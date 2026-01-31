@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -13,9 +13,6 @@ const HeroSection = ({ onShopClick, onAboutClick }) => {
   const headingRef = useRef(null);
   const descriptionRef = useRef(null);
   const exploreButtonRef = useRef(null);
-  const bottomButtonsRef = useRef([]);
-  const floatRef = useRef([]);
-
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
@@ -66,12 +63,6 @@ const HeroSection = ({ onShopClick, onAboutClick }) => {
             2.2
           );
 
-          masterTL.fromTo(
-            bottomButtonsRef.current,
-            { y: 30, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.6, stagger: 0.12 },
-            3.2
-          );
 
           if (exploreButtonRef.current) {
             masterTL.fromTo(
@@ -82,16 +73,6 @@ const HeroSection = ({ onShopClick, onAboutClick }) => {
             );
           }
 
-          const floats = floatRef.current.filter(Boolean);
-          if (floats.length) {
-            gsap.set(floats, { y: 20, opacity: 0 });
-            masterTL.fromTo(
-              floats,
-              { y: 20, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.5, stagger: 0.2 },
-              3.4
-            );
-          }
         }
       );
       return () => mm.revert();
@@ -157,7 +138,7 @@ const HeroSection = ({ onShopClick, onAboutClick }) => {
           </div>
 
           <div className="flex flex-col items-center justify-center gap-4 w-full mt-52">
-            <div className="w-full lg:w-[90%] border border-white/20 bg-black/50 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.55)] backdrop-blur-[20px] relative overflow-hidden">
+            <div className="w-full border border-white/20 bg-black/50 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.55)] backdrop-blur-[20px] relative overflow-hidden">
               <video
                 className="w-full rounded-2xl object-cover min-h-[30vh] lg:min-h-[38vh]"
                 src="https://videos.pexels.com/video-files/4945154/4945154-uhd_2732_1440_24fps.mp4"
@@ -167,41 +148,6 @@ const HeroSection = ({ onShopClick, onAboutClick }) => {
                 muted
                 preload="auto"
               />
-              {[
-                {
-                  text: "Build your career",
-                  img: "https://dfdx9u0psdezh.cloudfront.net/home/hero/e610ce8beaa7a2b72c73dd68.webp",
-                  top: "20%",
-                  right: "-2rem",
-                },
-                {
-                  text: "We understand you",
-                  img: "https://dfdx9u0psdezh.cloudfront.net/home/hero/57b6a3ee65a9c27fc2ee29c6.webp",
-                  top: "55%",
-                  right: "-3rem",
-                },
-              ].map((item, index) => (
-                <div
-                  key={item.text}
-                  ref={(el) => (floatRef.current[index] = el)}
-                  className="absolute flex flex-col items-center justify-center gap-1 rounded-tr-3xl rounded-bl-3xl border border-white/20 bg-white/5 px-4 py-3 text-center text-sm font-semibold text-white"
-                  style={{
-                    top: item.top,
-                    right: item.right,
-                    animation: "float 3s ease-in-out infinite",
-                  }}
-                >
-                  <img
-                    className="h-28 w-28 rounded-2xl object-cover"
-                    src={item.img}
-                    alt={item.text}
-                    loading="lazy"
-                  />
-                  <span className="text-xs uppercase tracking-[0.4em] text-white/80">
-                    {item.text}
-                  </span>
-                </div>
-              ))}
             </div>
           </div>
         </div>

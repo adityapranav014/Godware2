@@ -18,7 +18,7 @@ export const CONTACT_INFO = {
   whatsappPhone: '+91 79-03598844',
   whatsappNumber: '917903598844', // For WhatsApp API (no spaces/hyphens)
   email: 'contact@godwear.com',
-  address: 'Ahmedabad, Gujarat, India'
+  address: '1st floor, Bajrangi Chowk, Deo-JH-814112'
 };
 
 export const SOCIAL_LINKS = {

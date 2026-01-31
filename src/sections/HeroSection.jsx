@@ -1,5 +1,4 @@
-import { ArrowDown, Mail } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -7,16 +6,6 @@ import SplitType from "split-type";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const targetAudiences = [
-  "Gym Enthusiasts",
-  "Bodybuilders",
-  "Athletes",
-  "Crossfit",
-  "Cricket",
-  "Cycling",
-  "Running",
-  "Football",
-];
 
 const HeroSection = ({ onShopClick, onAboutClick }) => {
   const sectionRef = useRef(null);
@@ -26,9 +15,6 @@ const HeroSection = ({ onShopClick, onAboutClick }) => {
   const exploreButtonRef = useRef(null);
   const bottomButtonsRef = useRef([]);
   const floatRef = useRef([]);
-  const audienceRef = useRef(null);
-  const [audienceIndex, setAudienceIndex] = useState(0);
-  const madeForRef = useRef(null);
 
   useGSAP(
     () => {
@@ -80,16 +66,6 @@ const HeroSection = ({ onShopClick, onAboutClick }) => {
             2.2
           );
 
-          if (madeForRef.current) {
-            gsap.set(madeForRef.current, { y: 30, opacity: 0 });
-            masterTL.fromTo(
-              madeForRef.current,
-              { y: 30, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
-              2.7
-            );
-          }
-
           masterTL.fromTo(
             bottomButtonsRef.current,
             { y: 30, opacity: 0 },
@@ -100,8 +76,8 @@ const HeroSection = ({ onShopClick, onAboutClick }) => {
           if (exploreButtonRef.current) {
             masterTL.fromTo(
               exploreButtonRef.current,
-              { y: 30, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.5 },
+              { opacity: 0 },
+              { opacity: 1, duration: 0.5 },
               3.6
             );
           }
@@ -123,59 +99,20 @@ const HeroSection = ({ onShopClick, onAboutClick }) => {
     { scope: sectionRef }
   );
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!audienceRef.current) return;
-      gsap.to(audienceRef.current, {
-        scaleX: 0,
-        opacity: 0,
-        duration: 0.45,
-        ease: "power3.in",
-        transformOrigin: "center center",
-        onComplete: () => {
-          setAudienceIndex((prevIndex) => (prevIndex + 1) % targetAudiences.length);
-        }
-      });
-    }, 3200);
-    return () => {
-      clearInterval(interval);
-      gsap.killTweensOf(audienceRef.current);
-    };
-  }, []);
 
-  useEffect(() => {
-    if (!audienceRef.current) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        audienceRef.current,
-        { scaleX: 0, opacity: 0, filter: "blur(1px)" },
-        {
-          scaleX: 1,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 0.65,
-          ease: "power3.out",
-          transformOrigin: "center center"
-        }
-      );
-    }, audienceRef);
-    return () => {
-      ctx.revert();
-      gsap.killTweensOf(audienceRef.current);
-    };
-  }, [audienceIndex]);
 
   return (
-    <div className="bg-ink text-white min-h-[100dvh] overflow-hidden">
+    <div className="bg-ink text-white min-h-[100dvh] overflow-hidden relative">
       <section
         ref={sectionRef}
-        className="relative z-10 w-full max-w-6xl mx-auto px-6 py-12 md:py-16 flex flex-col items-center justify-center min-h-[100dvh] gap-8"
+        className="relative z-10 w-full max-w-6xl mx-auto px-6 pb-12 md:pb-16 flex flex-col items-center justify-center min-h-[100dvh] gap-8 m-40"
+        containerClassName="w-full max-w-full"
       >
         <h4
           ref={taglineRef}
-          className="uppercase text-accent md:text-2xl text-center font-manrope tracking-[0.5em]"
+          className="uppercase text-accent md:text-2xl text-center mb-2"
         >
-          GODWEAR: Built for relentless sessions
+          Second layer of skin
         </h4>
         <div className="flex flex-col items-center justify-center gap-10 w-full">
           <div className="flex flex-col items-center justify-center gap-6 w-full">
@@ -198,28 +135,10 @@ const HeroSection = ({ onShopClick, onAboutClick }) => {
               ref={descriptionRef}
               className="text-lg md:text-[1.8rem] text-center font-manrope text-white/70 w-full lg:w-[70%]"
             >
-              Intelligent dry-fit wicks sweat, graduated compression speeds
-              recovery, antimicrobial mesh keeps it fresh, and flat-lock seams
-              stay smooth under every grind.
+              Premium fitness and lifestyle brand for those who train with discipline and live with confidence, built with powerful compression, bold design, and lasting comfort.
             </p>
-            <div ref={madeForRef} className="text-center space-y-3">
-              <p className="text-[0.6rem] md:text-[0.68rem] uppercase tracking-[0.6em] text-white/50">
-                MADE FOR
-              </p>
-              <span
-                ref={audienceRef}
-                key={audienceIndex}
-                aria-live="polite"
-                className="accent-pill relative inline-flex items-center gap-2 rounded-full bg-[#0c0c0f] border border-white/15 px-6 py-3 text-[0.7rem] md:text-[0.78rem] tracking-[0.4em] font-semibold uppercase text-white/70 shadow-[0_12px_30px_rgba(0,0,0,0.45)] transition-all duration-700 ease-out"
-              >
-                {targetAudiences[audienceIndex]}
-                <span className="corner-dot corner-dot-tl absolute -left-3 -top-2 h-2 w-2 rounded-full bg-white" />
-                <span className="corner-dot corner-dot-tr absolute -right-3 -top-2 h-2 w-2 rounded-full bg-white" />
-                <span className="corner-dot corner-dot-bl absolute -left-3 -bottom-2 h-2 w-2 rounded-full bg-white" />
-                <span className="corner-dot corner-dot-br absolute -right-3 -bottom-2 h-2 w-2 rounded-full bg-white" />
-              </span>
-            </div>
-            <div className="flex justify-center w-full">
+
+            <div className="flex justify-center w-full mt-4">
               <button
                 ref={exploreButtonRef}
                 onClick={onShopClick}
@@ -237,7 +156,7 @@ const HeroSection = ({ onShopClick, onAboutClick }) => {
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-4 w-full">
+          <div className="flex flex-col items-center justify-center gap-4 w-full mt-52">
             <div className="w-full lg:w-[90%] border border-white/20 bg-black/50 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.55)] backdrop-blur-[20px] relative overflow-hidden">
               <video
                 className="w-full rounded-2xl object-cover min-h-[30vh] lg:min-h-[38vh]"
@@ -287,6 +206,34 @@ const HeroSection = ({ onShopClick, onAboutClick }) => {
           </div>
         </div>
       </section>
+      <div className="absolute w-full -top-40 left-0 overflow-hidden">
+        <img
+          className="block md:hidden
+    brightness-75 saturate-125 contrast-110
+    scale-150
+    h-[80vh] sm:h-[90vh] md:h-[165vh]
+    object-center
+  "
+          alt="bg mobile"
+          fetchpriority="high"
+          src="https://dfdx9u0psdezh.cloudfront.net/common/Background_mobile.svg"
+        />
+
+        <img
+          className="
+    hidden md:block
+    brightness-80 saturate-120 contrast-110
+    scale-110
+    h-[165vh]
+    object-cover
+    object-[60%_60%]
+  "
+          alt="bg desktop"
+          fetchpriority="high"
+          src="https://dfdx9u0psdezh.cloudfront.net/common/Background.svg"
+        />
+
+      </div>
     </div>
   );
 };

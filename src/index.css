@@ -305,19 +305,19 @@ a.active hr {
     @apply relative overflow-hidden w-max;
   }
 
-  .hover-swap > span:first-child {
+  .hover-swap>span:first-child {
     @apply transition-transform duration-300 ease-out;
   }
 
-  .hover-swap > span:last-child {
+  .hover-swap>span:last-child {
     @apply absolute inset-0 translate-y-full transition-transform duration-300 ease-out;
   }
 
-  .hover-swap:hover > span:first-child {
+  .hover-swap:hover>span:first-child {
     @apply -translate-y-full;
   }
 
-  .hover-swap:hover > span:last-child {
+  .hover-swap:hover>span:last-child {
     @apply translate-y-0;
   }
 
@@ -344,6 +344,7 @@ a.active hr {
   .compare-shell {
     @apply rounded-3xl border border-ink/20 bg-white/70 backdrop-blur-md;
   }
+
   .btn-hover {
     @apply hover:bg-transparent hover:border hover:border-zinc-600 hover:transition-all;
   }

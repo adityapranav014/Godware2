@@ -2,7 +2,7 @@ import { Asterisk } from "lucide-react"
 
 const TaglineText = () => {
     return (
-        <div className="bg-ink py-20">
+        <div className="bg-ink py-40">
             <div className="relative max-w-5xl mx-auto px-4 xl:px-0 text-center z-20 text-white">
 
 

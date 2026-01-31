@@ -55,7 +55,7 @@ const TestimonialsSection = () => {
   }, { scope: sectionRef });
 
   return (
-    <Section background="dark" padding="large" sectionRef={sectionRef} className="text-white">
+    <Section background="dark" padding="large" sectionRef={sectionRef} className="text-white" containerClassName="w-full max-w-full">
       <div className="space-y-10">
         <div className="flex justify-center">
           <span className="accent-pill uppercase tracking-[0.4em] text-white/70">

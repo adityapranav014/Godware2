@@ -80,7 +80,7 @@ const ImpactSection = () => {
           subtitleClassName="text-white/70 font-manrope"
         />
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto overflow-y-clip">
           <div className="flex gap-6 px-2 md:px-6 snap-x snap-mandatory">
             <div className="w-14 shrink-0 hidden md:block" />
             {impactItems.map((item, index) => (

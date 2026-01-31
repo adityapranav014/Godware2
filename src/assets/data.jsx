@@ -49,6 +49,8 @@ const productData = [
   {
     name: "T-Shirts",
     description: "Godwear Pro Solid Dry Fit T-Shirt Men Compression",
+    details:
+      "Precision-knit compression that sculpts the upper body, balances airflow, and stays locked during high reps.",
     price: "₹2,299",
     priceAfterDiscount: "₹676",
     discount: "70% off",
@@ -60,6 +62,8 @@ const productData = [
   {
     name: "T-Shirts",
     description: "Godwear Pro Dry Fit Skins T-Shirt Men Compression",
+    details:
+      "Dual-layer dry-fit weave that keeps you cool while amplifying mobility through every lift.",
     price: "₹2,399",
     priceAfterDiscount: "₹799",
     discount: "70% off",

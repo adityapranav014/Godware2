@@ -14,34 +14,38 @@ const Marquee = ({
     const marquee = marqueeRef.current;
     if (!marquee) return;
 
-    // Calculate animation duration based on content width
-    const contentWidth = marquee.scrollWidth / 2; // Divide by 2 since we duplicate items
-    const duration = contentWidth / 50; // 50px per second for smooth scrolling
+    const contentWidth = marquee.scrollWidth / 2;
+    const duration = Math.max(contentWidth / 60, 14);
 
-    // Set CSS custom property for animation duration
-    marquee.style.setProperty('--marquee-duration', `${duration}s`);
+    marquee.style.setProperty("--marquee-duration", `${duration}s`);
   }, [items]);
 
+  const maskStyle = {
+    WebkitMaskImage:
+      "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+    maskImage:
+      "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+  };
+
   return (
-    <div
-      className={`overflow-hidden w-full h-20 md:h-[100px] flex items-center marquee-text-responsive font-light uppercase whitespace-nowrap ${className}`}
-    >
-      <div
-        ref={marqueeRef}
-        className={`flex ${reverse ? 'marquee-reverse' : 'marquee'}`}
-        style={{
-          animationDuration: 'var(--marquee-duration, 40s)'
-        }}
-      >
-        {/* Duplicate items for seamless loop */}
-        {items.concat(items).map((text, index) => (
-          <span
-            key={index}
-            className="flex items-center px-16 gap-x-32"
-          >
-            {text} <Icon icon={icon} className={iconClassName} />
-          </span>
-        ))}
+    <div className={`relative overflow-hidden ${className}`} style={maskStyle}>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-ink via-ink/50 to-transparent opacity-90 blur-[30px]" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-ink via-ink/50 to-transparent opacity-90 blur-[30px]" />
+
+      <div className="overflow-hidden w-full h-20 md:h-[100px] flex items-center marquee-text-responsive font-light uppercase whitespace-nowrap">
+        <div
+          ref={marqueeRef}
+          className={`flex ${reverse ? "marquee-reverse" : "marquee"}`}
+          style={{
+            animationDuration: "var(--marquee-duration, 40s)",
+          }}
+        >
+          {items.concat(items).map((text, index) => (
+            <span key={index} className="flex items-center px-16 gap-x-32">
+              {text} <Icon icon={icon} className={iconClassName} />
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );

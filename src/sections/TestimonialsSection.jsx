@@ -74,9 +74,17 @@ const TestimonialsSection = () => {
           subtitleClassName="text-white/70 font-manrope"
         />
 
-        <div className="relative overflow-hidden">
-          <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-ink to-transparent" />
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-ink to-transparent" />
+        <div
+          className="relative overflow-hidden"
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)"
+          }}
+        >
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-[22%] bg-gradient-to-r from-ink via-transparent to-transparent opacity-80 blur-[30px]" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-[22%] bg-gradient-to-l from-ink via-transparent to-transparent opacity-80 blur-[30px]" />
 
           <div className="overflow-hidden">
             <div className="marquee-left gap-6 px-6 py-4">

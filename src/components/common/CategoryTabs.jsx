@@ -3,37 +3,40 @@
  * Displays horizontal category filter tabs with swipe support
  */
 
-import { useRef, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { CATEGORIES } from '../../data';
 
 const CategoryTabs = ({ activeCategory, onCategoryChange, tabsContainerRef, tabButtonsRef }) => {
   
   // Scroll active tab into view smoothly
-  const scrollActiveTabIntoView = (categoryName) => {
-    if (!tabsContainerRef.current) return;
+  const scrollActiveTabIntoView = useCallback(
+    (categoryName) => {
+      if (!tabsContainerRef.current) return;
 
-    const activeIndex = CATEGORIES.findIndex(cat => cat.name === categoryName);
-    const activeButton = tabButtonsRef.current[activeIndex];
+      const activeIndex = CATEGORIES.findIndex(cat => cat.name === categoryName);
+      const activeButton = tabButtonsRef.current[activeIndex];
 
-    if (activeButton && tabsContainerRef.current) {
-      const container = tabsContainerRef.current;
-      const button = activeButton;
-      const containerRect = container.getBoundingClientRect();
-      const buttonRect = button.getBoundingClientRect();
+      if (activeButton && tabsContainerRef.current) {
+        const container = tabsContainerRef.current;
+        const button = activeButton;
+        const containerRect = container.getBoundingClientRect();
+        const buttonRect = button.getBoundingClientRect();
 
-      const scrollLeft = button.offsetLeft - (containerRect.width / 2) + (buttonRect.width / 2);
-      
-      container.scrollTo({
-        left: scrollLeft,
-        behavior: 'smooth'
-      });
-    }
-  };
+        const scrollLeft = button.offsetLeft - (containerRect.width / 2) + (buttonRect.width / 2);
+        
+        container.scrollTo({
+          left: scrollLeft,
+          behavior: 'smooth'
+        });
+      }
+    },
+    [tabsContainerRef, tabButtonsRef]
+  );
 
   // Scroll to active tab on mount and category change
   useEffect(() => {
     scrollActiveTabIntoView(activeCategory);
-  }, [activeCategory]);
+  }, [activeCategory, scrollActiveTabIntoView]);
 
   return (
     <div 

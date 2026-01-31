@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import ReactLenis from "lenis/react";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -23,8 +23,6 @@ import { useScrollSpy, useScrollToSection } from "./hooks";
 gsap.registerPlugin(ScrollToPlugin);
 
 const App = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-
   // Section refs for scroll navigation
   const heroSectionRef = useRef(null);
   const categorySectionRef = useRef(null);
@@ -45,18 +43,6 @@ const App = () => {
 
   // Handler: Shop Now button clicks
   const handleShopClick = () => {
-    setSelectedCategory("All");
-    scrollToSection("Shop");
-  };
-
-  // Handler: About button clicks
-  const handleAboutClick = () => {
-    scrollToSection("About");
-  };
-
-  // Handler: Category selection from navbar dropdown
-  const handleCategorySelect = (categoryName) => {
-    setSelectedCategory(categoryName);
     scrollToSection("Shop");
   };
 
@@ -66,12 +52,10 @@ const App = () => {
       <Navbar 
         activeSection={activeSection} 
         onNavClick={scrollToSection}
-        onCategorySelect={handleCategorySelect}
-        selectedCategory={selectedCategory}
       />
 
       <div ref={heroSectionRef} data-section="Home">
-        <HeroSection onShopClick={handleShopClick} onAboutClick={handleAboutClick} />
+        <HeroSection onShopClick={handleShopClick} />
         <TaglineSection />
       </div>
 
@@ -79,22 +63,19 @@ const App = () => {
       <TestimonialsSection />
 
       <div ref={categorySectionRef} data-section="Shop">
-        <CategorySection
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-        />
+        <CategorySection />
       </div>
 
       <div ref={aboutSectionRef} data-section="About">
         <AboutUsSection />
       </div>
 
-      <CTASection />
+      <CTASection onShopClick={handleShopClick} />
 
       <div ref={contactSectionRef} data-section="Contact">
         <Contact />
       </div>
-      <Footer onNavClick={scrollToSection} onCategorySelect={handleCategorySelect} />
+      <Footer onNavClick={scrollToSection} />
     </ReactLenis >
   );
 };

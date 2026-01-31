@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { Clock3, Send, ShieldCheck, Sparkles } from 'lucide-react';
-import { Button, Input } from '../ui';
+import { Input } from '../ui';
 import { sendWhatsAppMessage, validateContactForm } from '../../utils';
 
 const quickFacts = [
@@ -165,16 +165,21 @@ const ContactForm = () => {
           className="bg-black/40 border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px] min-h-[170px]"
         />
 
-        <Button
-          type="submit"
-          variant="secondary"
-          size="large"
-          className="w-full rounded-[30px] border border-white/20 bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 font-semibold text-black shadow-[0_25px_60px_rgba(255,170,0,0.35)] hover:translate-y-0.5"
-          icon={<Send size={20} />}
-          iconPosition="right"
-        >
-          Send Message
-        </Button>
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="cta-gradient group text-white text-xl py-3 px-10 rounded-2xl border border-transparent backdrop-blur-md shadow-[0_15px_40px_rgba(255,202,6,0.35)] transition duration-300 hover:-translate-y-0.5"
+          >
+            <div className="relative overflow-hidden w-max flex gap-1 font-manrope font-medium">
+              <div className="transition-transform duration-300 ease-out group-hover:-translate-y-full">
+                Send Message <span>→</span>
+              </div>
+              <div className="absolute inset-0 translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0">
+                Send Message <span>→</span>
+              </div>
+            </div>
+          </button>
+        </div>
 
         <p className="text-center text-[11px] uppercase tracking-[0.4em] text-white/50 font-manrope">
           Godware responds within 3 hours via WhatsApp.

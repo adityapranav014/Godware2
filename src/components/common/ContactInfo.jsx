@@ -63,7 +63,7 @@ const ContactInfo = () => {
                 </div>
                 <div>
                   <p className="text-sm opacity-90 mb-1 font-manrope">{method.label}</p>
-                  <p className="text-lg font-semibold font-manrope">{method.value}</p>
+                  <p className="text-lg font-semibold font-manrope break-all sm:break-normal">{method.value}</p>
                 </div>
               </Component>
             );
@@ -71,41 +71,49 @@ const ContactInfo = () => {
         </div>
       </div>
 
-      {/* Social Media Card */}
+      {/* Reach Us Card */}
       <div className="bg-ink rounded-3xl p-8 text-white">
-        <h3 className="text-xl font-bold mb-6 font-machina">Follow Us</h3>
-        <div className="flex gap-4">
-          <a
-            href={SOCIAL_LINKS.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors cursor-pointer backdrop-blur-sm"
-            aria-label="Instagram"
-          >
-            <Instagram size={24} />
-          </a>
-          <a
-            href={SOCIAL_LINKS.facebook}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors cursor-pointer backdrop-blur-sm"
-            aria-label="Facebook"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-            </svg>
-          </a>
-          <a
-            href={SOCIAL_LINKS.twitter}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-colors cursor-pointer backdrop-blur-sm"
-            aria-label="Twitter"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-            </svg>
-          </a>
+        <h3 className="text-xl font-bold mb-6 font-machina">Reach Us</h3>
+        <div className="flex flex-wrap gap-4">
+          {[
+            {
+              icon: Phone,
+              label: "Call",
+              href: `tel:${CONTACT_INFO.phone.replace(/\s|-/g, "")}`,
+            },
+            {
+              icon: MessageCircle,
+              label: "WhatsApp",
+              href: `https://wa.me/${CONTACT_INFO.whatsappNumber}`,
+            },
+            {
+              icon: Instagram,
+              label: "Instagram",
+              href: SOCIAL_LINKS.instagram,
+            },
+            {
+              icon: Mail,
+              label: "Email",
+              href: `mailto:${CONTACT_INFO.email}`,
+            },
+          ].map((item) => {
+            const Icon = item.icon;
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white hover:border-accent hover:bg-white/10 transition"
+                aria-label={item.label}
+              >
+                <Icon size={20} />
+                <span className="pointer-events-none absolute -bottom-6 left-1/2 w-max -translate-x-1/2 rounded-full bg-black/70 px-2 py-1 text-[10px] uppercase tracking-[0.4em] text-white opacity-0 transition duration-300 group-hover:opacity-100">
+                  {item.label}
+                </span>
+              </a>
+            );
+          })}
         </div>
       </div>
 

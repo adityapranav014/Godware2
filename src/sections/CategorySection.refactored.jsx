@@ -3,10 +3,10 @@
  * Uses ProductGrid, CategoryTabs components and new data imports
  */
 
-import { useRef, useState } from "react";
+import { useRef} from "react";
 import { Section, SectionHeader } from "../components/layout";
 import { CategoryTabs, ProductGrid } from "../components/common";
-import { CATEGORIES, PRODUCTS, filterProductsByCategory } from "../data";
+import { filterProductsByCategory } from "../data";
 
 const CategorySection = ({ selectedCategory, setSelectedCategory }) => {
   const productsContainerRef = useRef(null);

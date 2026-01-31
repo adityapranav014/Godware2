@@ -6,7 +6,7 @@ import Section from "../components/layout/Section";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CTASection = () => {
+const CTASection = ({ onShopClick }) => {
   const sectionRef = useRef(null);
 
   useGSAP(() => {
@@ -45,7 +45,7 @@ const CTASection = () => {
       <div className="relative max-w-6xl mx-auto px-4 xl:px-0 text-center space-y-6">
         <div className="flex justify-center">
           <span className="accent-pill text-white/80 uppercase tracking-[0.4em]">
-            Studio Accent
+            God Wear Performance Lab
           </span>
         </div>
         <h2 className="text-4xl sm:text-5xl lg:text-6xl impact uppercase font-machina">
@@ -63,10 +63,17 @@ const CTASection = () => {
         <p className="text-white/70 text-lg max-w-2xl mx-auto font-manrope">
           Build your edge with gear engineered for athletes who refuse average.
         </p>
-        <button className="cta-gradient text-white px-10 py-3 sm:py-4 rounded-2xl text-xl font-semibold font-manrope outline-none">
-          <div className="hover-swap">
-            <span>Explore the Drop →</span>
-            <span>Explore the Drop →</span>
+        <button
+          onClick={onShopClick}
+          className="cta-gradient group text-white text-xl py-3 px-10 rounded-2xl border border-transparent backdrop-blur-md shadow-[0_15px_40px_rgba(255,202,6,0.35)] transition duration-300 hover:-translate-y-0.5"
+        >
+          <div className="relative overflow-hidden w-max flex gap-1 font-manrope font-medium">
+            <div className="transition-transform duration-300 ease-out group-hover:-translate-y-full">
+              Shop Now <span>→</span>
+            </div>
+            <div className="absolute inset-0 translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0">
+              Shop Now <span>→</span>
+            </div>
           </div>
         </button>
       </div>

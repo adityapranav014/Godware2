@@ -1,9 +1,8 @@
 import { Instagram, Phone, Mail, Heart, MessageCircle, Sparkles } from 'lucide-react';
-import { CATEGORIES } from '../../data';
 import { APP_CONFIG, CONTACT_INFO, SOCIAL_LINKS } from '../../constants';
 import { Logo } from '../ui';
 
-const Footer = ({ onNavClick, onCategorySelect }) => {
+const Footer = ({ onNavClick }) => {
     const currentYear = new Date().getFullYear();
 
     return (
@@ -94,19 +93,13 @@ const Footer = ({ onNavClick, onCategorySelect }) => {
 
                     <div>
                         <p className="text-sm uppercase tracking-widest text-white/60 mb-4">Shop</p>
-                        <ul className="space-y-3 text-white/70 text-sm">
-                            {CATEGORIES.slice(0, 6).map((category) => (
-                                <li key={category.name}>
-                                    <button
-                                        onClick={() => onCategorySelect && onCategorySelect(category.name)}
-                                        className="flex items-center gap-2 hover:text-white transition"
-                                    >
-                                        <span className="w-2 h-2 rounded-full bg-white/40" />
-                                        {category.name}
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
+                        <button
+                            onClick={() => onNavClick && onNavClick('Shop')}
+                            className="flex items-center gap-2 text-white/70 text-sm transition hover:text-white"
+                        >
+                            <span className="w-2 h-2 rounded-full bg-white/40" />
+                            Compression T-Shirts
+                        </button>
                     </div>
 
                     <div>

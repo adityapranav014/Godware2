@@ -12,7 +12,6 @@ import TaglineSection from "./sections/TaglineSection";
 import CategorySection from "./sections/CategorySection";
 import AboutUsSection from "./sections/AboutUsSection";
 import Contact from "./sections/Contact";
-import ImpactSection from "./sections/ImpactSection";
 import ComparisonSection from "./sections/ComparisonSection";
 import TestimonialsSection from "./sections/TestimonialsSection";
 import CTASection from "./sections/CTASection";
@@ -76,7 +75,6 @@ const App = () => {
         <TaglineSection />
       </div>
 
-      <ImpactSection />
       <ComparisonSection />
       <TestimonialsSection />
 

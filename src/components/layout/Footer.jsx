@@ -1,4 +1,4 @@
-import { Instagram, Phone, Mail, Heart, MessageCircle, Sparkles } from 'lucide-react';
+import { Instagram, ExternalLink, Code, Phone, Mail, Heart, MessageCircle, Sparkles } from 'lucide-react';
 import { APP_CONFIG, CONTACT_INFO, SOCIAL_LINKS } from '../../constants';
 import { Logo } from '../ui';
 
@@ -128,7 +128,7 @@ const Footer = ({ onNavClick }) => {
                             <Heart size={16} className="text-red-500" />
                             Crafted with intention.
                         </div>
-                        <a
+                        {/* <a
                             href={APP_CONFIG.developer.website}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -136,12 +136,61 @@ const Footer = ({ onNavClick }) => {
                         >
                             <Sparkles size={16} />
                             {APP_CONFIG.developer.name}
-                        </a>
+                        </a> */}
+
+                        <div className="relative group">
+                            {/* Glow Effect on Hover */}
+                            <div className="absolute -inset-1 bg-linear-to-r from-gold via-amber-500 to-gold rounded-xl opacity-0 
+                                group-hover:opacity-20 blur-md transition-all duration-500"></div>
+
+                            {/* Button */}
+                            <a
+                                href={APP_CONFIG.developer.website}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="relative flex items-center gap-3 px-4 py-3 bg-white/5 backdrop-blur-sm rounded-2xl 
+                                    border border-white/10 hover:border-gold/40 transition-all duration-300 cursor-pointer
+                                    hover:shadow-lg hover:shadow-gold/5 group-hover:bg-zinc-800 w-fit"
+                            >
+                                {/* Sparkle Icon - Top Right */}
+                                <Sparkles
+                                    size={10}
+                                    className="text-gold opacity-0 group-hover:opacity-100 
+                                        transition-opacity duration-300 absolute -top-1.5 -right-1.5"
+                                />
+
+                                {/* Code Icon with Gradient Background */}
+                                <div className="p-2 bg-linear-to-br from-gold to-amber-600 rounded-lg
+                                    group-hover:scale-105 transition-transform duration-300 shadow-md shadow-gold/20">
+                                    <Code size={15} className="text-white" />
+                                </div>
+
+                                {/* Text Content */}
+                                <div className="flex flex-col leading-tight">
+                                    <span className="text-[10px] text-zinc-500 group-hover:text-zinc-400 transition-colors uppercase tracking-wide">
+                                        Crafted by
+                                    </span>
+                                    <span className="text-sm font-bold text-white group-hover:text-gold transition-colors">
+                                        {APP_CONFIG.developer.name}
+                                    </span>
+                                </div>
+
+                                {/* External Link Arrow */}
+                                <ExternalLink
+                                    size={13}
+                                    className="text-zinc-600 group-hover:text-gold group-hover:translate-x-0.5 
+                                        group-hover:-translate-y-0.5 transition-all duration-300 ml-1"
+                                />
+                            </a>
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>
 
-        </footer>
+        </footer >
     );
 };
 

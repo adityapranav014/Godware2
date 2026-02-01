@@ -115,13 +115,6 @@ const AboutUsSection = () => {
                     bg-cover bg-center flex items-center justify-center
                     text-white/60 saturate-100'>
                             </div>
-
-                            {/* Learn More Button */}
-                            <button className='absolute bottom-4 left-4 bg-white/10
-                    text-white text-xs sm:text-sm px-4 py-2 rounded-full
-                    uppercase hover:bg-white/20 transition-colors cursor-pointer'>
-                                Learn More
-                            </button>
                         </div>
 
                         {/* Right Text Col */}

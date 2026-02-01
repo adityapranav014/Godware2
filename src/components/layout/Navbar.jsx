@@ -28,11 +28,10 @@ const Navbar = ({ activeSection, onNavClick }) => {
               <button
                 key={link.name}
                 onClick={() => onNavClick(link.name)}
-                className={`py-2.5 px-4 rounded-full transition-all duration-200 ${
-                  activeSection === link.name
-                    ? "bg-accent text-white"
-                    : "bg-transparent text-white/70 hover:bg-accent hover:text-white"
-                }`}
+                className={`py-2.5 px-4 rounded-full transition-all duration-200 ${activeSection === link.name
+                  ? "bg-accent text-white"
+                  : "bg-transparent text-white/70 hover:bg-accent hover:text-white"
+                  }`}
               >
                 {link.name}
               </button>
@@ -52,15 +51,13 @@ const Navbar = ({ activeSection, onNavClick }) => {
       </div>
 
       <div
-        className={`fixed inset-0 bg-black/60 z-50 md:hidden transition-opacity duration-200 ${
-          isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 bg-black/60 z-50 md:hidden transition-opacity duration-200 ${isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         onClick={closeMenu}
       />
       <div
-        className={`fixed top-0 right-0 h-full w-[85%] max-w-sm z-50 md:hidden transform transition-transform duration-300 ${
-          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed top-0 right-0 h-full w-[85%] max-w-sm z-50 md:hidden transform transition-transform duration-300 ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="flex min-h-full flex-col bg-gradient-to-b from-[#050505] via-[#0f0b11] to-[#050505] border-l border-white/5">
           <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">

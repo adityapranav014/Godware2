@@ -4,27 +4,27 @@ const HeroSection = ({ onShopClick }) => {
       <section
         className="relative z-10 w-full max-w-6xl mx-auto px-6 pb-12 md:pb-16 flex flex-col items-center justify-center min-h-[100dvh] gap-8 m-8 md:m-16"
       >
-        <h4 className="uppercase text-accent md:text-2xl text-center mb-2">
+        <h4 className="uppercase text-accent md:text-2xl text-center mb-2 impact">
           Second layer of skin
         </h4>
         <div className="flex flex-col items-center justify-center gap-10 w-full">
           <div className="flex flex-col items-center justify-center gap-6 w-full">
             <div className="font-machina text-[2.7rem] md:text-[5rem] lg:text-[4.7rem] tracking-tight md:leading-[5rem] text-center">
-              <h1 className="capitalize">
-                Gear up with
+              <h1 className="capitalize impact">
+                Elevate Your
                 <span className="relative mx-2 inline-flex items-center">
-                  <span className="relative z-10 px-2 font-machina pt-[0.05rem] text-white/90 bg-[#E8602E21] border border-[#E8602E]">
-                    GODWEAR
+                  <span className="relative z-10 px-2 font-machina pt-[0.05rem] text-white/90 bg-[#E8602E21] border border-[#E8602E] uppercase">
+                    Performance
                     <span className="absolute -left-2 -top-2 h-1 w-1 bg-white" />
                     <span className="absolute -right-2 -top-2 h-1 w-1 bg-white" />
                     <span className="absolute -left-2 -bottom-2 h-1 w-1 bg-white" />
                     <span className="absolute -right-2 -bottom-2 h-1 w-1 bg-white" />
                   </span>
                 </span>
-                engineered athlete wear.
+                with Precision Engineered Athlete Wear
               </h1>
             </div>
-            <p className="text-base md:text-[1.65rem] text-center font-manrope text-white/70 w-full lg:w-[70%]">
+            <p className="text-base md:text-[1.65rem] text-center font-manrope text-white/70 w-full lg:w-[70%] ">
               Premium fitness and lifestyle brand for those who train with discipline and live with confidence, built with powerful compression, bold design, and lasting comfort.
             </p>
 

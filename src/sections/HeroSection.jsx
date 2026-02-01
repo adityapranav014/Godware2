@@ -1,3 +1,4 @@
+import { Video } from '@imagekit/react';
 const HeroSection = ({ onShopClick }) => {
   return (
     <div className="bg-ink text-white min-h-[100dvh] overflow-hidden relative flex items-center justify-center">
@@ -47,14 +48,14 @@ const HeroSection = ({ onShopClick }) => {
 
           <div className="flex flex-col items-center justify-center gap-4 w-full mt-52">
             <div className="w-full border border-white/20 bg-black/50 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.55)] backdrop-blur-[20px] relative overflow-hidden">
-              <video
-                className="w-full rounded-2xl object-cover min-h-[30vh] lg:min-h-[38vh]"
-                src="https://videos.pexels.com/video-files/4945154/4945154-uhd_2732_1440_24fps.mp4"
+              <Video
+                urlEndpoint="https://ik.imagekit.io/fr3yiiin6"
+                src="/video/hero.mp4"
                 autoPlay
                 loop
-                playsInline
                 muted
-                preload="auto"
+                playsInline
+                controls={false}
               />
             </div>
           </div>

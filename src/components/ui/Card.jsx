@@ -10,9 +10,9 @@ const Card = ({
   hover = false,
   padding = 'medium'
 }) => {
-  const baseClasses = 'rounded-2xl border border-stroke bg-surface transition-all duration-200';
-  const hoverClasses = hover 
-    ? 'cursor-pointer hover:shadow-lg hover:border-gold/30 hover:-translate-y-1' 
+  const baseClasses = 'rounded-2xl border border-stroke bg-subtle transition-all duration-200';
+  const hoverClasses = hover
+    ? 'cursor-pointer hover:shadow-lg hover:border-gold/30 hover:-translate-y-1'
     : '';
   const clickableClasses = onClick ? 'cursor-pointer' : '';
 

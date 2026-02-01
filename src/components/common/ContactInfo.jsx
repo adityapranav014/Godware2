@@ -118,7 +118,7 @@ const ContactInfo = () => {
       </div>
 
       {/* Business Hours */}
-      <div className="bg-surface rounded-3xl p-8 border border-stroke">
+      <div className="bg-subtle rounded-3xl p-8 border border-stroke">
         <h3 className="text-xl font-bold mb-4 text-ink font-machina">Business Hours</h3>
         <div className="space-y-2 text-muted font-manrope">
           <p className="flex justify-between">

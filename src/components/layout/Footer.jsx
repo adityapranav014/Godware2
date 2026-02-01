@@ -34,25 +34,6 @@ const Footer = ({ onNavClick }) => {
               compression, bold design, and lasting comfort.
             </p>
           </div>
-          <div className="flex flex-col gap-4 justify-center">
-            <p className="text-sm uppercase text-white/60 tracking-widest">
-              Need a bespoke touch?
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={() => onNavClick && onNavClick("Contact")}
-                className="px-6 py-3 rounded-full border border-white/30 bg-gradient-to-r from-gold to-amber-500 text-black font-semibold transition hover:scale-[1.02]"
-              >
-                Contact Us
-              </button>
-              <button
-                onClick={() => onNavClick && onNavClick("About")}
-                className="px-6 py-3 rounded-full border border-white/30 text-white font-semibold transition hover:bg-white/10"
-              >
-                About Us
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Link grid */}
@@ -62,8 +43,7 @@ const Footer = ({ onNavClick }) => {
               Connect
             </div>
             <p className="text-white/80 text-lg leading-relaxed">
-              Whether you need support, bespoke
-              sizing, or partnership, we are one ping away.
+              Share your volumes, timeline, and special requirements, and we will craft a custom on-demand solution that keeps your team moving without compromising lead time.
             </p>
             <div className="flex flex-wrap gap-3">
               {[CONTACT_INFO.email, CONTACT_INFO.phone].map((item, index) => (

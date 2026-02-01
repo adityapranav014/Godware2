@@ -14,7 +14,7 @@ const Section = ({
   padding = 'default'
 }) => {
   const backgrounds = {
-    white: 'bg-surface',
+    white: 'bg-subtle',
     gray: 'bg-base',
     dark: 'bg-ink',
     transparent: 'bg-transparent'

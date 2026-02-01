@@ -6,6 +6,8 @@ import { Activity, Droplets, ShieldCheck } from "lucide-react";
 import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
 import { productData } from "../assets/data";
+import { Video } from '@imagekit/react';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -124,8 +126,18 @@ const CategorySection = () => {
             >
               <div className="absolute inset-0">
                 <div
-                  className={`absolute inset-0 ${product.bgUrl} bg-cover bg-top transition duration-700 group-hover:scale-[1.05]`}
-                />
+                  className={`absolute inset-0  bg-cover bg-top transition duration-700`}>
+                  <Video
+                    urlEndpoint="https://ik.imagekit.io/fr3yiiin6"
+                    src={product.bgUrl}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    controls={false}
+                  />
+                </div>
+
                 <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/40 to-black/90" />
               </div>
               <div className="relative z-10 flex min-h-[680px] flex-col gap-6 p-6">

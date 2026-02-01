@@ -64,14 +64,12 @@ const HeroSection = ({ onShopClick }) => {
         <img
           className="block lg:hidden absolute inset-0 brightness-75 saturate-125 contrast-110 scale-150 h-full w-full object-cover"
           alt="bg mobile"
-          fetchpriority="high"
           src="https://dfdx9u0psdezh.cloudfront.net/common/Background_mobile.svg"
         />
 
         <img
           className="hidden lg:block absolute inset-0 brightness-80 saturate-120 contrast-110 scale-110 h-full w-full object-cover object-[60%_60%]"
           alt="bg desktop"
-          fetchpriority="high"
           src="https://dfdx9u0psdezh.cloudfront.net/common/Background.svg"
         />
       </div>

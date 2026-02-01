@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
   } = product;
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-stroke bg-surface hover:shadow-2xl transition-all duration-300">
+    <div className="group relative overflow-hidden rounded-2xl border border-stroke bg-subtle hover:shadow-2xl transition-all duration-300">
       {/* Product Image */}
       <div className={`${imgHeight} ${bgUrl} bg-cover bg-center relative overflow-hidden`}>
         {tag && (
@@ -29,14 +29,14 @@ const ProductCard = ({ product }) => {
             </Badge>
           </div>
         )}
-        
+
         {/* Hover Overlay */}
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <a
             href={flipkartLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-surface text-ink font-semibold rounded-full flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 cursor-pointer hover:bg-ink hover:text-surface"
+            className="px-6 py-3 bg-subtle text-ink font-semibold rounded-full flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 cursor-pointer hover:bg-ink hover:text-surface"
           >
             View on Flipkart
             <ExternalLink size={18} />
@@ -66,7 +66,7 @@ const ProductCard = ({ product }) => {
           <Badge variant="success" size="small">
             {discount}
           </Badge>
-          
+
           <a
             href={flipkartLink}
             target="_blank"

@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Section from "../components/layout/Section";
+import { Video } from '@imagekit/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -108,12 +109,20 @@ const AboutUsSection = () => {
                     <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-6 items-center'>
 
                         {/* Left Image Col */}
-                        <div ref={imageRef} className='relative h-[360px] sm:h-[440px] lg:h-[620px] bg-white/5 border border-white/10 rounded-3xl overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.5)]'>
+                        <div ref={imageRef} className='relative h-[360px] sm:h-[440px] lg:h-[620px]  border border-white/10 rounded-3xl overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.5)]'>
 
                             {/* Image Placeholder */}
-                            <div className='size-full bg-[url(https://images.pexels.com/photos/29526382/pexels-photo-29526382.jpeg)]
-                    bg-cover bg-center flex items-center justify-center
-                    text-white/60 saturate-100'>
+                            <div className='size-full 
+                    bg-cover bg-center flex items-center justify-center'>
+                                <Video
+                                    urlEndpoint="https://ik.imagekit.io/fr3yiiin6"
+                                    src="/video/video-tag-line.mp4"
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    controls={false}
+                                />
                             </div>
                         </div>
 

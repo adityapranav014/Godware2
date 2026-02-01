@@ -115,25 +115,11 @@ const CategorySection = () => {
             >
               <div className="absolute inset-0">
                 <div
-                  className={`absolute inset-0 ${product.bgUrl} bg-cover bg-center transition duration-700 group-hover:scale-[1.05]`}
+                  className={`absolute inset-0 ${product.bgUrl} bg-cover bg-top transition duration-700 group-hover:scale-[1.05]`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/40 to-black/90" />
               </div>
               <div className="relative z-10 flex min-h-[680px] flex-col gap-6 p-6">
-                <div className="flex items-center justify-between gap-4">
-                  <span className="inline-flex text-[0.65rem] uppercase tracking-[0.5em] text-white/80 bg-white/10 px-4 py-2 rounded-full font-semibold">
-                    {product.tag}
-                  </span>
-                  <span className="text-[0.6rem] uppercase tracking-[0.45em] text-white/60">
-                    Performance fit
-                  </span>
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-3xl font-machina uppercase tracking-tight text-white">
-                    {product.description}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-white/70">{product.details}</p>
-                </div>
                 <div className="mt-auto space-y-4">
                   <div className="flex flex-wrap items-end gap-3">
                     <span className="text-3xl font-semibold text-gold">
@@ -145,7 +131,7 @@ const CategorySection = () => {
                     </span>
                   </div>
                   <p className="text-[0.65rem] uppercase tracking-[0.4em] text-white/50">
-                    Direct from Flipkart
+                    Buy from Flipkart
                   </p>
                   <div className="w-full border-t border-white/10 pt-3">
                     <span className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.35em] font-semibold text-white transition duration-300 group-hover:border-gold group-hover:bg-gold/90 group-hover:text-slate-950">

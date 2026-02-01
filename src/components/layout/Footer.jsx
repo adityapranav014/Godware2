@@ -21,9 +21,6 @@ const Footer = ({ onNavClick }) => {
                 <div className="bg-gradient-to-br from-white/5 to-white/0 border border-white/10 rounded-3xl px-6 py-8 shadow-2xl shadow-white/10 backdrop-blur-2xl flex flex-col lg:flex-row gap-8">
                     <div className="flex-1 space-y-4">
                         <Logo onClick={() => onNavClick('Home')} size="small" />
-                        <h2 className="text-3xl md:text-4xl font-semibold uppercase tracking-[0.4em] text-white">
-                            GOD WEAR
-                        </h2>
                         <p className="text-white/70 leading-relaxed max-w-2xl">
                             {APP_CONFIG.tagline} — {APP_CONFIG.description} Crafted for movement, tuned to performance, and finished in luxe details.
                         </p>
@@ -35,13 +32,13 @@ const Footer = ({ onNavClick }) => {
                                 onClick={() => onNavClick && onNavClick('Contact')}
                                 className="px-6 py-3 rounded-full border border-white/30 bg-gradient-to-r from-gold to-amber-500 text-black font-semibold transition hover:scale-[1.02]"
                             >
-                                Reach the atelier
+                                Contact Us
                             </button>
                             <button
                                 onClick={() => onNavClick && onNavClick('About')}
                                 className="px-6 py-3 rounded-full border border-white/30 text-white font-semibold transition hover:bg-white/10"
                             >
-                                Discover our story
+                                About Us
                             </button>
                         </div>
                     </div>

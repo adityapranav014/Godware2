@@ -43,25 +43,12 @@ const CTASection = ({ onShopClick }) => {
       />
       <div className="absolute inset-0 bg-ink/80" />
       <div className="relative max-w-6xl mx-auto px-4 xl:px-0 text-center space-y-6">
-        <div className="flex justify-center">
-          <span className="accent-pill text-white/80 uppercase tracking-[0.4em]">
-            God Wear Performance Lab
-          </span>
-        </div>
         <h2 className="text-4xl sm:text-5xl lg:text-6xl impact uppercase font-machina">
-          Transform Your Training Journey
+          Ignite Your Potential. Revolutionize Every Workout
         </h2>
-        <div className="inline-flex justify-center">
-          <span className="accent-pill">
-            God Wear
-            <span className="corner-dot corner-dot-tl" />
-            <span className="corner-dot corner-dot-tr" />
-            <span className="corner-dot corner-dot-bl" />
-            <span className="corner-dot corner-dot-br" />
-          </span>
-        </div>
+
         <p className="text-white/70 text-lg max-w-2xl mx-auto font-manrope">
-          Build your edge with gear engineered for athletes who refuse average.
+          Elevate with precision-engineered gear to crush barriers and dominate. Elite athletes trust it for faster gains and zero compromises. Transform now – shop and claim your edge.
         </p>
         <button
           onClick={onShopClick}

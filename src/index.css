@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Space+Grotesk:wght@300..700&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Cookie&display=swap");
+/* Google Fonts are preloaded in index.html for Manrope, Space Grotesk, Cookie, Playfair Display, and Montserrat */
 
 /* Tailwind V4.0 */
 @import "tailwindcss";
@@ -22,6 +20,11 @@
     0 10px 36px rgba(216, 143, 63, 0.18),
     0 0 0 1px rgba(216, 143, 63, 0.25),
     inset 0 40px 70px rgba(255, 244, 233, 0.45);
+  --font-sans: "Manrope", "Space Grotesk", "montreal", sans-serif;
+  --font-display: "Space Grotesk", "impact01", "montreal", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-script: "Cookie", cursive;
+  --font-alt: "Montserrat", sans-serif;
 }
 
 
@@ -30,6 +33,9 @@ body {
   overflow-x: hidden;
   background-color: var(--color-base);
   color: var(--color-text);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv01" 1;
+  font-synthesis: none;
 }
 
 .input-placeholder-visible::placeholder {
@@ -43,38 +49,40 @@ body {
 
 @font-face {
   font-family: "impact01";
-  src: url(/fonts/IMPACT.TTF);
+  src: url("/fonts/IMPACT.TTF") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "montreal";
-  src: url(/fonts/NEUEMONTREAL-REGULAR.OTF);
+  src: url("/fonts/NEUEMONTREAL-REGULAR.OTF") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 .impact {
-  font-family: "Space Grotesk", "impact01", "montreal", sans-serif !important;
+  font-family: var(--font-display) !important;
   letter-spacing: -0.02em;
 }
 
 /* Google Fonts */
-* {
-  font-family: "Manrope", "montreal", sans-serif;
-}
-
 .playfair-display {
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-serif);
   font-weight: 400;
   /* font-style: normal; */
 }
 
 .cookie-font {
-  font-family: "Cookie", cursive;
+  font-family: var(--font-script);
   font-weight: 400;
   font-style: normal;
 }
 
 .montserrat {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--font-alt);
   font-optical-sizing: auto;
   font-style: normal;
 }

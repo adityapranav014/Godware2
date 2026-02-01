@@ -31,6 +31,54 @@ const testimonials = [
     role: "Bodybuilder",
     text: "Stitching, cut, and feel are all premium. Looks sharp in and out of the gym.",
     image: "https://dfdx9u0psdezh.cloudfront.net/testimonials/3039dffc08ff5ef12227dd51.webp"
+  },
+  {
+    name: "Karan Mehta",
+    role: "Functional Athlete",
+    text: "The compression T-shirt locks my torso without choking movement—ideal for long supersets and keeps the midsection warm through every rep.",
+    image: "https://dfdx9u0psdezh.cloudfront.net/testimonials/2a424c3f32e78e318bdc2234.webp"
+  },
+  {
+    name: "Aniket Rao",
+    role: "Marathon Prep Athlete",
+    text: "Runs stay sweat-free thanks to the targeted compression panels. I never look forward to post-run chafing, but this tee keeps me comfortable for miles.",
+    image: "https://dfdx9u0psdezh.cloudfront.net/testimonials/2a424c3f32e78e318bdc2234.webp"
+  },
+  {
+    name: "Devansh Patel",
+    role: "Cross-Training Enthusiast",
+    text: "The compression tee hugs the right places so my form stays locked during plyo drills, yet it's breathable enough for high cadence circuits.",
+    image: "https://dfdx9u0psdezh.cloudfront.net/testimonials/2a424c3f32e78e318bdc2234.webp"
+  },
+  {
+    name: "Nikhil Kapoor",
+    role: "Circuit Racer",
+    text: "I rotate this shirt between the gym and track. The compressive feel keeps my shoulders steady and doesn’t bunch under my race bibs.",
+    image: "https://dfdx9u0psdezh.cloudfront.net/testimonials/2a424c3f32e78e318bdc2234.webp"
+  },
+  {
+    name: "Samar Verma",
+    role: "Weightlifting Coach",
+    text: "Clients keep asking where I got my gear. It stays locked in for every snatch and still feels soft for cool-down stretches.",
+    image: "https://dfdx9u0psdezh.cloudfront.net/testimonials/2a424c3f32e78e318bdc2234.webp"
+  },
+  {
+    name: "Kavya Rao",
+    role: "Fitness Model",
+    text: "Layered under my shoot wardrobe, it never creases or wrinkles, and the compression gives me that sculpted look without stiffness.",
+    image: "https://dfdx9u0psdezh.cloudfront.net/testimonials/2a424c3f32e78e318bdc2234.webp"
+  },
+  {
+    name: "Himanshu Dixit",
+    role: "Trail Runner",
+    text: "Humidity and heat are no match; the tee moves with me yet supports my midsection, perfect for long, off-road days.",
+    image: "https://dfdx9u0psdezh.cloudfront.net/testimonials/2a424c3f32e78e318bdc2234.webp"
+  },
+  {
+    name: "Meera Iyer",
+    role: "Strength Athlete",
+    text: "Compression panels feel like a second skin, especially during partners’ workouts—the stretch keeps me confident while lifting heavy.",
+    image: "https://dfdx9u0psdezh.cloudfront.net/testimonials/2a424c3f32e78e318bdc2234.webp"
   }
 ];
 
@@ -68,7 +116,7 @@ const TestimonialsSection = () => {
         </div>
         <SectionHeader
           title="Athletes Speak"
-          subtitle="Real feedback from daily riders who train with God Wear."
+          subtitle="Tested praise from dedicated athletes who trust God Wear compression tees every day."
           align="center"
           titleClassName="text-white font-machina"
           subtitleClassName="text-white/70 font-manrope"

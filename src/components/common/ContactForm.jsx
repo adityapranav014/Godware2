@@ -1,8 +1,3 @@
-/**
- * ContactForm component
- * Redesigned layout to match Godware's premium UI
- */
-
 import { useState } from 'react';
 import { Clock3, Send, ShieldCheck, Sparkles } from 'lucide-react';
 import { Input } from '../ui';
@@ -107,7 +102,7 @@ const ContactForm = () => {
                   className="flex flex-col gap-1 rounded-2xl border border-white/10 bg-white/5 p-3 text-white/70"
                 >
                   <div className="flex items-center gap-2 text-white">
-                    <Icon size={16} />
+                    <Icon size={18} className="text-white" />
                     <p className="text-sm font-semibold font-manrope">{fact.label}</p>
                   </div>
                   <p className="text-xs leading-tight text-white/60 font-manrope">
@@ -181,9 +176,6 @@ const ContactForm = () => {
           </button>
         </div>
 
-        <p className="text-center text-[11px] uppercase tracking-[0.4em] text-white/50 font-manrope">
-          Godware responds within 3 hours via WhatsApp.
-        </p>
       </form>
     </div>
   );

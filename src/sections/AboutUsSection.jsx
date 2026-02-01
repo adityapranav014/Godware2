@@ -88,7 +88,7 @@ const AboutUsSection = () => {
                 <div ref={headerRef} className="text-center mb-10 sm:mb-12 lg:mb-16 space-y-4">
                     <div className="flex justify-center">
                         <span className="accent-pill font-manrope">
-                            Our Story
+                            About
                             <span className="corner-dot corner-dot-tl" />
                             <span className="corner-dot corner-dot-tr" />
                             <span className="corner-dot corner-dot-bl" />
@@ -96,7 +96,7 @@ const AboutUsSection = () => {
                         </span>
                     </div>
                     <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl impact uppercase text-white mb-4 font-machina">
-                        About Us
+                        Our Story
                     </h2>
                     <p className="text-base sm:text-lg text-white/70 max-w-2xl mx-auto font-manrope">
                         We're redefining athletic wear. Built for champions who demand excellence in every rep, every set, every day.

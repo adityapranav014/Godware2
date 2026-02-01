@@ -94,6 +94,15 @@ const CategorySection = () => {
   return (
     <Section background="dark" padding="large" className="text-white" sectionRef={sectionRef}>
       <div className="space-y-12">
+        <div className="flex justify-center">
+          <span className="accent-pill uppercase tracking-[0.4em] text-white/70">
+            Shop
+            <span className="corner-dot corner-dot-tl" />
+            <span className="corner-dot corner-dot-tr" />
+            <span className="corner-dot corner-dot-bl" />
+            <span className="corner-dot corner-dot-br" />
+          </span>
+        </div>
         <div ref={headerRef}>
           <SectionHeader
             title="Compression T-Shirts"

@@ -166,19 +166,19 @@ const CategorySection = () => {
           ))}
         </div>
 
-        <div ref={featuresRef} className="grid gap-6 md:grid-cols-3">
+        <div ref={featuresRef} className="grid gap-6 lg:grid-cols-3">
           {featureHighlights.map((feature) => (
             <div
               key={feature.title}
-              className="rounded-[32px] border border-white/10 bg-gradient-to-b from-black/80 via-black/60 to-black/90 p-6 text-white shadow-[0_30px_70px_rgba(0,0,0,0.55)]"
+              className="bg-subtle rounded-3xl text-ink h-full lg:col-span-1 p-6 sm:p-8 "
             >
-              <div className={`inline-flex items-center justify-center rounded-2xl bg-gradient-to-r ${feature.accent} p-3 shadow-[0_25px_60px_rgba(0,0,0,0.65)]`}>
-                <feature.icon size={22} />
+              <div className={`inline-flex items-center justify-center rounded-2xl bg-gradient-to-r ${feature.accent} p-3`}>
+                <feature.icon size={22} aria-hidden="true" />
               </div>
-              <h3 className="mt-5 text-2xl uppercase tracking-[0.2em] text-white font-machina">
+              <h3 className="mt-5 text-2xl uppercase tracking-[0.2em] text-accent font-machina">
                 {feature.title}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/70 font-manrope">
+              <p className="mt-3 text-sm sm:text-base text-muted font-manrope">
                 {feature.copy}
               </p>
             </div>

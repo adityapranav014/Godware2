@@ -115,8 +115,8 @@ const TestimonialsSection = () => {
           </span>
         </div>
         <SectionHeader
-          title="Athletes Speak"
-          subtitle="Tested praise from dedicated athletes who trust God Wear compression tees every day."
+          title="Proven By Athletes"
+          subtitle="Real voices. Real results. Hear from those who train relentlessly and trust God Wear."
           align="center"
           titleClassName="text-white font-machina"
           subtitleClassName="text-white/70 font-manrope"

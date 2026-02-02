@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Section from "../components/layout/Section";
+import SectionHeader from "../components/layout/SectionHeader";
 import { Video } from '@imagekit/react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -86,7 +87,7 @@ const AboutUsSection = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 xl:px-0">
 
                 {/* Header */}
-                <div ref={headerRef} className="text-center mb-10 sm:mb-12 lg:mb-16 space-y-4">
+                <div ref={headerRef} className="mb-10 sm:mb-12 lg:mb-16 space-y-4">
                     <div className="flex justify-center">
                         <span className="accent-pill font-manrope">
                             About
@@ -96,12 +97,13 @@ const AboutUsSection = () => {
                             <span className="corner-dot corner-dot-br" />
                         </span>
                     </div>
-                    <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl impact uppercase text-white mb-4 font-machina">
-                        Our Story
-                    </h2>
-                    <p className="text-base sm:text-lg text-white/70 max-w-2xl mx-auto font-manrope">
-                        We're redefining athletic wear. Built for champions who demand excellence in every rep, every set, every day.
-                    </p>
+                    <SectionHeader
+                        title="Built for Warriors"
+                        subtitle="Born from discipline and driven by performance. God Wear delivers premium athletic wear that moves as relentlessly as you do."
+                        align="center"
+                        titleClassName="text-white font-machina"
+                        subtitleClassName="text-white/70 font-manrope"
+                    />
                 </div>
 
                 {/* Content */}

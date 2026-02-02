@@ -80,7 +80,7 @@ const ComparisonSection = () => {
         </div>
         <SectionHeader
           title="Why God Wear"
-          subtitle="Precision performance gear for athletes who demand more from every set."
+          subtitle="Because performance demands more than ordinary it demands precision, power, and purpose."
           align="center"
           titleClassName="text-white font-machina"
           subtitleClassName="text-white/70 font-manrope"

@@ -108,7 +108,7 @@ const CategorySection = () => {
         <div ref={headerRef}>
           <SectionHeader
             title="Compression T-Shirts"
-            subtitle="Engineered for athletes who train with intent—sculpted fit, steady support, and fearless style."
+            subtitle="Your second layer of skin, 4-way stretch, muscle support, and moisture control for peak performance."
             align="center"
             titleClassName="text-white font-machina"
             subtitleClassName="text-white/70 font-manrope"

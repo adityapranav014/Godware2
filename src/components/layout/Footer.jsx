@@ -15,13 +15,13 @@ const Footer = ({ onNavClick }) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-black text-white overflow-hidden pt-24">
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 pb-16 space-y-12">
+    <footer className="relative bg-black text-white overflow-hidden pt-32 pb-8">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 space-y-20">
         {/* Front hero */}
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="flex-1 space-y-4">
+        <div className="flex flex-col lg:flex-row gap-10">
+          <div className="flex-1 space-y-6">
             <Logo onClick={() => onNavClick("Home")} size="small" />
-            <p className="text-white/70 leading-relaxed max-w-2xl">
+            <p className="text-white/60 leading-relaxed max-w-xl text-sm">
               Premium fitness and lifestyle brand for those who train with
               discipline and live with confidence, built with powerful
               compression, bold design, and lasting comfort.
@@ -30,28 +30,19 @@ const Footer = ({ onNavClick }) => {
         </div>
 
         {/* Link grid */}
-        <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr_1fr]">
-          <div className="space-y-6">
-            <div className="text-sm uppercase tracking-[0.4em] text-white/60">
+        <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr]">
+
+          {/* Connect */}
+          <div className="space-y-5">
+            <p className="text-xs uppercase tracking-[0.2em] text-white/50 mb-6">
               Connect
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {[CONTACT_INFO.email, CONTACT_INFO.phone].map((item, index) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-3 rounded-2xl"
-                >
-                  {index === 0 ? <Mail size={16} /> : <Phone size={16} />}
-                  <span className="text-sm text-white/80">{item}</span>
-                </div>
-              ))}
-            </div>
+            </p>
             <div className="flex items-center gap-4">
               <a
                 href={SOCIAL_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white/10 rounded-2xl transition hover:bg-white/20"
+                className="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"
                 aria-label="Instagram"
               >
                 <Instagram size={18} />
@@ -60,46 +51,59 @@ const Footer = ({ onNavClick }) => {
                 href={`https://wa.me/${CONTACT_INFO.whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-white/10 rounded-2xl transition hover:bg-green-500/40"
+                className="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"
                 aria-label="WhatsApp"
               >
                 <MessageCircle size={18} />
               </a>
               <a
                 href={`mailto:${CONTACT_INFO.email}`}
-                className="p-3 bg-white/10 rounded-2xl transition hover:bg-white/20"
+                className="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"
                 aria-label="Email"
               >
                 <Mail size={18} />
               </a>
+              <a
+                href={`tel:${CONTACT_INFO.phone.replace(/\s|-/g, '')}`}
+                className="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"
+                aria-label="Phone"
+              >
+                <Phone size={18} />
+              </a>
+            </div>
+            <div className="space-y-1.5 text-sm text-white/40 font-light">
+              <p>{CONTACT_INFO.email}</p>
+              <p>{CONTACT_INFO.phone}</p>
             </div>
           </div>
 
-          <div>
-            <p className="text-sm uppercase tracking-widest text-white/60 mb-4">
+          {/* Shop */}
+          <div className="space-y-5">
+            <p className="text-xs uppercase tracking-[0.2em] text-white/50 mb-6">
               Shop
             </p>
             <button
               onClick={() => onNavClick && onNavClick("Shop")}
-              className="flex items-center gap-2 text-white/70 text-sm transition hover:text-white"
+              className="flex items-center gap-2.5 text-white/50 text-sm transition-colors duration-200 hover:text-white"
             >
-              <span className="w-2 h-2 rounded-full bg-white/40" />
+              <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
               Compression T-Shirts
             </button>
           </div>
 
-          <div>
-            <p className="text-sm uppercase tracking-widest text-white/60 mb-4">
+          {/* Company */}
+          <div className="space-y-5">
+            <p className="text-xs uppercase tracking-[0.2em] text-white/50 mb-6">
               Company
             </p>
-            <ul className="space-y-3 text-white/70 text-sm">
+            <ul className="space-y-3 text-white/50 text-sm">
               {NAV_LINKS.map((link) => (
                 <li key={link.id}>
                   <button
                     onClick={() => onNavClick && onNavClick(link.name)}
-                    className="flex items-center gap-2 hover:text-white transition"
+                    className="flex items-center gap-2.5 hover:text-white transition-colors duration-200"
                   >
-                    <span className="w-2 h-2 rounded-full bg-white/40" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
                     {link.name}
                   </button>
                 </li>
@@ -109,11 +113,11 @@ const Footer = ({ onNavClick }) => {
         </div>
 
         {/* Footer base */}
-        <div className="border-t border-white/10 pt-6">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-sm text-white/60">
+        <div className="border-t border-white/10 pt-10">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-xs text-white/40">
             <p>© {currentYear} GOD WEAR. All rights reserved.</p>
             <div className="flex items-center gap-2">
-              <Heart size={16} className="text-red-500" />
+              <Heart size={14} className="text-red-500" />
               Crafted with intention.
             </div>
 

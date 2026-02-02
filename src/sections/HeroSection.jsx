@@ -47,7 +47,7 @@ const HeroSection = ({ onShopClick }) => {
           </div>
 
           <div className="flex flex-col items-center justify-center gap-4 w-full mt-21 md:mt-52">
-            <div className="w-full border border-white/20 bg-black/50 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.55)] backdrop-blur-[20px] relative overflow-hidden aspect-[9/16] md:aspect-video">
+            <div className="w-full border border-white/20 rounded-3xl relative overflow-hidden aspect-[9/16] md:aspect-video">
               <Video
                 urlEndpoint="https://ik.imagekit.io/fr3yiiin6"
                 src="/video/hero.mp4"

@@ -11,7 +11,7 @@ const Contact = () => {
         </div>
 
         <SectionHeader
-          title="Share your support, bulk, or corporate order needs"
+          title="Share your bulk, or corporate order needs"
           subtitle="Send us your requirements for custom and on-demand solutions; we reply within three hours."
           align="center"
           titleClassName="text-white font-machina text-3xl sm:text-[2.75rem] md:text-[3.25rem] leading-snug"

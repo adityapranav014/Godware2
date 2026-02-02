@@ -1,50 +1,3 @@
-const navLinksData = [
-  {
-    isActive: false,
-    name: "Home",
-  },
-  {
-    isActive: false,
-    name: "Shop",
-  },
-  {
-    isActive: false,
-    name: "About",
-  },
-  {
-    isActive: false,
-    name: "Contact",
-  },
-];
-
-const filterButtonsData = [
-  {
-    name: "All",
-    count: 2,
-    isActive: true,
-  },
-  {
-    name: "T-Shirts",
-    count: 2,
-    isActive: false,
-  },
-  {
-    name: "Shorts",
-    count: 0,
-    isActive: false,
-  },
-  {
-    name: "Trousers",
-    count: 0,
-    isActive: false,
-  },
-  {
-    name: "Accessories",
-    count: 0,
-    isActive: false,
-  },
-];
-
 const productData = [
   {
     name: "T-Shirts",
@@ -75,36 +28,7 @@ const productData = [
   },
 ];
 
-const productLinksData = [
-  {
-    title: "Product",
-    links: ["Menswear", "Womenswear",],
-  },
-];
-const buyingLinksData = [
-  {
-    title: "Buying",
-    links: [
-      "Shipping",
-      "Returns",
-      "Terms of Use",
-      "Privacy Policy",
-      "Customer Service",
-    ],
-  },
-];
-const socialLinksData = [
-  {
-    title: "Social",
-    links: ["Instagram", "Facebook", "Twitter"],
-  },
-];
 
 export {
-  navLinksData,
-  filterButtonsData,
   productData,
-  socialLinksData,
-  buyingLinksData,
-  productLinksData,
 };

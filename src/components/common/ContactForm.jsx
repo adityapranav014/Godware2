@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Clock3, Send, ShieldCheck, Sparkles } from 'lucide-react';
+import { Clock3, ShieldCheck, Sparkles } from 'lucide-react';
 import { Input } from '../ui';
 import { sendWhatsAppMessage, validateContactForm } from '../../utils';
 
@@ -120,7 +120,7 @@ const ContactForm = () => {
           <Input
             type="text"
             name="name"
-            autocomplete="on" 
+            autocomplete="on"
             value={formData.name}
             onChange={handleChange}
             placeholder="Full Name *"
@@ -131,7 +131,7 @@ const ContactForm = () => {
           <Input
             type="email"
             name="email"
-            autocomplete="on" 
+            autocomplete="on"
             value={formData.email}
             onChange={handleChange}
             placeholder="Email Address *"
@@ -144,7 +144,7 @@ const ContactForm = () => {
         <Input
           type="tel"
           name="phone"
-          autocomplete="on" 
+          autocomplete="on"
           value={formData.phone}
           onChange={handleChange}
           placeholder="Phone Number (Optional)"

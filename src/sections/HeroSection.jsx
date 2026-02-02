@@ -63,7 +63,7 @@ const HeroSection = ({ onShopClick }) => {
         </div>
       </section>
       <div className="absolute inset-x-0 lg:-top-40 h-[165vh] overflow-hidden">
-        <img class="block md:hidden brightness-125 scale-150 h-[80vh] sm:h-[90vh] md:h-[165vh] object-center"
+        <img className="block md:hidden brightness-125 scale-150 h-[80vh] sm:h-[90vh] md:h-[165vh] object-center"
           alt="bg mobile"
           src="https://dfdx9u0psdezh.cloudfront.net/common/Background_mobile.svg" />
 

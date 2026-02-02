@@ -121,15 +121,15 @@ const ContactInfo = () => {
       <div className="bg-subtle rounded-3xl p-8 border border-stroke">
         <h3 className="text-xl font-bold mb-4 text-ink font-machina">Business Hours</h3>
         <div className="space-y-2 text-muted font-manrope">
-          <p className="flex justify-between">
+          <p className="flex flex-col sm:flex-row sm:justify-between">
             <span>Monday - Friday</span>
             <span className="font-semibold">9:00 AM - 8:00 PM</span>
           </p>
-          <p className="flex justify-between">
+          <p className="flex flex-col sm:flex-row sm:justify-between">
             <span>Saturday</span>
             <span className="font-semibold">10:00 AM - 6:00 PM</span>
           </p>
-          <p className="flex justify-between">
+          <p className="flex flex-col sm:flex-row sm:justify-between">
             <span>Sunday</span>
             <span className="font-semibold">Closed</span>
           </p>

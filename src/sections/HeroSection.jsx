@@ -14,7 +14,7 @@ const HeroSection = ({ onShopClick }) => {
               <h1 className="capitalize impact">
                 Elevate Your
                 <span className="relative mx-2 inline-flex items-center">
-                  <span className="relative z-10 px-2 font-machina pt-[0.05rem] text-white/90 bg-[#E8602E21] border border-[#E8602E] uppercase">
+                  <span className="relative z-10 px-2 font-machina pt-[0.05rem] text-white/90 bg-[#E8602E21] border border-[#E8602E]">
                     Performance
                     <span className="absolute -left-2 -top-2 h-1 w-1 bg-white" />
                     <span className="absolute -right-2 -top-2 h-1 w-1 bg-white" />
@@ -62,15 +62,13 @@ const HeroSection = ({ onShopClick }) => {
           </div>
         </div>
       </section>
-      <div className="absolute inset-x-0 -top-40 h-[165vh] overflow-hidden">
-        <img
-          className="block lg:hidden absolute inset-0 brightness-75 saturate-125 contrast-110 scale-150 h-full w-full object-cover"
+      <div className="absolute inset-x-0 lg:-top-40 h-[165vh] overflow-hidden">
+        <img class="block md:hidden brightness-125 scale-150 h-[80vh] sm:h-[90vh] md:h-[165vh] object-center"
           alt="bg mobile"
-          src="https://dfdx9u0psdezh.cloudfront.net/common/Background_mobile.svg"
-        />
+          src="https://dfdx9u0psdezh.cloudfront.net/common/Background_mobile.svg" />
 
         <img
-          className="hidden lg:block absolute inset-0 brightness-80 saturate-120 contrast-110 scale-110 h-full w-full object-cover object-[60%_60%]"
+          className="hidden lg:block absolute top-0 inset-0 brightness-50 saturate-120 contrast-125 scale-150 h-full w-full object-cover"
           alt="bg desktop"
           src="https://dfdx9u0psdezh.cloudfront.net/common/Background.svg"
         />

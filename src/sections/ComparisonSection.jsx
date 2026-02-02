@@ -89,7 +89,7 @@ const ComparisonSection = () => {
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-3xl border border-white/15 bg-gradient-to-br from-[#050505]/80 to-[#0a0a0a]/80 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
             <div className="flex items-center justify-center gap-3 mb-8">
-              <span className="impact text-3xl uppercase text-accent font-machina">God Wear</span>
+              <span className="impact text-3xl uppercase text-gold font-machina">God Wear</span>
             </div>
             <div className="space-y-5">
               {godWearPoints.map((item, index) => (

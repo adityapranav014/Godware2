@@ -42,9 +42,9 @@ const ContactInfo = () => {
     <div className="space-y-8">
 
       {/* Business Hours */}
-      <div className="bg-subtle rounded-3xl p-8 border border-stroke">
-        <h3 className="text-xl font-bold mb-4 text-ink font-machina">Business Hours</h3>
-        <div className="space-y-2 text-muted font-manrope">
+      <div className="bg-black rounded-3xl p-8 text-white ">
+        <h3 className="text-xl font-bold mb-6 font-machina">Business Hours</h3>
+        <div className="space-y-2 text-white/70 font-manrope">
           <p className="flex flex-col sm:flex-row sm:justify-between">
             <span>Monday - Friday</span>
             <span className="font-semibold">9:00 AM - 8:00 PM</span>
@@ -61,7 +61,7 @@ const ContactInfo = () => {
       </div>
 
       {/* Reach Us Card */}
-      <div className="bg-black rounded-3xl p-8 text-white border border-stroke">
+      <div className="bg-black rounded-3xl p-8 text-white ">
         <h3 className="text-xl font-bold mb-6 font-machina">Reach Us</h3>
         <div className="flex flex-wrap gap-4">
           {[
@@ -105,8 +105,6 @@ const ContactInfo = () => {
           })}
         </div>
       </div>
-
-
     </div>
   );
 };

@@ -16,7 +16,7 @@ const Input = ({
   error = null
 }) => {
   const baseClasses =
-    'input-placeholder-visible w-full px-4 py-3 border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/20';
+    'w-full px-4 py-3 border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/20';
   const stateClasses = error
     ? 'border-red-500 focus:border-red-500'
     : 'border-stroke focus:border-gold';

@@ -84,7 +84,7 @@ const ContactForm = () => {
             placeholder="Full Name *"
             required
             error={errors.name}
-            className="bg-black/40 border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px]"
+            className="bg-black border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px]"
           />
           <Input
             type="email"
@@ -95,7 +95,7 @@ const ContactForm = () => {
             placeholder="Email Address *"
             required
             error={errors.email}
-            className="bg-black/40 border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px]"
+            className="bg-black border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px]"
           />
         </div>
 
@@ -106,7 +106,7 @@ const ContactForm = () => {
           value={formData.phone}
           onChange={handleChange}
           placeholder="Phone Number (Optional)"
-          className="bg-black/40 border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px]"
+          className="bg-black border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px]"
         />
 
         <Input
@@ -118,7 +118,7 @@ const ContactForm = () => {
           required
           rows={6}
           error={errors.message}
-          className="bg-black/40 border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px] min-h-[170px]"
+          className="bg-black border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px] min-h-[170px]"
         />
 
         <div className="flex justify-center">

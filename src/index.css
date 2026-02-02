@@ -38,14 +38,6 @@ body {
   font-synthesis: none;
 }
 
-.input-placeholder-visible::placeholder {
-  color: rgba(255, 255, 255, 0.75);
-  opacity: 1;
-}
-
-/* FONTS */
-
-/* Custom Fonts */
 
 @font-face {
   font-family: "impact01";

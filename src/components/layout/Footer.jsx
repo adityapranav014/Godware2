@@ -15,17 +15,10 @@ const Footer = ({ onNavClick }) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-[#030304] text-white overflow-hidden pt-24">
-      {/* Radiant backdrop */}
-      <div className="pointer-events-none absolute inset-0 opacity-60">
-        <div className="absolute inset-y-8 left-10 w-72 h-72 rounded-full bg-[#e8603d] blur-3xl animate-pulse" />
-        <div className="absolute -top-6 right-4 w-72 h-72 rounded-full bg-[#3c9ee5] blur-3xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_55%)]" />
-      </div>
-
+    <footer className="relative bg-black text-white overflow-hidden pt-24">
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 pb-16 space-y-12">
         {/* Front hero */}
-        <div className="bg-gradient-to-br from-white/5 to-white/0 border border-white/10 rounded-3xl px-6 py-8 shadow-2xl shadow-white/10 backdrop-blur-2xl flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-1 space-y-4">
             <Logo onClick={() => onNavClick("Home")} size="small" />
             <p className="text-white/70 leading-relaxed max-w-2xl">
@@ -42,9 +35,6 @@ const Footer = ({ onNavClick }) => {
             <div className="text-sm uppercase tracking-[0.4em] text-white/60">
               Connect
             </div>
-            <p className="text-white/80 text-lg leading-relaxed">
-              Share your volumes, timeline, and special requirements, and we will craft a custom on-demand solution that keeps your team moving without compromising lead time.
-            </p>
             <div className="flex flex-wrap gap-3">
               {[CONTACT_INFO.email, CONTACT_INFO.phone].map((item, index) => (
                 <div
@@ -126,15 +116,6 @@ const Footer = ({ onNavClick }) => {
               <Heart size={16} className="text-red-500" />
               Crafted with intention.
             </div>
-            {/* <a
-                            href={APP_CONFIG.developer.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-white/70 hover:text-white transition"
-                        >
-                            <Sparkles size={16} />
-                            {APP_CONFIG.developer.name}
-                        </a> */}
 
             <div className="relative group">
               {/* Glow Effect on Hover */}

@@ -48,7 +48,7 @@ const CTASection = ({ onShopClick }) => {
         </h2>
 
         <p className="text-white/70 text-lg max-w-2xl mx-auto font-manrope">
-          Elevate with precision-engineered gear to crush barriers and dominate. Elite athletes trust it for faster gains and zero compromises. Transform now – shop and claim your edge.
+          Experience gear that transforms discipline into dominance—shop now and feel the difference.
         </p>
         <button
           onClick={onShopClick}

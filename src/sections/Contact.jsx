@@ -5,7 +5,7 @@ import { Sparkles } from 'lucide-react';
 
 const Contact = () => {
   return (
-    <Section background="dark" padding="large" className="relative overflow-hidden">
+    <Section padding="large" className="relative overflow-hidden bg-[#050505]">
       <div className="relative mx-auto max-w-5xl space-y-8 px-4 sm:px-6">
         <div className="flex justify-center">
           <span className="accent-pill uppercase tracking-widest text-white/70">Contact</span>
@@ -19,10 +19,10 @@ const Contact = () => {
           subtitleClassName="text-white/70 font-manrope text-base sm:text-lg max-w-3xl mx-auto"
         />
 
-        <div className="relative rounded-[36px] border border-white/10 bg-black/60 p-4 sm:p-6 shadow-[0_40px_90px_rgba(0,0,0,0.55)]">
+        <div className="relative rounded-[36px] bg-black/60 p-4 sm:p-6">
           <div className="relative space-y-6">
 
-            <div className="rounded-[32px] border border-white/10 bg-white/5 p-5 sm:p-6">
+            <div className="rounded-[32px] bg-white/5 p-5 sm:p-6">
               <div className="relative space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-4 ">
                   <div>
@@ -37,10 +37,10 @@ const Contact = () => {
             </div>
 
             <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-              <div className="rounded-[32px] border border-white/10 bg-white/5 p-5 sm:p-6">
+              <div className="rounded-[32px] bg-white/5 p-5 sm:p-6">
                 <ContactInfo />
               </div>
-              <div className="rounded-[32px] border border-white/10 bg-white/5 p-5 sm:p-6">
+              <div className="rounded-[32px] bg-white/5 p-5 sm:p-6">
                 <ContactForm />
               </div>
             </div>

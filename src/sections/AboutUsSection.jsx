@@ -111,7 +111,7 @@ const AboutUsSection = () => {
                     <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-6 items-center'>
 
                         {/* Left Image Col */}
-                        <div ref={imageRef} className='relative h-[360px] sm:h-[440px] lg:h-[620px]  border border-white/10 rounded-3xl overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.5)]'>
+                        <div ref={imageRef} className='relative h-[360px] sm:h-[440px] lg:h-[620px] rounded-3xl overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.5)]'>
 
                             {/* Image Placeholder */}
                             <div className='size-full 
@@ -129,11 +129,11 @@ const AboutUsSection = () => {
                         </div>
 
                         {/* Right Text Col */}
-                        <div ref={contentRef} className='space-y-8 bg-subtle rounded-3xl text-ink
+                        <div ref={contentRef} className='space-y-8 bg-[#050505] rounded-3xl
                 h-full lg:col-span-2 flex flex-col justify-between p-6 sm:p-8 lg:p-14'>
 
                             {/* Heading */}
-                            <h2 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl impact text-accent font-machina
+                            <h2 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl impact font-machina
                     leading-tight mb-4 uppercase'>
                                 We'Re changing <br />
                                 The Way things <br />
@@ -142,7 +142,7 @@ const AboutUsSection = () => {
 
 
                             {/* Two Small Feature Items */}
-                            <div className='grid lg:grid-cols-2 gap-6 border-t border-accent pt-6'>
+                            <div className='grid lg:grid-cols-2 gap-6 border-t border-white/10 pt-6'>
 
                                 {/* Feature Item 1 */}
                                 <div className='about-feature flex items-start space-x-3'>
@@ -151,10 +151,10 @@ const AboutUsSection = () => {
                                         <Zap size={18} className="text-white" />
                                     </div>
                                     <div>
-                                        <h3 className="text-ink text-base sm:text-lg uppercase font-bold mb-1 font-manrope">
+                                        <h3 className="sm:text-lg uppercase font-bold mb-1 font-manrope text-white/80">
                                             SUSTAINABILITY
                                         </h3>
-                                        <p className="text-sm sm:text-base text-muted font-manrope">
+                                        <p className="text-sm  font-manrope text-white/70">
                                             Working alongside international groups of  athletes,
                                             we create high-performance gym wear from premium materials.
                                         </p>
@@ -168,10 +168,10 @@ const AboutUsSection = () => {
                                         <Landmark size={18} className="text-white" />
                                     </div>
                                     <div>
-                                        <h3 className="text-ink text-base sm:text-lg uppercase font-bold mb-1 font-manrope">
+                                        <h3 className="sm:text-lg uppercase font-bold mb-1 font-manrope text-white/80">
                                             MISSION
                                         </h3>
-                                        <p className="text-sm sm:text-base text-muted font-manrope">
+                                        <p className="text-sm font-manrope text-white/70">
                                             We're on a mission to empower people to push their limits
                                             and achieve their fitness goals with confidence and style.
                                         </p>

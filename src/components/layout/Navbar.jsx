@@ -55,10 +55,7 @@ const Navbar = ({ activeSection, onNavClick }) => {
           }`}
       >
         <div className="flex min-h-full flex-col">
-          <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
-            <div className="text-xl impact tracking-tight text-gold">
-              GOD WEAR <sup>®</sup>
-            </div>
+          <div className="flex items-center justify-end px-6 py-5">
             <button
               onClick={closeMenu}
               className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"

@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Activity, Droplets, ShieldCheck } from "lucide-react";
 import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
 import { productData } from "../assets/data";
@@ -11,32 +10,11 @@ import { Video } from '@imagekit/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const featureHighlights = [
-  {
-    title: "Breathable Mesh",
-    copy: "Airflow panels keep your core temperature balanced during every rep.",
-    icon: Activity,
-    accent: "from-[#22d3ee] to-[#0b3d5b]"
-  },
-  {
-    title: "Compression Support",
-    copy: "Precision cuts lock you in so fatigue stays low and focus stays high.",
-    icon: ShieldCheck,
-    accent: "from-[#f97316] to-[#7c2d12]"
-  },
-  {
-    title: "Sweat-Ready Fabric",
-    copy: "Quick-dry yarns stay light, breathable, and odor-free even after brutal sessions.",
-    icon: Droplets,
-    accent: "from-[#e8602e] to-[#311f0d]"
-  }
-];
 
 const CategorySection = () => {
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const gridRef = useRef(null);
-  const featuresRef = useRef(null);
 
   useGSAP(() => {
     if (!sectionRef.current) return;
@@ -70,23 +48,6 @@ const CategorySection = () => {
           scrollTrigger: {
             trigger: gridRef.current,
             start: "top 80%"
-          }
-        }
-      );
-    }
-
-    if (featuresRef.current) {
-      gsap.fromTo(
-        featuresRef.current,
-        { y: 20, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: featuresRef.current,
-            start: "top 85%"
           }
         }
       );
@@ -163,25 +124,6 @@ const CategorySection = () => {
                 </div>
               </div>
             </a>
-          ))}
-        </div>
-
-        <div ref={featuresRef} className="grid gap-6 lg:grid-cols-3">
-          {featureHighlights.map((feature) => (
-            <div
-              key={feature.title}
-              className="testimonial-card rounded-3xl not-even:h-full lg:col-span-1 p-6 sm:p-8 "
-            >
-              <div className={`inline-flex items-center justify-center rounded-2xl bg-gradient-to-r ${feature.accent} p-3`}>
-                <feature.icon size={22} aria-hidden="true" />
-              </div>
-              <h3 className="mt-5 text-lg font-semibold text-white font-manrope">
-                {feature.title}
-              </h3>
-              <p className="mt-3 text-white/80 text-lg leading-relaxed font-manrope">
-                {feature.copy}
-              </p>
-            </div>
           ))}
         </div>
       </div>

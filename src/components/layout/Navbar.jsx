@@ -28,9 +28,9 @@ const Navbar = ({ activeSection, onNavClick }) => {
               <button
                 key={link.name}
                 onClick={() => onNavClick(link.name)}
-                className={`py-2.5 px-4 rounded-full transition-all duration-200 ${activeSection === link.name
-                  ? "bg-accent text-white"
-                  : "bg-transparent text-white/70 hover:bg-accent hover:text-white"
+                className={`py-2.5 px-4 transition-all duration-200 cursor-pointer ${activeSection === link.name
+                  ? "text-accent"
+                  : " text-white/60 hover:text-accent/90"
                   }`}
               >
                 {link.name}

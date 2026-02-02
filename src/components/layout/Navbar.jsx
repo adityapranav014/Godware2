@@ -1,5 +1,5 @@
-import { Menu, X, Mail, Phone, MessageCircle } from "lucide-react";
-import { NAV_LINKS, CONTACT_INFO } from "../../constants";
+import { Menu, X, } from "lucide-react";
+import { NAV_LINKS } from "../../constants";
 import { useMobileMenu } from "../../hooks";
 
 const Navbar = ({ activeSection, onNavClick }) => {
@@ -51,43 +51,24 @@ const Navbar = ({ activeSection, onNavClick }) => {
       </div>
 
       <div
-        className={`fixed inset-0 bg-black/60 z-50 md:hidden transition-opacity duration-200 ${isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
-        onClick={closeMenu}
-      />
-      <div
-        className={`fixed top-0 right-0 h-full w-[85%] max-w-sm z-50 md:hidden transform transition-transform duration-300 ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed inset-0 bg-black z-50 md:hidden transition-opacity duration-300 ${isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
       >
-        <div className="flex min-h-full flex-col bg-gradient-to-b from-[#050505] via-[#0f0b11] to-[#050505] border-l border-white/5">
-          <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
-            <button
-              onClick={() => {
-                onNavClick("Home");
-                closeMenu();
-              }}
-              className="flex items-center gap-3 cursor-pointer transition hover:opacity-80"
-            >
-              <img
-                src={`${import.meta.env.BASE_URL}images/logo.webp`}
-                alt="GOD WEAR"
-                className="h-9 w-auto object-contain"
-              />
-              <div>
-                <span className="text-lg impact tracking-tight text-gold block">GOD WEAR</span>
-                <p className="text-xs tracking-[0.4em] uppercase text-white/50">crafted power</p>
-              </div>
-            </button>
+        <div className="flex min-h-full flex-col">
+          <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+            <div className="text-xl impact tracking-tight text-gold">
+              GOD WEAR <sup>®</sup>
+            </div>
             <button
               onClick={closeMenu}
-              className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition"
+              className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
               aria-label="Close menu"
             >
-              <X size={24} className="text-white/80" />
+              <X size={24} className="text-white" />
             </button>
           </div>
 
-          <nav className="flex-1 overflow-y-auto px-6 py-6 space-y-5">
+          <nav className="flex-1 flex flex-col justify-center items-center px-6 py-12 space-y-8">
             {NAV_LINKS.map((link) => (
               <button
                 key={link.name}
@@ -95,46 +76,16 @@ const Navbar = ({ activeSection, onNavClick }) => {
                   onNavClick(link.name);
                   closeMenu();
                 }}
-                className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-left text-lg font-semibold text-white/80 transition-all duration-200 hover:border-accent hover:text-white"
+                className={`text-center text-3xl transition-all duration-200 ${activeSection === link.name
+                  ? "text-accent"
+                  : "text-white/60 hover:text-white"
+                  }`}
               >
-                <div className="flex items-center justify-between">
-                  <span>{link.name}</span>
-                  {activeSection === link.name && (
-                    <div className="w-2 h-2 rounded-full bg-white"></div>
-                  )}
-                </div>
+                {link.name}
               </button>
             ))}
           </nav>
 
-          <div className="px-6 pb-10 space-y-3">
-            <p className="font-semibold text-sm uppercase tracking-widest text-white/70">Connect</p>
-            <div className="grid grid-cols-3 gap-3">
-              <a
-                href={`https://wa.me/${CONTACT_INFO.whatsappNumber}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center rounded-2xl border border-white/10 bg-green-500/90 p-3 text-white transition hover:scale-[1.02]"
-                aria-label="WhatsApp"
-              >
-                <MessageCircle size={20} />
-              </a>
-              <a
-                href={`tel:${CONTACT_INFO.phone.replace(/\s|-/g, "")}`}
-                className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-3 text-white transition hover:border-accent hover:scale-[1.02]"
-                aria-label="Call"
-              >
-                <Phone size={20} />
-              </a>
-              <a
-                href={`mailto:${CONTACT_INFO.email}`}
-                className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-3 text-white transition hover:border-accent hover:scale-[1.02]"
-                aria-label="Email"
-              >
-                <Mail size={20} />
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </header>

@@ -72,48 +72,6 @@ const ContactForm = () => {
 
   return (
     <div className="space-y-6">
-      <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-[#0f0f0f] via-[#080808] to-[#050505] p-6 shadow-[0_35px_80px_rgba(0,0,0,0.55)]">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -right-6 top-4 h-24 w-24 rounded-full bg-amber-500/30 blur-[80px]" />
-          <div className="absolute -left-4 bottom-10 h-28 w-28 rounded-full bg-cyan-400/25 blur-[80px]" />
-        </div>
-
-        <div className="relative space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.5em] text-white/60 font-machina">Inquiry</p>
-              <h3 className="text-2xl font-semibold text-white font-machina">Start the conversation</h3>
-            </div>
-            <div className="flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs text-white/80">
-              <Sparkles size={14} />
-              <span>3-hour reply</span>
-            </div>
-          </div>
-          <p className="max-w-xl text-sm text-white/70 font-manrope">
-            Share your vision, goals, and constraints. We will respond via WhatsApp with a tailored approach.
-          </p>
-
-          <div className="grid gap-3 sm:grid-cols-3">
-            {quickFacts.map((fact) => {
-              const Icon = fact.icon;
-              return (
-                <div
-                  key={fact.label}
-                  className="flex flex-col gap-1 rounded-2xl border border-white/10 bg-white/5 p-3 text-white/70"
-                >
-                  <div className="flex items-center gap-2 text-white">
-                    <Icon size={18} className="text-white" />
-                    <p className="text-sm font-semibold font-manrope">{fact.label}</p>
-                  </div>
-                  <p className="text-xs leading-tight text-white/60 font-manrope">
-                    {fact.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid gap-4 md:grid-cols-2">

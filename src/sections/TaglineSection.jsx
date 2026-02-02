@@ -13,7 +13,7 @@ const TaglineSection = () => {
 
   return (
     <Section background="dark" padding="medium" className="space-y-10 text-white" containerClassName="w-full max-w-full">
-      <Marquee items={items} className="text-white bg-ink border-y border-white/10" />
+      <Marquee items={items} className="text-white border-y border-white/10" />
     </Section>
   );
 };

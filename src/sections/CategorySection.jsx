@@ -170,15 +170,15 @@ const CategorySection = () => {
           {featureHighlights.map((feature) => (
             <div
               key={feature.title}
-              className="bg-subtle rounded-3xl text-ink h-full lg:col-span-1 p-6 sm:p-8 "
+              className="testimonial-card rounded-3xl not-even:h-full lg:col-span-1 p-6 sm:p-8 "
             >
               <div className={`inline-flex items-center justify-center rounded-2xl bg-gradient-to-r ${feature.accent} p-3`}>
                 <feature.icon size={22} aria-hidden="true" />
               </div>
-              <h3 className="mt-5 text-2xl uppercase tracking-[0.2em] text-accent font-machina">
+              <h3 className="mt-5 text-lg font-semibold text-white font-manrope">
                 {feature.title}
               </h3>
-              <p className="mt-3 text-sm sm:text-base text-muted font-manrope">
+              <p className="mt-3 text-white/80 text-lg leading-relaxed font-manrope">
                 {feature.copy}
               </p>
             </div>

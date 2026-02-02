@@ -1,16 +1,16 @@
 import { Video } from '@imagekit/react';
 const HeroSection = ({ onShopClick }) => {
   return (
-    <div className="bg-ink text-white min-h-[100dvh] overflow-hidden relative flex items-center justify-center">
+    <div className="bg-black text-white min-h-[100dvh] overflow-hidden relative flex items-center justify-center">
       <section
-        className="relative z-10 w-full max-w-6xl mx-auto px-6 pb-12 md:pb-16 flex flex-col items-center justify-center min-h-[100dvh] gap-8 m-8 md:m-16"
+        className="relative z-10 w-full max-w-6xl mx-auto px-6 pb-12 md:pb-16 flex flex-col items-center justify-center min-h-[100dvh] gap-8 m-8 md:m-20"
       >
-        <h4 className="uppercase text-accent md:text-2xl text-center mb-2 impact">
-          Second layer of skin
+        <h4 className="uppercase text-accent md:text-xl text-center mb-2 impact opacity-90">
+          Your second layer of skin
         </h4>
         <div className="flex flex-col items-center justify-center gap-10 w-full">
           <div className="flex flex-col items-center justify-center gap-6 w-full">
-            <div className="font-machina text-[2.7rem] md:text-[5rem] lg:text-[4.7rem] tracking-tight md:leading-[5rem] text-center">
+            <div className="font-machina text-[2.7rem] md:text-[3rem] lg:text-[4rem] tracking-tight md:leading-[5rem] text-center">
               <h1 className="capitalize impact">
                 Elevate Your
                 <span className="relative mx-2 inline-flex items-center">
@@ -62,13 +62,14 @@ const HeroSection = ({ onShopClick }) => {
           </div>
         </div>
       </section>
-      <div className="absolute inset-x-0 lg:-top-40 h-[165vh] overflow-hidden">
-        <img className="block md:hidden brightness-125 scale-150 h-[80vh] sm:h-[90vh] md:h-[165vh] object-center"
-          alt="bg mobile"
-          src="https://dfdx9u0psdezh.cloudfront.net/common/Background_mobile.svg" />
-
+      <div className="absolute w-full top-0 left-0 overflow-hidden">
         <img
-          className="hidden lg:block absolute top-0 inset-0 brightness-50 saturate-120 contrast-125 scale-150 h-full w-full object-cover"
+          className="block md:hidden brightness-150 scale-150 h-[80vh] sm:h-[90vh] md:h-[165vh] object-center"
+          alt="bg mobile"
+          src="https://dfdx9u0psdezh.cloudfront.net/common/Background_mobile.svg"
+        />
+        <img
+          className="hidden md:block scale-110 h-[165vh] object-cover object-[60%_60%] opacity-90"
           alt="bg desktop"
           src="https://dfdx9u0psdezh.cloudfront.net/common/Background.svg"
         />

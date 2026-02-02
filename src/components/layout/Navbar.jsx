@@ -7,8 +7,8 @@ const Navbar = ({ activeSection, onNavClick }) => {
 
   return (
     <header className="w-full sticky top-0 z-50">
-      <div className="bg-ink/90 backdrop-blur-md p-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between border border-white/10 bg-ink/80 rounded-2xl p-4">
+      <div className="bg-black backdrop-blur-md p-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between border border-white/10 rounded-2xl p-4">
           <button
             onClick={() => onNavClick("Home")}
             className="flex items-center gap-3 cursor-pointer transition hover:opacity-80"

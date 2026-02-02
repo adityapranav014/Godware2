@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 
 const Marquee = ({
   items,
-  className = "text-surface bg-ink",
+  className = "text-surface bg-black",
   icon = "mdi:star-four-points",
   iconClassName = "",
   reverse = false,

@@ -40,39 +40,28 @@ const ContactInfo = () => {
 
   return (
     <div className="space-y-8">
-      {/* Primary Contact Card */}
-      <div className="bg-gradient-to-br from-[#E8602E] via-[#8C2F12] to-[#1F0B05] rounded-3xl p-8 text-white shadow-[0_24px_60px_rgba(232,96,46,0.18)]">
-        <h3 className="text-2xl font-bold mb-6 font-machina">Contact Information</h3>
-        <div className="space-y-6">
-          {contactMethods.map((method, index) => {
-            const Icon = method.icon;
-            const Component = method.href ? 'a' : 'div';
-            const props = method.href ? {
-              href: method.href,
-              ...(method.external && { target: '_blank', rel: 'noopener noreferrer' })
-            } : {};
 
-            return (
-              <Component
-                key={index}
-                {...props}
-                className={`flex items-start gap-4 ${method.href ? 'group hover:translate-x-2 transition-transform duration-300 cursor-pointer' : ''}`}
-              >
-                <div className={`p-3 bg-white/20 rounded-xl backdrop-blur-sm ${method.href ? 'group-hover:bg-white/30' : ''} transition-colors`}>
-                  <Icon size={24} />
-                </div>
-                <div>
-                  <p className="text-sm opacity-90 mb-1 font-manrope">{method.label}</p>
-                  <p className="text-lg font-semibold font-manrope break-all sm:break-normal">{method.value}</p>
-                </div>
-              </Component>
-            );
-          })}
+      {/* Business Hours */}
+      <div className="bg-subtle rounded-3xl p-8 border border-stroke">
+        <h3 className="text-xl font-bold mb-4 text-ink font-machina">Business Hours</h3>
+        <div className="space-y-2 text-muted font-manrope">
+          <p className="flex flex-col sm:flex-row sm:justify-between">
+            <span>Monday - Friday</span>
+            <span className="font-semibold">9:00 AM - 8:00 PM</span>
+          </p>
+          <p className="flex flex-col sm:flex-row sm:justify-between">
+            <span>Saturday</span>
+            <span className="font-semibold">10:00 AM - 6:00 PM</span>
+          </p>
+          <p className="flex flex-col sm:flex-row sm:justify-between">
+            <span>Sunday</span>
+            <span className="font-semibold">Closed</span>
+          </p>
         </div>
       </div>
 
       {/* Reach Us Card */}
-      <div className="bg-ink rounded-3xl p-8 text-white">
+      <div className="bg-black rounded-3xl p-8 text-white border border-stroke">
         <h3 className="text-xl font-bold mb-6 font-machina">Reach Us</h3>
         <div className="flex flex-wrap gap-4">
           {[
@@ -117,24 +106,7 @@ const ContactInfo = () => {
         </div>
       </div>
 
-      {/* Business Hours */}
-      <div className="bg-subtle rounded-3xl p-8 border border-stroke">
-        <h3 className="text-xl font-bold mb-4 text-ink font-machina">Business Hours</h3>
-        <div className="space-y-2 text-muted font-manrope">
-          <p className="flex flex-col sm:flex-row sm:justify-between">
-            <span>Monday - Friday</span>
-            <span className="font-semibold">9:00 AM - 8:00 PM</span>
-          </p>
-          <p className="flex flex-col sm:flex-row sm:justify-between">
-            <span>Saturday</span>
-            <span className="font-semibold">10:00 AM - 6:00 PM</span>
-          </p>
-          <p className="flex flex-col sm:flex-row sm:justify-between">
-            <span>Sunday</span>
-            <span className="font-semibold">Closed</span>
-          </p>
-        </div>
-      </div>
+
     </div>
   );
 };

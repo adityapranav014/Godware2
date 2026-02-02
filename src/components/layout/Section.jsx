@@ -16,7 +16,7 @@ const Section = ({
   const backgrounds = {
     white: 'bg-subtle',
     gray: 'bg-base',
-    dark: 'bg-ink',
+    dark: 'bg-black',
     transparent: 'bg-transparent'
   };
 

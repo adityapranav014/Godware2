@@ -79,7 +79,7 @@ const ComparisonSection = () => {
           </span>
         </div>
         <SectionHeader
-          title="Why God Wear Wins"
+          title="Why God Wear"
           subtitle="Precision performance gear for athletes who demand more from every set."
           align="center"
           titleClassName="text-white font-machina"

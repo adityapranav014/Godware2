@@ -1,4 +1,4 @@
-import { Menu, X, } from "lucide-react";
+import { Menu } from "lucide-react";
 import { NAV_LINKS } from "../../constants";
 import { useMobileMenu } from "../../hooks";
 
@@ -55,16 +55,6 @@ const Navbar = ({ activeSection, onNavClick }) => {
           }`}
       >
         <div className="flex min-h-full flex-col">
-          <div className="flex items-center justify-end px-6 py-5">
-            <button
-              onClick={closeMenu}
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
-              aria-label="Close menu"
-            >
-              <X size={24} className="text-white" />
-            </button>
-          </div>
-
           <nav className="flex-1 flex flex-col justify-center items-center px-6 py-12 space-y-8">
             {NAV_LINKS.map((link) => (
               <button

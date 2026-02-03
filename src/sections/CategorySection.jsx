@@ -150,7 +150,7 @@ const CategorySection = () => {
         {/* Header */}
         <div ref={headerRef}>
           <SectionHeader
-            title="T-Shirts"
+            title="Compression T-Shirts"
             subtitle="Your second layer of skin—4-way stretch, muscle support, and moisture control for peak performance."
             align="center"
             titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"

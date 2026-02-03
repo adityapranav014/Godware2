@@ -83,7 +83,7 @@ const CategorySection = () => {
               href={product.flipkartLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="product-card group relative overflow-hidden rounded-4xl bg-gradient-to-b from-slate-950/80 to-black shadow-[0_25px_60px_rgba(0,0,0,0.6)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_35px_80px_rgba(0,0,0,0.7)]"
+              className="product-card group relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-b from-slate-950/80 to-black shadow-[0_25px_60px_rgba(0,0,0,0.6)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_35px_80px_rgba(0,0,0,0.7)]"
             >
               <div className="absolute inset-0">
                 <div

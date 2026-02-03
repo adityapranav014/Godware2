@@ -105,7 +105,7 @@ const Navbar = ({ activeSection, onNavClick }) => {
     {/* Mobile Menu Overlay */}
     {isMobileMenuOpen && (
       <div className="fixed inset-0 z-[60] md:hidden bg-black/95 backdrop-blur-2xl">
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-dvh">
           {/* Mobile Menu Header */}
           <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
             <div className="flex items-center gap-2">
@@ -114,7 +114,7 @@ const Navbar = ({ activeSection, onNavClick }) => {
                 alt="GOD WEAR"
                 className="h-10 object-contain"
               />
-              <div className="text-2xl font-display bg-gradient-to-r from-gold-400 to-gold-600 bg-clip-text text-transparent">
+              <div className="text-2xl font-display bg-gold bg-clip-text text-transparent">
                 GOD WEAR <sup className="text-xs">®</sup>
               </div>
             </div>

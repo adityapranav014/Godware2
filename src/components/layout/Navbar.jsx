@@ -56,20 +56,7 @@ const Navbar = ({ activeSection, onNavClick }) => {
         className={`fixed inset-0 bg-dark-900 z-50 md:hidden transition-all duration-300 ${isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
           }`}
       >
-        <div className="flex min-h-dvh  flex-col px-6 py-8 bg-dark-800">
-          {/* Close Button - Top Right */}
-          <div className="flex justify-end mb-12">
-            <button
-              onClick={closeMenu}
-              className="p-4 -mr-4 rounded-lg text-white/80 hover:text-gold-500 active:bg-dark-800 transition-all"
-              aria-label="Close menu"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
+        <div className="flex min-h-dvh flex-col px-6 py-8 bg-dark-800">
           {/* Navigation Links - Large, Thumb-friendly */}
           <nav className="flex-1 flex flex-col justify-center items-center space-y-6">
             {NAV_LINKS.map((link) => (

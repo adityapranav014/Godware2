@@ -6,7 +6,7 @@ const VideoSection = () => {
         <Section background="dark" padding="large" className="relative overflow-hidden">
             <div className="space-y-10">
                 <div className="flex justify-center">
-                    <span className="accent-pill uppercase tracking-[0.4em] text-white/70">
+                    <span className="accent-pill uppercase tracking-[0.4em] text-white/70 text-xs md:text-sm">
                         Studio Film
                     </span>
                 </div>
@@ -15,8 +15,8 @@ const VideoSection = () => {
                     title="Built to Last" 
                     subtitle="Premium materials, precision craftsmanship. Experience the difference quality makes."
                     align="center"
-                    titleClassName="text-white font-machina"
-                    subtitleClassName="text-white/70 font-manrope"
+                    titleClassName="text-white font-display md:text-2xl lg:text-3xl xl:text-4xl font-bold"
+                    subtitleClassName="text-white/70 md:text-white/80 font-sans md:text-base"
                 />
 
                 <div className="glass-card glow-border w-full max-w-[95vw] lg:h-auto mx-auto lg:w-[90%] xl:w-[94%] 2xl:w-[96%] 
@@ -39,7 +39,7 @@ const VideoSection = () => {
                             loading="eager"
                             src="https://dfdx9u0psdezh.cloudfront.net/home/hero/e610ce8beaa7a2b72c73dd68.webp"
                         />
-                        <p className="text-center text-xs uppercase tracking-[0.4em] text-white/70 font-manrope">
+                        <p className="text-center text-xs uppercase tracking-[0.4em] text-white/70 font-sans">
                             Elite Performance
                         </p>
                     </div>
@@ -51,7 +51,7 @@ const VideoSection = () => {
                             loading="eager"
                             src="https://dfdx9u0psdezh.cloudfront.net/home/hero/57b6a3ee65a9c27fc2ee29c6.webp"
                         />
-                        <p className="text-center text-xs uppercase tracking-[0.4em] text-white/70 font-manrope">
+                        <p className="text-center text-xs uppercase tracking-[0.4em] text-white/70 font-sans">
                             Premium Quality
                         </p>
                     </div>

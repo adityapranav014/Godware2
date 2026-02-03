@@ -41,7 +41,7 @@ const Logo = ({ onClick, size = 'medium', className = '' }) => {
         alt={APP_CONFIG.name}
         className={`${sizes[size]} w-auto object-contain`}
       />
-      <span className={`${textSizes[size]} impact tracking-tight text-gold`}>
+      <span className={`${textSizes[size]} font-display tracking-tight text-gold`}>
         {APP_CONFIG.name}
         <sup className={supSizes[size]}>®</sup>
       </span>

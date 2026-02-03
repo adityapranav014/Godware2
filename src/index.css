@@ -16,15 +16,64 @@
   --color-text: #f1f1f1;
   --color-scrollbar-thumb: #4b4b4b;
   --color-scrollbar-thumb-hover: #6a6a6a;
+
+  /* Brand colors */
+  --color-gold: #c98b3a;
+  --color-accent: #e8602e;
+  --color-accent-dark: #3a1a0e;
+  --color-accent-alpha: #e8602e21;
+  --color-bg-subtle: #FFF3EF;
+
+  /* Grayscale palette */
+  --color-black: #000000;
+  --color-black-lighter: #050505;
+  --color-black-light: #0a0a0a;
+  --color-gray-light: #9B9999;
+
+  /* Semantic colors */
+  --color-success: #38d16a;
+
+  /* White variations */
+  --color-white: #ffffff;
+  --color-white-90: rgba(255, 255, 255, 0.9);
+  --color-white-85: rgba(255, 255, 255, 0.85);
+  --color-white-80: rgba(255, 255, 255, 0.8);
+  --color-white-70: rgba(255, 255, 255, 0.7);
+  --color-white-60: rgba(255, 255, 255, 0.6);
+  --color-white-50: rgba(255, 255, 255, 0.5);
+  --color-white-40: rgba(255, 255, 255, 0.4);
+  --color-white-20: rgba(255, 255, 255, 0.2);
+  --color-white-15: rgba(255, 255, 255, 0.15);
+  --color-white-10: rgba(255, 255, 255, 0.1);
+  --color-white-5: rgba(255, 255, 255, 0.05);
+
+  /* Black variations */
+  --color-black-80: rgba(0, 0, 0, 0.8);
+  --color-black-60: rgba(0, 0, 0, 0.6);
+  --color-black-40: rgba(0, 0, 0, 0.4);
+
+  /* Gradients */
+  --gradient-bg-dark: linear-gradient(to bottom right, rgba(5, 5, 5, 0.8), rgba(10, 10, 10, 0.8));
+  --gradient-bg-category: linear-gradient(to bottom, rgba(2, 6, 23, 0.8), rgba(0, 0, 0, 1));
+
+  /* Shadows */
   --shadow-video-shell: 0 12px 28px rgba(0, 0, 0, 0.12),
     0 10px 36px rgba(216, 143, 63, 0.18),
     0 0 0 1px rgba(216, 143, 63, 0.25),
     inset 0 40px 70px rgba(255, 244, 233, 0.45);
-  --font-sans: "Manrope", "Space Grotesk", "montreal", sans-serif;
-  --font-display: "Space Grotesk", "impact01", "montreal", sans-serif;
-  --font-serif: "Playfair Display", serif;
-  --font-script: "Cookie", cursive;
-  --font-alt: "Montserrat", sans-serif;
+  --shadow-dark-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
+  --shadow-dark-lg: 0 20px 50px rgba(0, 0, 0, 0.4);
+  --shadow-category-card: 0 25px 60px rgba(0, 0, 0, 0.6);
+  --shadow-category-card-hover: 0 35px 80px rgba(0, 0, 0, 0.7);
+  --shadow-about: 0 30px 70px rgba(0, 0, 0, 0.5);
+  --shadow-cta: 0 15px 40px rgba(255, 202, 6, 0.35);
+  --shadow-glow: 0 12px 40px rgba(232, 96, 46, 0.25);
+  --shadow-inner-card: inset 0 24px 48px rgba(255, 255, 255, 0.08);
+
+  /* Fonts */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Raleway", sans-serif;
+  --font-serif: "Raleway", sans-serif;
 }
 
 
@@ -55,28 +104,13 @@ body {
   font-display: swap;
 }
 
-.impact {
+.font-display {
   font-family: var(--font-display) !important;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
-/* Google Fonts */
-.playfair-display {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  /* font-style: normal; */
-}
-
-.cookie-font {
-  font-family: var(--font-script);
-  font-weight: 400;
-  font-style: normal;
-}
-
-.montserrat {
-  font-family: var(--font-alt);
-  font-optical-sizing: auto;
-  font-style: normal;
+.font-sans {
+  font-family: var(--font-sans) !important;
 }
 
 a.active hr {
@@ -169,9 +203,26 @@ a.active hr {
   --color-ink: #12100d;
   --color-muted: #5a534a;
   --color-stroke: #e6dfd3;
+
+  /* New Brand Color System - Luxury Performance Wear */
+  --color-gold-500: #c98b3a;
+  --color-gold-600: #b37a2f;
+  --color-gold-700: #9d6a26;
+  --color-dark-900: #0a0a0a;
+  --color-dark-800: #1a1a1a;
+  --color-dark-700: #2a2a2a;
+  --color-dark-400: #9ca3af;
+  --color-energy-500: #e8602e;
+
+  /* Legacy colors (mapped to new system) */
   --color-gold: #c98b3a;
   --color-accent: #e8602e;
+  --color-accent-dark: #3a1a0e;
+  --color-accent-light: #e8602e21;
   --color-bg-subtle: #FFF3EF;
+  --color-success: #38d16a;
+  --color-black-lighter: #050505;
+  --color-gray-light: #9B9999;
 
   --drop-shadow-3xl: 0 35px 35px rgba(0, 0, 0, 0.25);
 
@@ -260,7 +311,7 @@ a.active hr {
 
 @layer components {
   .accent-pill {
-    @apply relative inline-flex items-center gap-2 rounded-full border border-[#3a1a0e] bg-[#e8602e21] px-3 py-1 text-xs uppercase tracking-wide text-[#9B9999] font-light;
+    @apply relative inline-flex items-center gap-2 rounded-full border border-accent-dark bg-accent-light px-3 py-1 text-xs uppercase tracking-wide text-gray-light font-light;
     font-family: "Space Grotesk", "impact01", "montreal", sans-serif;
     letter-spacing: -0.02em;
   }
@@ -334,6 +385,22 @@ a.active hr {
   .testimonial-card {
     @apply rounded-2xl border border-white/20 bg-black/80 text-white/85;
     box-shadow: inset 0 24px 48px rgba(255, 255, 255, 0.08);
+  }
+
+  .testimonial-mask {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  }
+
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  }
+
+  .cta-bg {
+    background-image: url('/images/hero-3.webp');
+    background-size: cover;
+    background-position: center;
   }
 
   .radial-divider {
@@ -430,13 +497,14 @@ a.active hr {
     display: none !important;
   }
 
-  .font-manrope {
-    font-family: "Manrope", "montreal", sans-serif;
+  /* Raleway + Inter Font System */
+  .font-display {
+    font-family: "Raleway", sans-serif;
+    letter-spacing: -0.01em;
   }
 
-  .font-machina {
-    font-family: "Space Grotesk", "impact01", "montreal", sans-serif;
-    letter-spacing: -0.02em;
+  .font-sans {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   }
 }
 

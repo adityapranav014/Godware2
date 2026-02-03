@@ -25,11 +25,11 @@ const SectionHeader = ({
 
   return (
     <div className={`mb-16 ${alignments[align]} ${className}`}>
-      <h2 className={`text-5xl md:text-7xl impact uppercase text-ink mb-4 font-machina ${titleClassName}`}>
+      <h2 className={`text-5xl md:text-7xl font-display uppercase text-ink mb-4 ${titleClassName}`}>
         {title}
       </h2>
       {subtitle && (
-        <p className={`text-lg text-muted max-w-2xl font-manrope ${subtitleAlignment[align]} ${subtitleClassName}`}>
+        <p className={`text-lg text-muted max-w-2xl font-sans ${subtitleAlignment[align]} ${subtitleClassName}`}>
           {subtitle}
         </p>
       )}

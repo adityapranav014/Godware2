@@ -103,82 +103,81 @@ const TestimonialsSection = () => {
   }, { scope: sectionRef });
 
   return (
-    <Section background="dark" padding="large" sectionRef={sectionRef} className="text-white" containerClassName="w-full max-w-full">
-      <div className="space-y-10">
+    <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-900 text-white" containerClassName="w-full max-w-full">
+      <div className="space-y-8 sm:space-y-10 md:space-y-12">
+        
+        {/* Badge */}
         <div className="flex justify-center">
-          <span className="accent-pill uppercase tracking-[0.4em] text-white/70">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-500 text-xs sm:text-sm uppercase tracking-widest font-semibold">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
             Voices
-            <span className="corner-dot corner-dot-tl" />
-            <span className="corner-dot corner-dot-tr" />
-            <span className="corner-dot corner-dot-bl" />
-            <span className="corner-dot corner-dot-br" />
           </span>
         </div>
+
+        {/* Header */}
         <SectionHeader
           title="Proven By Athletes"
           subtitle="Real voices. Real results. Hear from those who train relentlessly and trust God Wear."
           align="center"
-          titleClassName="text-white font-machina"
-          subtitleClassName="text-white/70 font-manrope"
+          titleClassName="text-white font-display text-3xl sm:text-4xl md:text-2xl lg:text-3xl xl:text-4xl font-bold"
+          subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
         />
 
-        <div
-          className="relative overflow-hidden"
-          style={{
-            WebkitMaskImage:
-              "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
-            maskImage:
-              "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)"
-          }}
-        >
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-[22%] bg-gradient-to-r from-ink via-transparent to-transparent opacity-80 blur-[30px]" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-[22%] bg-gradient-to-l from-ink via-transparent to-transparent opacity-80 blur-[30px]" />
+        {/* Testimonials Marquee - Mobile: Single Column Horizontal Scroll */}
+        <div className="relative overflow-hidden testimonial-mask">
+          {/* Fade edges */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-[10%] sm:w-[15%] bg-gradient-to-r from-dark-900 via-dark-900/50 to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-[10%] sm:w-[15%] bg-gradient-to-l from-dark-900 via-dark-900/50 to-transparent z-10" />
 
-          <div className="overflow-hidden">
-            <div className="marquee-left gap-6 px-6 py-4">
+          {/* First Row */}
+          <div className="overflow-hidden mb-4 sm:mb-6">
+            <div className="marquee-left gap-4 sm:gap-6 px-4 sm:px-6 py-4">
               {testimonials.concat(testimonials).map((item, index) => (
-                <div key={`${item.name}-${index}`} className="testimonial-card w-[85vw] md:w-[45vw] lg:w-[30vw] p-6 shrink-0">
-                  <div className="flex items-center gap-4 border-b border-white/20 pb-4 mb-4">
-                    <div className="h-12 w-12 rounded-full overflow-hidden bg-white/10">
+                <div key={`${item.name}-${index}`} className="bg-dark-800 border border-dark-700 rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] shrink-0 hover:border-gold-500/30 transition-all duration-300">
+                  {/* Header */}
+                  <div className="flex items-center gap-3 sm:gap-4 pb-4 md:pb-5 mb-4 md:mb-5 border-b border-dark-700">
+                    <div className="h-11 w-11 sm:h-12 sm:w-12 md:h-12 md:w-12 rounded-full overflow-hidden ring-2 ring-dark-700 shrink-0">
                       <img
                         className="h-full w-full object-cover"
                         alt={item.name}
-                        loading="eager"
+                        loading="lazy"
                         decoding="async"
                         src={item.image}
                       />
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white font-manrope">{item.name}</h3>
-                      <p className="text-sm text-white/50 font-manrope">{item.role}</p>
+                    <div className="min-w-0">
+                      <h3 className="text-base sm:text-lg md:text-lg font-semibold md:font-bold text-white font-sans truncate">{item.name}</h3>
+                      <p className="text-xs sm:text-sm md:text-sm text-dark-400 md:text-white/70 font-sans truncate">{item.role}</p>
                     </div>
                   </div>
-                  <p className="text-white/80 text-lg leading-relaxed font-manrope">{item.text}</p>
+                  {/* Quote */}
+                  <p className="text-sm sm:text-base md:text-base text-white/90 leading-relaxed font-sans line-clamp-4">{item.text}</p>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Second Row - Reverse Direction */}
           <div className="overflow-hidden">
-            <div className="marquee-right gap-6 px-6 py-4">
+            <div className="marquee-right gap-4 sm:gap-6 px-4 sm:px-6 py-4">
               {testimonials.concat(testimonials).map((item, index) => (
-                <div key={`${item.role}-${index}`} className="testimonial-card w-[85vw] md:w-[45vw] lg:w-[30vw] p-6 shrink-0">
-                  <div className="flex items-center gap-4 border-b border-white/20 pb-4 mb-4">
-                    <div className="h-12 w-12 rounded-full overflow-hidden bg-white/10">
+                <div key={`${item.role}-${index}`} className="bg-dark-800 border border-dark-700 rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] shrink-0 hover:border-gold-500/30 transition-all duration-300">
+                  <div className="flex items-center gap-3 sm:gap-4 pb-4 md:pb-5 mb-4 md:mb-5 border-b border-dark-700">
+                    <div className="h-11 w-11 sm:h-12 sm:w-12 md:h-12 md:w-12 rounded-full overflow-hidden ring-2 ring-dark-700 shrink-0">
                       <img
                         className="h-full w-full object-cover"
                         alt={item.name}
-                        loading="eager"
+                        loading="lazy"
                         decoding="async"
                         src={item.image}
                       />
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white font-manrope">{item.name}</h3>
-                      <p className="text-sm text-white/50 font-manrope">{item.role}</p>
+                    <div className="min-w-0">
+                      <h3 className="text-base sm:text-lg md:text-lg font-semibold md:font-bold text-white font-sans truncate">{item.name}</h3>
+                      <p className="text-xs sm:text-sm md:text-sm text-dark-400 md:text-white/70 font-sans truncate">{item.role}</p>
                     </div>
                   </div>
-                  <p className="text-white/80 text-lg leading-relaxed font-manrope">{item.text}</p>
+                  <p className="text-sm sm:text-base md:text-base text-white/90 leading-relaxed font-sans line-clamp-4">{item.text}</p>
                 </div>
               ))}
             </div>

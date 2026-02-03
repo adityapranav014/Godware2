@@ -8,12 +8,13 @@ const TaglineSection = () => {
     "Endurance",
     "Victory",
     "Excellence",
+    "Discipline",
+    "Performance"
   ];
 
-
   return (
-    <Section background="dark" padding="medium" className="space-y-10 text-white" containerClassName="w-full max-w-full">
-      <Marquee items={items} className="text-white border-y border-white/10" />
+    <Section background="dark" padding="none" className="bg-dark-900 border-y border-dark-700" containerClassName="w-full max-w-full">
+      <Marquee items={items} className="text-white bg-dark-800/50" iconClassName="text-gold-500" />
     </Section>
   );
 };

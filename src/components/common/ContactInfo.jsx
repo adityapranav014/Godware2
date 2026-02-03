@@ -39,31 +39,31 @@ const ContactInfo = () => {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
 
       {/* Business Hours */}
-      <div className="bg-black rounded-3xl p-8 text-white ">
-        <h3 className="text-xl font-bold mb-6 font-machina">Business Hours</h3>
-        <div className="space-y-2 text-white/70 font-manrope">
-          <p className="flex flex-col sm:flex-row sm:justify-between">
+      <div className="bg-dark-900 border border-dark-700 rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 text-white">
+        <h3 className="text-lg sm:text-xl md:text-xl font-bold mb-4 sm:mb-6 font-display text-white">Business Hours</h3>
+        <div className="space-y-3 md:space-y-4 text-sm sm:text-base md:text-base text-dark-400 md:text-white/70 font-sans">
+          <p className="flex flex-col xs:flex-row xs:justify-between gap-1">
             <span>Monday - Friday</span>
-            <span className="font-semibold">9:00 AM - 8:00 PM</span>
+            <span className="font-semibold md:font-bold text-white">9:00 AM - 8:00 PM</span>
           </p>
-          <p className="flex flex-col sm:flex-row sm:justify-between">
+          <p className="flex flex-col xs:flex-row xs:justify-between gap-1">
             <span>Saturday</span>
-            <span className="font-semibold">10:00 AM - 6:00 PM</span>
+            <span className="font-semibold md:font-bold text-white">10:00 AM - 6:00 PM</span>
           </p>
-          <p className="flex flex-col sm:flex-row sm:justify-between">
+          <p className="flex flex-col xs:flex-row xs:justify-between gap-1">
             <span>Sunday</span>
-            <span className="font-semibold">Closed</span>
+            <span className="font-semibold md:font-bold text-white">Closed</span>
           </p>
         </div>
       </div>
 
       {/* Reach Us Card */}
-      <div className="bg-black rounded-3xl p-8 text-white ">
-        <h3 className="text-xl font-bold mb-6 font-machina">Reach Us</h3>
-        <div className="flex flex-wrap gap-4">
+      <div className="bg-dark-900 border border-dark-700 rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 text-white">
+        <h3 className="text-lg sm:text-xl md:text-xl font-bold mb-4 sm:mb-6 font-display text-white">Reach Us</h3>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {[
             {
               icon: Phone,
@@ -93,11 +93,11 @@ const ContactInfo = () => {
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white hover:border-accent hover:bg-white/10 transition"
+                className="group relative flex flex-col items-center justify-center aspect-square rounded-xl border border-dark-700 bg-dark-800 text-white hover:border-gold-500/30 hover:bg-dark-700 transition-all duration-200 active:scale-95"
                 aria-label={item.label}
               >
-                <Icon size={20} />
-                <span className="pointer-events-none absolute -bottom-6 left-1/2 w-max -translate-x-1/2 rounded-full bg-black/70 px-2 py-1 text-[10px] uppercase tracking-[0.4em] text-white opacity-0 transition duration-300 group-hover:opacity-100">
+                <Icon size={20} className="mb-2 md:w-6 md:h-6 text-dark-400 group-hover:text-gold-500 transition-colors" strokeWidth={2} />
+                <span className="text-xs md:text-sm font-medium text-dark-400 group-hover:text-white transition-colors">
                   {item.label}
                 </span>
               </a>

@@ -31,38 +31,38 @@ const CTASection = ({ onShopClick }) => {
       sectionRef={sectionRef}
       background="dark"
       padding="large"
-      className="relative overflow-hidden"
+      className="relative overflow-hidden bg-dark-900"
     >
-      <div
-        className="absolute inset-0 opacity-60"
-        style={{
-          backgroundImage: `url(${import.meta.env.BASE_URL}images/hero-3.webp)`,
-          backgroundSize: "cover",
-          backgroundPosition: "center"
-        }}
-      />
-      <div className="absolute inset-0 bg-ink/80" />
-      <div className="relative max-w-6xl mx-auto px-4 xl:px-0 text-center space-y-6">
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl impact uppercase font-machina">
-          Ignite Your Potential. Revolutionize Every Workout
+      {/* Background Image - Subtle */}
+      <div className="absolute inset-0 opacity-20 cta-bg" />
+      <div className="absolute inset-0 bg-gradient-to-b from-dark-900/80 via-dark-900/90 to-dark-900" />
+      
+      {/* Content - Mobile First */}
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6 sm:space-y-8">
+        <h2 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl xl:text-5xl font-display uppercase leading-tight font-bold text-white">
+          Ignite Your Potential.
+          <br className="hidden sm:block" />
+          <span className="block sm:inline"> Revolutionize Every Workout</span>
         </h2>
 
-        <p className="text-white/70 text-lg max-w-2xl mx-auto font-manrope">
+        <p className="text-dark-400 md:text-white/80 text-base sm:text-lg md:text-base max-w-2xl mx-auto font-sans leading-relaxed">
           Experience gear that transforms discipline into dominance—shop now and feel the difference.
         </p>
-        <button
-          onClick={onShopClick}
-          className="cta-gradient group text-white text-xl py-3 px-10 rounded-2xl border border-transparent backdrop-blur-md shadow-[0_15px_40px_rgba(255,202,6,0.35)] transition duration-300 hover:-translate-y-0.5"
-        >
-          <div className="relative overflow-hidden w-max flex gap-1 font-manrope font-medium">
-            <div className="transition-transform duration-300 ease-out group-hover:-translate-y-full">
-              Shop Now <span>→</span>
-            </div>
-            <div className="absolute inset-0 translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0">
-              Shop Now <span>→</span>
-            </div>
-          </div>
-        </button>
+        
+        {/* CTA Button - Thumb-friendly, Gold Primary */}
+        <div className="pt-4">
+          <button
+            onClick={onShopClick}
+            className="group w-full sm:w-auto min-w-[280px] sm:min-w-0 px-10 sm:px-12 lg:px-14 py-4 sm:py-5 lg:py-6 bg-gold-500 hover:bg-gold-600 active:bg-gold-700 text-dark-900 text-base sm:text-lg lg:text-lg font-bold rounded-xl sm:rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-gold-500/40 active:scale-100"
+          >
+            <span className="flex items-center justify-center gap-2 font-sans">
+              Shop Now
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
+          </button>
+        </div>
       </div>
     </Section>
   );

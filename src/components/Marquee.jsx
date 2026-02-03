@@ -20,28 +20,18 @@ const Marquee = ({
     marquee.style.setProperty("--marquee-duration", `${duration}s`);
   }, [items]);
 
-  const maskStyle = {
-    WebkitMaskImage:
-      "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
-    maskImage:
-      "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
-  };
-
   return (
-    <div className={`relative overflow-hidden ${className}`} style={maskStyle}>
+    <div className={`relative overflow-hidden marquee-mask ${className}`}>
       <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-ink via-ink/50 to-transparent opacity-90 blur-[30px]" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-ink via-ink/50 to-transparent opacity-90 blur-[30px]" />
 
-      <div className="overflow-hidden w-full h-20 md:h-[100px] flex items-center marquee-text-responsive font-light uppercase whitespace-nowrap">
+      <div className="overflow-hidden w-full h-20 md:h-24 lg:h-28 flex items-center marquee-text-responsive font-light uppercase whitespace-nowrap">
         <div
           ref={marqueeRef}
           className={`flex ${reverse ? "marquee-reverse" : "marquee"}`}
-          style={{
-            animationDuration: "var(--marquee-duration, 40s)",
-          }}
         >
           {items.concat(items).map((text, index) => (
-            <span key={index} className="flex items-center px-16 gap-x-32">
+            <span key={index} className="flex items-center px-16 md:px-20 gap-x-32 md:gap-x-40">
               {text} <Icon icon={icon} className={iconClassName} />
             </span>
           ))}

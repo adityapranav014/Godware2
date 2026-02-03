@@ -72,9 +72,10 @@ const ContactForm = () => {
 
   return (
     <div className="space-y-6">
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid gap-4 md:grid-cols-2">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+        
+        {/* Name & Email - Mobile: Stack, Desktop: Grid */}
+        <div className="grid gap-4 sm:grid-cols-2">
           <Input
             type="text"
             name="name"
@@ -84,7 +85,7 @@ const ContactForm = () => {
             placeholder="Full Name *"
             required
             error={errors.name}
-            className="bg-black border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px]"
+            className="bg-dark-900 border-dark-700 text-white placeholder-dark-400 focus:border-gold-500 focus:ring-1 focus:ring-gold-500/20 rounded-xl transition-all"
           />
           <Input
             type="email"
@@ -95,10 +96,11 @@ const ContactForm = () => {
             placeholder="Email Address *"
             required
             error={errors.email}
-            className="bg-black border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px]"
+            className="bg-dark-900 border-dark-700 text-white placeholder-dark-400 focus:border-gold-500 focus:ring-1 focus:ring-gold-500/20 rounded-xl transition-all"
           />
         </div>
 
+        {/* Phone */}
         <Input
           type="tel"
           name="phone"
@@ -106,9 +108,10 @@ const ContactForm = () => {
           value={formData.phone}
           onChange={handleChange}
           placeholder="Phone Number (Optional)"
-          className="bg-black border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px]"
+          className="bg-dark-900 border-dark-700 text-white placeholder-dark-400 focus:border-gold-500 focus:ring-1 focus:ring-gold-500/20 rounded-xl transition-all"
         />
 
+        {/* Message */}
         <Input
           type="textarea"
           name="message"
@@ -116,27 +119,25 @@ const ContactForm = () => {
           onChange={handleChange}
           placeholder="Tell us about your project *"
           required
-          rows={6}
+          rows={5}
           error={errors.message}
-          className="bg-black border-white/10 text-white placeholder-white/50 focus:border-amber-400 focus:ring-0 shadow-inner shadow-black/40 rounded-[20px] min-h-[170px]"
+          className="bg-dark-900 border-dark-700 text-white placeholder-dark-400 focus:border-gold-500 focus:ring-1 focus:ring-gold-500/20 rounded-xl min-h-[140px] sm:min-h-[160px] transition-all"
         />
 
-        <div className="flex justify-center">
+        {/* Submit Button - Thumb-friendly */}
+        <div className="pt-2">
           <button
             type="submit"
-            className="cta-gradient group text-white text-xl py-3 px-10 rounded-2xl border border-transparent backdrop-blur-md shadow-[0_15px_40px_rgba(255,202,6,0.35)] transition duration-300 hover:-translate-y-0.5"
+            className="group w-full py-4 md:py-5 px-8 md:px-10 bg-gold-500 hover:bg-gold-600 active:bg-gold-700 text-dark-900 text-base sm:text-lg md:text-lg font-bold rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-gold-500/30 active:scale-100"
           >
-            <div className="relative overflow-hidden w-max flex gap-1 font-manrope font-medium">
-              <div className="transition-transform duration-300 ease-out group-hover:-translate-y-full">
-                Send Message <span>→</span>
-              </div>
-              <div className="absolute inset-0 translate-y-full transition-transform duration-300 ease-out group-hover:translate-y-0">
-                Send Message <span>→</span>
-              </div>
-            </div>
+            <span className="flex items-center justify-center gap-2 font-sans">
+              Send Message
+              <svg className="w-5 h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
           </button>
         </div>
-
       </form>
     </div>
   );

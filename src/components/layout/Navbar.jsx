@@ -50,7 +50,7 @@ const Navbar = ({ activeSection, onNavClick }) => {
     <>
       <header
         ref={navRef}
-        className="w-full fixed top-0 left-0 right-0 z-50 bg-black/80 md:bg-black/40 backdrop-blur-xl border-b border-white/20 md:border-white/10 transition-all duration-300"
+        className="w-full fixed top-0 left-0 right-0 z-50 backdrop-blur-sm transition-all duration-300"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
@@ -103,7 +103,7 @@ const Navbar = ({ activeSection, onNavClick }) => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[60] md:hidden bg-black/95 backdrop-blur-2xl">
+        <div className="fixed inset-0 z-60 md:hidden bg-black/95 backdrop-blur-2xl">
           <div className="flex flex-col h-dvh">
 
             {/* Mobile Navigation Links */}

@@ -8,18 +8,75 @@ import {
   MessageCircle,
   Sparkles,
 } from "lucide-react";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { APP_CONFIG, CONTACT_INFO, NAV_LINKS, SOCIAL_LINKS } from "../../constants";
 import { Logo } from "../ui";
+import { EASE, DURATION, STAGGER } from "../../utils/animations";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Footer = ({ onNavClick }) => {
   const currentYear = new Date().getFullYear();
+  const footerRef = useRef(null);
+  const socialLinksRef = useRef([]);
+
+  useGSAP(() => {
+    if (!footerRef.current) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: footerRef.current,
+        start: "top 85%",
+      }
+    });
+
+    // Footer sections stagger in
+    const sections = footerRef.current.querySelectorAll('.footer-section');
+    tl.fromTo(
+      sections,
+      { y: 40, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: DURATION.medium,
+        stagger: STAGGER.normal,
+        ease: EASE.power,
+      }
+    );
+
+    // Social link hover effects
+    socialLinksRef.current.forEach((link, index) => {
+      if (!link) return;
+      
+      link.addEventListener('mouseenter', () => {
+        gsap.to(link, {
+          scale: 1.15,
+          rotate: 5,
+          duration: DURATION.fast,
+          ease: EASE.back,
+        });
+      });
+
+      link.addEventListener('mouseleave', () => {
+        gsap.to(link, {
+          scale: 1,
+          rotate: 0,
+          duration: DURATION.fast,
+          ease: EASE.power,
+        });
+      });
+    });
+  }, { scope: footerRef });
 
   return (
-    <footer className="relative bg-dark-800 border-t border-dark-700 text-white overflow-hidden pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-8">
+    <footer ref={footerRef} className="relative bg-dark-800 border-t border-dark-700 text-white overflow-hidden pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-8">
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 space-y-12 sm:space-y-16">
         
         {/* Brand Section */}
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
+        <div className="footer-section flex flex-col lg:flex-row gap-8 lg:gap-10">
           <div className="flex-1 space-y-4 sm:space-y-6">
             <Logo onClick={() => onNavClick("Home")} size="small" />
             <p className="text-dark-400 md:text-white/70 leading-relaxed max-w-xl text-sm sm:text-base md:text-base">
@@ -34,12 +91,13 @@ const Footer = ({ onNavClick }) => {
         <div className="grid gap-8 sm:gap-10 md:gap-12 lg:grid-cols-3">
 
           {/* Connect */}
-          <div className="space-y-4 sm:space-y-5 md:space-y-6">
+          <div className="footer-section space-y-4 sm:space-y-5 md:space-y-6">
             <p className="text-xs md:text-sm lg:text-base uppercase tracking-widest text-dark-400 md:text-white/60 font-semibold md:font-bold">
               Connect
             </p>
             <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
               <a
+                ref={(el) => (socialLinksRef.current[0] = el)}
                 href={SOCIAL_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -49,6 +107,7 @@ const Footer = ({ onNavClick }) => {
                 <Instagram size={18} className="md:w-5 md:h-5 lg:w-6 lg:h-6" strokeWidth={2} />
               </a>
               <a
+                ref={(el) => (socialLinksRef.current[1] = el)}
                 href={`https://wa.me/${CONTACT_INFO.whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -58,6 +117,7 @@ const Footer = ({ onNavClick }) => {
                 <MessageCircle size={18} className="md:w-5 md:h-5 lg:w-6 lg:h-6" strokeWidth={2} />
               </a>
               <a
+                ref={(el) => (socialLinksRef.current[2] = el)}
                 href={`mailto:${CONTACT_INFO.email}`}
                 className="p-2 md:p-3 rounded-lg md:rounded-xl bg-dark-900 border border-dark-700 text-dark-400 hover:text-gold-500 hover:border-gold-500/30 transition-all duration-200"
                 aria-label="Email"
@@ -65,6 +125,7 @@ const Footer = ({ onNavClick }) => {
                 <Mail size={18} className="md:w-5 md:h-5 lg:w-6 lg:h-6" strokeWidth={2} />
               </a>
               <a
+                ref={(el) => (socialLinksRef.current[3] = el)}
                 href={`tel:${CONTACT_INFO.phone.replace(/\s|-/g, '')}`}
                 className="p-2 md:p-3 rounded-lg md:rounded-xl bg-dark-900 border border-dark-700 text-dark-400 hover:text-gold-500 hover:border-gold-500/30 transition-all duration-200"
                 aria-label="Phone"
@@ -79,7 +140,7 @@ const Footer = ({ onNavClick }) => {
           </div>
 
           {/* Shop */}
-          <div className="space-y-4 sm:space-y-5 md:space-y-6">
+          <div className="footer-section space-y-4 sm:space-y-5 md:space-y-6">
             <p className="text-xs md:text-sm lg:text-base uppercase tracking-widest text-dark-400 md:text-white/60 font-semibold md:font-bold">
               Shop
             </p>
@@ -93,7 +154,7 @@ const Footer = ({ onNavClick }) => {
           </div>
 
           {/* Company */}
-          <div className="space-y-4 sm:space-y-5 md:space-y-6">
+          <div className="footer-section space-y-4 sm:space-y-5 md:space-y-6">
             <p className="text-xs md:text-sm lg:text-base uppercase tracking-widest text-dark-400 md:text-white/60 font-semibold md:font-bold">
               Company
             </p>

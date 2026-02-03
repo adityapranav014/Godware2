@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Video } from '@imagekit/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import SplitType from 'split-type';
+import { EASE, DURATION, isMobile, getResponsiveDuration } from '../utils/animations';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,99 +11,59 @@ const HeroSection = ({ onShopClick }) => {
   const textRef = useRef(null);
   const buttonRef = useRef(null);
   const videoContainerRef = useRef(null);
+  const scrollIndicatorRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Split text into words and lines for advanced animation control
-      const splitText = new SplitType(textRef.current, { 
-        types: 'lines,words,chars',
-        lineClass: 'line-split',
-        wordClass: 'word-split'
-      });
-
-      // Set initial CSS for split elements
-      gsap.set(splitText.lines, { overflow: 'hidden' });
+      const mobile = isMobile();
       
       // Master timeline with refined pacing
       const masterTl = gsap.timeline({ 
-        defaults: { ease: 'power4.out' }
+        defaults: { ease: EASE.circ },
+        delay: 0.2
       });
 
-      // Video reveal - cinematic entrance with sophisticated blur
+      // Video reveal - premium cinematic entrance (mobile optimized)
       masterTl.fromTo(
         videoContainerRef.current,
         { 
           opacity: 0, 
-          scale: 1.08,
-          filter: 'blur(20px) brightness(0.7)'
+          scale: mobile ? 1.08 : 1.12,
+          filter: mobile ? 'blur(15px) brightness(0.6)' : 'blur(30px) brightness(0.5)',
+          willChange: 'transform, opacity, filter',
         },
         { 
           opacity: 1, 
           scale: 1, 
           filter: 'blur(0px) brightness(1)',
-          duration: 2.5,
-          ease: 'power3.inOut'
+          duration: mobile ? DURATION.cinematic : DURATION.epic,
+          ease: EASE.expo,
+          clearProps: 'willChange',
         }
       );
 
-      // Premium word reveal with mask effect
+      // Text entrance with depth (mobile optimized)
       masterTl.fromTo(
-        splitText.words,
-        { 
-          willChange: 'transform, opacity, filter',
-          opacity: 0,
-          yPercent: 120,
-          rotateX: -15,
-          scale: 0.9,
-          filter: 'blur(8px)',
-        },
-        {
-          opacity: 1,
-          yPercent: 0,
-          rotateX: 0,
-          scale: 1,
-          filter: 'blur(0px)',
-          duration: 1.4,
-          stagger: {
-            each: 0.12,
-            from: 'start',
-            ease: 'power3.out'
-          },
-          ease: 'expo.out',
-          clearProps: 'willChange'
-        },
-        '-=2'
-      );
-
-      // Character refinement - subtle depth animation
-      masterTl.fromTo(
-        splitText.chars,
-        { 
-          opacity: 0.6,
-          letterSpacing: '0.1em'
-        },
-        {
-          opacity: 1,
-          letterSpacing: '0em',
-          duration: 1,
-          stagger: {
-            each: 0.015,
-            from: 'start'
-          },
-          ease: 'power2.out',
-        },
-        '-=1.2'
-      );
-
-      // Add premium glow effect that builds up
-      masterTl.to(
         textRef.current,
-        {
-          textShadow: '0 0 40px rgba(255, 255, 255, 0.3), 0 0 80px rgba(212, 175, 55, 0.2)',
-          duration: 1.5,
-          ease: 'power2.inOut',
+        { 
+          opacity: 0,
+          y: mobile ? 50 : 80,
+          scale: 0.92,
+          rotateX: mobile ? 10 : 20,
+          filter: mobile ? 'blur(6px)' : 'blur(10px)',
+          willChange: 'transform, opacity, filter',
         },
-        '-=0.8'
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotateX: 0,
+          filter: 'blur(0px)',
+          duration: getResponsiveDuration('slow'),
+          ease: EASE.expo,
+          clearProps: 'willChange',
+        },
+        mobile ? '-=1.2' : '-=1.8'
       );
 
       // Button entrance - premium slide with depth
@@ -112,10 +72,10 @@ const HeroSection = ({ onShopClick }) => {
         { 
           willChange: 'transform, opacity, filter',
           opacity: 0, 
-          y: 60,
-          scale: 0.92,
-          filter: 'blur(8px)',
-          rotateX: -10
+          y: mobile ? 50 : 80,
+          scale: 0.88,
+          filter: mobile ? 'blur(8px)' : 'blur(12px)',
+          rotateX: mobile ? -8 : -15,
         },
         { 
           opacity: 1, 
@@ -123,116 +83,122 @@ const HeroSection = ({ onShopClick }) => {
           scale: 1,
           filter: 'blur(0px)',
           rotateX: 0,
-          duration: 1.3,
-          ease: 'expo.out',
-          clearProps: 'willChange'
+          duration: getResponsiveDuration('slow'),
+          ease: EASE.backSoft,
+          clearProps: 'willChange',
         },
-        '-=0.8'
+        '-=0.7'
       );
 
-      // Sophisticated infinite animations
-      
-      // Text breathing - very subtle scale with organic timing
-      gsap.to(splitText.words, {
-        scale: 1.015,
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        stagger: {
-          each: 0.15,
-          repeat: -1,
-          yoyo: true
-        }
-      });
+      // Scroll indicator fade in
+      if (scrollIndicatorRef.current) {
+        masterTl.fromTo(
+          scrollIndicatorRef.current,
+          {
+            opacity: 0,
+            y: -15,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: getResponsiveDuration('medium'),
+            ease: EASE.circ,
+          },
+          '-=0.4'
+        );
+      }
 
-      // Gentle floating with perspective
-      gsap.to(textRef.current, {
-        y: -8,
-        duration: 3.5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      });
-
-      // Subtle glow pulse for premium feel
-      gsap.to(textRef.current, {
-        textShadow: '0 0 50px rgba(255, 255, 255, 0.4), 0 0 100px rgba(212, 175, 55, 0.3)',
-        duration: 5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      });
-
-      // ===== SCROLL ANIMATIONS =====
+      // ===== SCROLL ANIMATIONS - Mobile Optimized =====
       
-      // Parallax effect on video - different speeds for mobile vs desktop
-      const isMobile = window.innerWidth < 768;
-      
+      // Parallax effect on video - responsive and smooth
       ScrollTrigger.create({
         trigger: heroRef.current,
         start: 'top top',
         end: 'bottom top',
-        scrub: true,
+        scrub: mobile ? 2 : 1.5,
+        invalidateOnRefresh: true,
         onUpdate: (self) => {
           const progress = self.progress;
-          const scale = 1 + (progress * (isMobile ? 0.1 : 0.15));
-          const opacity = 1 - (progress * 0.8);
+          const scale = 1 + (progress * (mobile ? 0.08 : 0.15));
+          const opacity = Math.max(0, 1 - (progress * 1.3));
+          const blur = progress * (mobile ? 8 : 15);
+          const brightness = Math.max(0.5, 1 - progress * 0.35);
           
           gsap.to(videoContainerRef.current, {
             scale: scale,
             opacity: opacity,
-            filter: `blur(${progress * (isMobile ? 8 : 15)}px) brightness(${1 - progress * 0.3})`,
-            duration: 0.1,
+            filter: `blur(${blur}px) brightness(${brightness})`,
+            duration: 0,
           });
         }
       });
 
-      // Text zoom out and fade on scroll
+      // Text reveal and zoom on scroll - silky smooth
       ScrollTrigger.create({
         trigger: heroRef.current,
         start: 'top top',
         end: 'bottom top',
-        scrub: 1,
+        scrub: mobile ? 2 : 1.5,
+        invalidateOnRefresh: true,
         onUpdate: (self) => {
           const progress = self.progress;
-          const scale = 1 - (progress * 0.3);
-          const opacity = 1 - (progress * 1.2);
-          const y = progress * (isMobile ? 100 : 150);
+          const opacity = Math.max(0, 1 - (progress * 1.6));
+          const y = progress * (mobile ? 80 : 150);
+          const scale = Math.max(0.85, 1 - (progress * 0.15));
+          const blur = progress * (mobile ? 8 : 12);
           
           gsap.to(textRef.current, {
-            scale: scale,
             opacity: opacity,
             y: -y,
-            filter: `blur(${progress * (isMobile ? 4 : 8)}px)`,
-            duration: 0.1,
+            scale: scale,
+            filter: `blur(${blur}px)`,
+            duration: 0,
           });
         }
       });
 
-      // Button scroll animation
+      // Button scroll animation - premium smooth
       ScrollTrigger.create({
         trigger: heroRef.current,
         start: 'top top',
         end: 'bottom top',
-        scrub: 1,
+        scrub: mobile ? 2 : 1.5,
+        invalidateOnRefresh: true,
         onUpdate: (self) => {
           const progress = self.progress;
-          const opacity = 1 - (progress * 1.5);
-          const y = progress * (isMobile ? 80 : 120);
-          const scale = 1 - (progress * 0.2);
+          const opacity = Math.max(0, 1 - (progress * 1.9));
+          const y = progress * (mobile ? 70 : 120);
+          const scale = Math.max(0.75, 1 - (progress * 0.25));
+          const blur = progress * (mobile ? 6 : 8);
           
           gsap.to(buttonRef.current, {
             opacity: opacity,
             y: -y,
             scale: scale,
-            filter: `blur(${progress * 6}px)`,
-            duration: 0.1,
+            filter: `blur(${blur}px)`,
+            duration: 0,
           });
         }
       });
 
-      // Overlay darkness increases on scroll for smooth transition
+      // Scroll indicator fade out early
+      if (scrollIndicatorRef.current) {
+        ScrollTrigger.create({
+          trigger: heroRef.current,
+          start: 'top top',
+          end: '15% top',
+          scrub: true,
+          onUpdate: (self) => {
+            gsap.to(scrollIndicatorRef.current, {
+              opacity: Math.max(0, 1 - (self.progress * 2.5)),
+              y: self.progress * 20,
+              duration: 0,
+            });
+          }
+        });
+      }
+
+      // Overlay darkness increases on scroll
       const overlayElement = heroRef.current.querySelector('.hero-overlay');
       if (overlayElement) {
         ScrollTrigger.create({
@@ -241,16 +207,16 @@ const HeroSection = ({ onShopClick }) => {
           end: 'bottom top',
           scrub: true,
           onUpdate: (self) => {
-            const progress = self.progress;
+            const opacity = 0.6 + (self.progress * 0.3);
             gsap.to(overlayElement, {
-              opacity: 0.7 + (progress * 0.3),
-              duration: 0.1,
+              opacity: opacity,
+              duration: 0,
             });
           }
         });
       }
 
-      // Refresh ScrollTrigger on resize for responsiveness
+      // Responsive ScrollTrigger refresh
       const handleResize = () => {
         ScrollTrigger.refresh();
       };
@@ -303,9 +269,31 @@ const HeroSection = ({ onShopClick }) => {
           <button
             onClick={onShopClick}
             className="group relative px-8 sm:px-12 md:px-16 py-4 sm:py-5 md:py-6 bg-gold-500 hover:bg-gold-400 text-black text-base sm:text-lg md:text-xl font-bold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-gold-500/50 active:scale-95 overflow-hidden"
+            onMouseEnter={(e) => {
+              if (!isMobile()) {
+                gsap.to(e.currentTarget, {
+                  scale: 1.06,
+                  boxShadow: '0 30px 80px rgba(212,175,55,0.65)',
+                  y: -3,
+                  duration: getResponsiveDuration('fast'),
+                  ease: EASE.backGentle,
+                });
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isMobile()) {
+                gsap.to(e.currentTarget, {
+                  scale: 1,
+                  boxShadow: '0 0 0 rgba(212,175,55,0)',
+                  y: 0,
+                  duration: getResponsiveDuration('fast'),
+                  ease: EASE.circ,
+                });
+              }
+            }}
           >
             {/* Button shine effect */}
-            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
             
             <span className="relative flex items-center justify-center gap-2 sm:gap-3 font-sans">
               Shop Now
@@ -322,9 +310,9 @@ const HeroSection = ({ onShopClick }) => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden md:block">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
-            <div className="w-1.5 h-3 bg-gold-500 rounded-full animate-pulse" />
+        <div ref={scrollIndicatorRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block">
+          <div className="w-6 h-10 border-2 border-white/40 rounded-full flex items-start justify-center p-2 animate-pulse">
+            <div className="w-1.5 h-3 bg-gold-500 rounded-full animate-bounce" />
           </div>
         </div>
       </div>

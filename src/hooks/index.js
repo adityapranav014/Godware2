@@ -5,3 +5,4 @@
 export * from './useScrollSpy';
 export * from './useScrollToSection';
 export * from './useMobileMenu';
+export * from './useScrollAnimation';

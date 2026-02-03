@@ -6,79 +6,169 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
 import { Video } from '@imagekit/react';
+import { EASE, DURATION, STAGGER, isMobile, getResponsiveDuration, getResponsiveStagger } from '../utils/animations';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const AboutUsSection = () => {
     const sectionRef = useRef(null);
+    const badgeRef = useRef(null);
     const headerRef = useRef(null);
     const imageRef = useRef(null);
     const contentRef = useRef(null);
 
     useGSAP(() => {
-        const featureItems = sectionRef.current?.querySelectorAll(".about-feature");
+        if (!sectionRef.current) return;
 
-        gsap.fromTo(
+        const mobile = isMobile();
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: sectionRef.current,
+                start: mobile ? "top 85%" : "top 75%",
+                toggleActions: 'play none none reverse',
+            }
+        });
+
+        // Badge entrance - smooth
+        tl.fromTo(
+            badgeRef.current,
+            { scale: 0.85, opacity: 0, y: -15, willChange: 'transform, opacity' },
+            {
+                scale: 1,
+                opacity: 1,
+                y: 0,
+                duration: getResponsiveDuration('medium'),
+                ease: EASE.backGentle,
+                clearProps: 'willChange',
+            }
+        );
+
+        // Header entrance - silky smooth
+        tl.fromTo(
             headerRef.current,
-            { y: 20, opacity: 0 },
+            { 
+                y: mobile ? 30 : 40, 
+                opacity: 0, 
+                filter: mobile ? 'blur(5px)' : 'blur(8px)',
+                willChange: 'transform, opacity, filter',
+            },
             {
                 y: 0,
                 opacity: 1,
-                duration: 0.6,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: "top 70%"
-                }
-            }
+                filter: 'blur(0px)',
+                duration: getResponsiveDuration('medium'),
+                ease: EASE.circ,
+                clearProps: 'willChange',
+            },
+            '-=0.25'
         );
 
-        gsap.fromTo(
+        // Image reveal with premium scale and blur
+        tl.fromTo(
             imageRef.current,
-            { x: -20, opacity: 0 },
+            { 
+                y: mobile ? 30 : 40, 
+                opacity: 0,
+                scale: 0.96,
+                filter: mobile ? 'blur(6px)' : 'blur(10px)',
+                willChange: 'transform, opacity, filter',
+            },
             {
-                x: 0,
+                y: 0,
                 opacity: 1,
-                duration: 0.7,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: "top 70%"
-                }
-            }
+                scale: 1,
+                filter: 'blur(0px)',
+                duration: getResponsiveDuration('slow'),
+                ease: EASE.expo,
+                clearProps: 'willChange',
+            },
+            '-=0.15'
         );
 
-        gsap.fromTo(
+        // Content reveal - synchronized
+        tl.fromTo(
             contentRef.current,
-            { x: 20, opacity: 0 },
+            { 
+                y: mobile ? 30 : 40, 
+                opacity: 0,
+                scale: 0.96,
+                filter: mobile ? 'blur(6px)' : 'blur(10px)',
+                willChange: 'transform, opacity, filter',
+            },
             {
-                x: 0,
+                y: 0,
                 opacity: 1,
-                duration: 0.7,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: "top 70%"
-                }
-            }
+                scale: 1,
+                filter: 'blur(0px)',
+                duration: getResponsiveDuration('slow'),
+                ease: EASE.expo,
+                clearProps: 'willChange',
+            },
+            '<'
         );
 
+        // Feature items stagger - smooth cascade
+        const featureItems = sectionRef.current?.querySelectorAll(".about-feature");
         if (featureItems?.length) {
-            gsap.fromTo(
+            tl.fromTo(
                 featureItems,
-                { y: 16, opacity: 0 },
+                { 
+                    y: mobile ? 20 : 30, 
+                    opacity: 0,
+                    willChange: 'transform, opacity',
+                },
                 {
                     y: 0,
                     opacity: 1,
-                    duration: 0.5,
-                    stagger: 0.08,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: contentRef.current,
-                        start: "top 75%"
+                    duration: getResponsiveDuration('normal'),
+                    stagger: getResponsiveStagger('normal'),
+                    ease: EASE.circ,
+                    clearProps: 'willChange',
+                },
+                '-=0.5'
+            );
+
+            // Feature hover effects - desktop only
+            if (!mobile) {
+                featureItems.forEach((item) => {
+                    item.addEventListener('mouseenter', () => {
+                        gsap.to(item, {
+                            scale: 1.015,
+                            y: -2,
+                            duration: getResponsiveDuration('fast'),
+                            ease: EASE.circ,
+                        });
+                    });
+
+                    item.addEventListener('mouseleave', () => {
+                        gsap.to(item, {
+                            scale: 1,
+                            y: 0,
+                            duration: getResponsiveDuration('fast'),
+                            ease: EASE.circ,
+                        });
+                    });
+                });
+            }
+        }
+
+        // Parallax effect on image - subtle on mobile
+        if (!mobile) {
+            ScrollTrigger.create({
+                trigger: imageRef.current,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 2,
+                onUpdate: (self) => {
+                    const video = imageRef.current?.querySelector('video');
+                    if (video) {
+                        gsap.to(video, {
+                            y: -25 * self.progress,
+                            duration: 0,
+                        });
                     }
                 }
-            );
+            });
         }
     }, { scope: sectionRef });
 
@@ -88,7 +178,7 @@ const AboutUsSection = () => {
 
                 {/* Header */}
                 <div ref={headerRef} className="mb-8 sm:mb-10 md:mb-12 lg:mb-14 space-y-6 sm:space-y-8">
-                    <div className="flex justify-center">
+                    <div ref={badgeRef} className="flex justify-center">
                         <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-500 text-xs sm:text-sm uppercase tracking-widest font-semibold">
                             <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
                             About
@@ -98,7 +188,7 @@ const AboutUsSection = () => {
                         title="Built for Warriors"
                         subtitle="Born from discipline and driven by performance. God Wear delivers premium athletic wear that moves as relentlessly as you do."
                         align="center"
-                        titleClassName="text-white font-display text-3xl sm:text-4xl md:text-2xl lg:text-3xl xl:text-4xl font-bold"
+                        titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
                         subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
                     />
                 </div>

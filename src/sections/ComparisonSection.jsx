@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CircleCheck, CircleX } from "lucide-react";
 import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
+import { EASE, DURATION, STAGGER } from '../utils/animations';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,44 +27,136 @@ const othersPoints = [
 
 const ComparisonSection = () => {
   const sectionRef = useRef(null);
+  const badgeRef = useRef(null);
+  const headerRef = useRef(null);
+  const leftCardRef = useRef(null);
+  const rightCardRef = useRef(null);
   const leftItemsRef = useRef([]);
   const rightItemsRef = useRef([]);
 
   useGSAP(() => {
+    if (!sectionRef.current) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 75%",
+      }
+    });
+
+    // Badge entrance
+    tl.fromTo(
+      badgeRef.current,
+      { scale: 0.8, opacity: 0, y: -20 },
+      {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: DURATION.medium,
+        ease: EASE.back,
+      }
+    );
+
+    // Header entrance
+    tl.fromTo(
+      headerRef.current,
+      { y: 40, opacity: 0, filter: 'blur(8px)' },
+      {
+        y: 0,
+        opacity: 1,
+        filter: 'blur(0px)',
+        duration: DURATION.medium,
+        ease: EASE.power,
+      },
+      '-=0.3'
+    );
+
+    // Cards split reveal
+    tl.fromTo(
+      leftCardRef.current,
+      { y: 40, opacity: 0, scale: 0.95 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: DURATION.slow,
+        ease: EASE.expo,
+      },
+      '-=0.2'
+    );
+
+    tl.fromTo(
+      rightCardRef.current,
+      { y: 40, opacity: 0, scale: 0.95 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: DURATION.slow,
+        ease: EASE.expo,
+      },
+      '<'
+    );
+
+    // Stagger list items
     const leftItems = leftItemsRef.current.filter(Boolean);
     const rightItems = rightItemsRef.current.filter(Boolean);
 
-    gsap.fromTo(
-      leftItems,
-      { y: 18, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.08,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%"
-        }
-      }
-    );
+    if (leftItems.length > 0) {
+      tl.fromTo(
+        leftItems,
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: DURATION.normal,
+          stagger: STAGGER.fast,
+          ease: EASE.power,
+        },
+        '-=0.6'
+      );
+    }
 
-    gsap.fromTo(
-      rightItems,
-      { y: 18, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        stagger: 0.08,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%"
-        }
-      }
-    );
+    if (rightItems.length > 0) {
+      tl.fromTo(
+        rightItems,
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: DURATION.normal,
+          stagger: STAGGER.fast,
+          ease: EASE.power,
+        },
+        '<+=0.1'
+      );
+    }
+
+    // Card hover effects
+    const addHoverEffect = (card) => {
+      if (!card) return;
+      
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, {
+          scale: 1.02,
+          y: -5,
+          duration: DURATION.fast,
+          ease: EASE.power,
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          scale: 1,
+          y: 0,
+          duration: DURATION.fast,
+          ease: EASE.power,
+        });
+      });
+    };
+
+    addHoverEffect(leftCardRef.current);
+    addHoverEffect(rightCardRef.current);
   }, { scope: sectionRef });
 
   return (
@@ -71,7 +164,7 @@ const ComparisonSection = () => {
       <div className="space-y-8 sm:space-y-10 md:space-y-12">
         
         {/* Badge - Mobile Optimized */}
-        <div className="flex justify-center">
+        <div ref={badgeRef} className="flex justify-center">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-500 text-xs sm:text-sm uppercase tracking-widest font-semibold">
             <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
             Built Different
@@ -79,19 +172,21 @@ const ComparisonSection = () => {
         </div>
 
         {/* Section Header */}
-        <SectionHeader
-          title="Why God Wear"
-          subtitle="Because performance demands more than ordinary—it demands precision, power, and purpose."
-          align="center"
-          titleClassName="text-white font-display text-3xl sm:text-4xl md:text-2xl lg:text-3xl xl:text-4xl font-bold"
-          subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
-        />
+        <div ref={headerRef}>
+          <SectionHeader
+            title="Why God Wear"
+            subtitle="Because performance demands more than ordinary—it demands precision, power, and purpose."
+            align="center"
+            titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
+            subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
+          />
+        </div>
 
         {/* Comparison Cards - Mobile: Stack, Desktop: Side-by-side */}
         <div className="grid gap-4 sm:gap-6 md:gap-8 lg:gap-10 md:grid-cols-2 max-w-6xl mx-auto px-4 lg:px-8">
           
           {/* God Wear - Highlighted Card */}
-          <div className="order-1 rounded-2xl sm:rounded-3xl border-2 border-gold-500/30 bg-gradient-to-br from-dark-800 to-dark-900 p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl shadow-gold-500/10">
+          <div ref={leftCardRef} className="order-1 rounded-2xl sm:rounded-3xl border-2 border-gold-500/30 bg-gradient-to-br from-dark-800 to-dark-900 p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl shadow-gold-500/10 transition-shadow duration-300 hover:shadow-gold-500/20" style={{ perspective: '1000px' }}>
             <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8 md:mb-10 pb-4 sm:pb-6 md:pb-8 border-b border-gold-500/20">
               <span className="font-display text-2xl sm:text-3xl md:text-2xl lg:text-3xl xl:text-4xl uppercase text-gold-500 tracking-tight font-bold">
                 God Wear
@@ -116,7 +211,7 @@ const ComparisonSection = () => {
           </div>
 
           {/* Others - Subdued Card */}
-          <div className="order-2 rounded-2xl sm:rounded-3xl border border-dark-700 bg-dark-800/50 p-6 sm:p-8 md:p-10 lg:p-12 shadow-xl">
+          <div ref={rightCardRef} className="order-2 rounded-2xl sm:rounded-3xl border border-dark-700 bg-dark-800/50 p-6 sm:p-8 md:p-10 lg:p-12 shadow-xl transition-shadow duration-300 hover:shadow-2xl" style={{ perspective: '1000px' }}>
             <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8 md:mb-10 pb-4 sm:pb-6 md:pb-8 border-b border-dark-700">
               <span className="font-display text-2xl sm:text-3xl md:text-2xl lg:text-3xl xl:text-4xl uppercase text-dark-400 tracking-tight font-bold">
                 Others

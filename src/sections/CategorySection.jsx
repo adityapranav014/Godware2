@@ -6,6 +6,7 @@ import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
 import { productData } from "../assets/data";
 import { Video } from '@imagekit/react';
+import { EASE, DURATION, STAGGER, isMobile, getResponsiveDuration, getResponsiveStagger } from '../utils/animations';
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,44 +14,124 @@ gsap.registerPlugin(ScrollTrigger);
 
 const CategorySection = () => {
   const sectionRef = useRef(null);
+  const badgeRef = useRef(null);
   const headerRef = useRef(null);
   const gridRef = useRef(null);
 
   useGSAP(() => {
     if (!sectionRef.current) return;
 
-    gsap.fromTo(
-      headerRef.current,
-      { y: 24, opacity: 0 },
+    const mobile = isMobile();
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: mobile ? "top 85%" : "top 75%",
+        toggleActions: 'play none none reverse',
+      }
+    });
+
+    // Badge entrance - smooth bounce
+    tl.fromTo(
+      badgeRef.current,
+      { 
+        scale: 0.85, 
+        opacity: 0,
+        y: -15,
+        willChange: 'transform, opacity',
+      },
       {
-        y: 0,
+        scale: 1,
         opacity: 1,
-        duration: 0.6,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%"
-        }
+        y: 0,
+        duration: getResponsiveDuration('medium'),
+        ease: EASE.backGentle,
+        clearProps: 'willChange',
       }
     );
 
+    // Header entrance - silky smooth
+    tl.fromTo(
+      headerRef.current,
+      { 
+        y: mobile ? 30 : 40, 
+        opacity: 0,
+        filter: mobile ? 'blur(5px)' : 'blur(8px)',
+        willChange: 'transform, opacity, filter',
+      },
+      {
+        y: 0,
+        opacity: 1,
+        filter: 'blur(0px)',
+        duration: getResponsiveDuration('medium'),
+        ease: EASE.circ,
+        clearProps: 'willChange',
+      },
+      '-=0.25'
+    );
+
+    // Cards stagger entrance - premium feel
     if (gridRef.current) {
       const cards = gridRef.current.querySelectorAll(".product-card");
-      gsap.fromTo(
+      tl.fromTo(
         cards,
-        { y: 30, opacity: 0 },
+        { 
+          y: mobile ? 40 : 60, 
+          opacity: 0,
+          scale: 0.96,
+          rotateX: mobile ? -5 : -10,
+          willChange: 'transform, opacity',
+        },
         {
           y: 0,
           opacity: 1,
-          duration: 0.6,
-          stagger: 0.12,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: gridRef.current,
-            start: "top 80%"
-          }
-        }
+          scale: 1,
+          rotateX: 0,
+          duration: getResponsiveDuration('medium'),
+          stagger: getResponsiveStagger('normal'),
+          ease: EASE.backGentle,
+          clearProps: 'willChange',
+        },
+        '-=0.15'
       );
+
+      // Card hover animations - desktop only for better mobile performance
+      if (!mobile) {
+        cards.forEach((card) => {
+          const video = card.querySelector('video');
+          
+          card.addEventListener('mouseenter', () => {
+            gsap.to(card, {
+              scale: 1.02,
+              y: -6,
+              duration: getResponsiveDuration('fast'),
+              ease: EASE.circ,
+            });
+            if (video) {
+              gsap.to(video, {
+                scale: 1.08,
+                duration: getResponsiveDuration('slower'),
+                ease: EASE.circ,
+              });
+            }
+          });
+
+          card.addEventListener('mouseleave', () => {
+            gsap.to(card, {
+              scale: 1,
+              y: 0,
+              duration: getResponsiveDuration('fast'),
+              ease: EASE.circ,
+            });
+            if (video) {
+              gsap.to(video, {
+                scale: 1,
+                duration: getResponsiveDuration('slower'),
+                ease: EASE.circ,
+              });
+            }
+          });
+        });
+      }
     }
   }, { scope: sectionRef });
 
@@ -59,7 +140,7 @@ const CategorySection = () => {
       <div className="space-y-8 sm:space-y-10 md:space-y-12">
         
         {/* Badge */}
-        <div className="flex justify-center">
+        <div ref={badgeRef} className="flex justify-center">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-500 text-xs sm:text-sm uppercase tracking-widest font-semibold">
             <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
             Shop
@@ -69,10 +150,10 @@ const CategorySection = () => {
         {/* Header */}
         <div ref={headerRef}>
           <SectionHeader
-            title="Compression T-Shirts"
+            title="T-Shirts"
             subtitle="Your second layer of skin—4-way stretch, muscle support, and moisture control for peak performance."
             align="center"
-            titleClassName="text-white font-display text-3xl sm:text-4xl md:text-2xl lg:text-3xl xl:text-4xl font-bold"
+            titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
             subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
           />
         </div>

@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
+import { EASE, DURATION, STAGGER } from '../utils/animations';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -84,22 +85,81 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   const sectionRef = useRef(null);
+  const badgeRef = useRef(null);
+  const headerRef = useRef(null);
+  const marqueeRef = useRef(null);
 
   useGSAP(() => {
-    gsap.fromTo(
-      sectionRef.current,
-      { opacity: 0, y: 20 },
+    if (!sectionRef.current) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 75%",
+      }
+    });
+
+    // Badge entrance
+    tl.fromTo(
+      badgeRef.current,
+      { scale: 0.8, opacity: 0, y: -20 },
+      {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: DURATION.medium,
+        ease: EASE.back,
+      }
+    );
+
+    // Header entrance
+    tl.fromTo(
+      headerRef.current,
+      { y: 40, opacity: 0, filter: 'blur(8px)' },
+      {
+        y: 0,
+        opacity: 1,
+        filter: 'blur(0px)',
+        duration: DURATION.medium,
+        ease: EASE.power,
+      },
+      '-=0.3'
+    );
+
+    // Marquee entrance
+    tl.fromTo(
+      marqueeRef.current,
+      { opacity: 0, y: 40 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.6,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%"
-        }
-      }
+        duration: DURATION.slow,
+        ease: EASE.power,
+      },
+      '-=0.2'
     );
+
+    // Card hover effects
+    const cards = sectionRef.current.querySelectorAll('.testimonial-card');
+    cards.forEach((card) => {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, {
+          scale: 1.03,
+          y: -8,
+          duration: DURATION.fast,
+          ease: EASE.power,
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          scale: 1,
+          y: 0,
+          duration: DURATION.fast,
+          ease: EASE.power,
+        });
+      });
+    });
   }, { scope: sectionRef });
 
   return (
@@ -107,7 +167,7 @@ const TestimonialsSection = () => {
       <div className="space-y-8 sm:space-y-10 md:space-y-12">
         
         {/* Badge */}
-        <div className="flex justify-center">
+        <div ref={badgeRef} className="flex justify-center">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-500 text-xs sm:text-sm uppercase tracking-widest font-semibold">
             <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
             Voices
@@ -115,16 +175,18 @@ const TestimonialsSection = () => {
         </div>
 
         {/* Header */}
-        <SectionHeader
-          title="Proven By Athletes"
-          subtitle="Real voices. Real results. Hear from those who train relentlessly and trust God Wear."
-          align="center"
-          titleClassName="text-white font-display text-3xl sm:text-4xl md:text-2xl lg:text-3xl xl:text-4xl font-bold"
-          subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
-        />
+        <div ref={headerRef}>
+          <SectionHeader
+            title="Proven By Athletes"
+            subtitle="Real voices. Real results. Hear from those who train relentlessly and trust God Wear."
+            align="center"
+            titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
+            subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
+          />
+        </div>
 
         {/* Testimonials Marquee - Mobile: Single Column Horizontal Scroll */}
-        <div className="relative overflow-hidden testimonial-mask">
+        <div ref={marqueeRef} className="relative overflow-hidden testimonial-mask">
           {/* Fade edges */}
           <div className="pointer-events-none absolute inset-y-0 left-0 w-[10%] sm:w-[15%] bg-gradient-to-r from-dark-900 via-dark-900/50 to-transparent z-10" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-[10%] sm:w-[15%] bg-gradient-to-l from-dark-900 via-dark-900/50 to-transparent z-10" />
@@ -133,7 +195,7 @@ const TestimonialsSection = () => {
           <div className="overflow-hidden mb-4 sm:mb-6">
             <div className="marquee-left gap-4 sm:gap-6 px-4 sm:px-6 py-4">
               {testimonials.concat(testimonials).map((item, index) => (
-                <div key={`${item.name}-${index}`} className="bg-dark-800 border border-dark-700 rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] shrink-0 hover:border-gold-500/30 transition-all duration-300">
+                <div key={`${item.name}-${index}`} className="testimonial-card bg-dark-800 border border-dark-700 rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] shrink-0 hover:border-gold-500/30 transition-all duration-300 cursor-default">
                   {/* Header */}
                   <div className="flex items-center gap-3 sm:gap-4 pb-4 md:pb-5 mb-4 md:mb-5 border-b border-dark-700">
                     <div className="h-11 w-11 sm:h-12 sm:w-12 md:h-12 md:w-12 rounded-full overflow-hidden ring-2 ring-dark-700 shrink-0">

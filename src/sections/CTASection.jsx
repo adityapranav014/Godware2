@@ -34,7 +34,7 @@ const CTASection = ({ onShopClick }) => {
       className="relative overflow-hidden bg-dark-900"
     >
       {/* Background Image - Subtle */}
-      <div className="absolute inset-0 opacity-20 cta-bg" />
+      <div className="absolute inset-0 cta-bg" />
       <div className="absolute inset-0 bg-gradient-to-b from-dark-900/80 via-dark-900/90 to-dark-900" />
       
       {/* Content - Mobile First */}

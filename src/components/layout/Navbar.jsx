@@ -67,15 +67,13 @@ const Navbar = ({ activeSection, onNavClick }) => {
         tl.fromTo(
           menuButtonRef.current,
           {
-            scale: 0.6,
+            scale: 0.85,
             opacity: 0,
-            rotation: -90,
             willChange: 'transform, opacity',
           },
           {
             scale: 1,
             opacity: 1,
-            rotation: 0,
             duration: getResponsiveDuration('medium'),
             ease: EASE.backGentle,
             clearProps: 'willChange',

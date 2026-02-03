@@ -19,7 +19,7 @@ const HeroSection = ({ onShopClick }) => {
 
       {/* Content - Mobile First */}
       <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-28 flex flex-col items-center justify-center min-h-dvh space-y-8 sm:space-y-10 md:space-y-12">
-        
+
         {/* Eyebrow - Compact on Mobile */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-energy-500/10 border border-energy-500/20">
           <span className="h-1.5 w-1.5 rounded-full bg-energy-500 animate-pulse" />
@@ -33,7 +33,7 @@ const HeroSection = ({ onShopClick }) => {
           <h1 className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl xl:text-5xl font-bold font-display leading-tight tracking-tight">
             Elevate Your{' '}
             <span className="relative inline-flex items-baseline">
-              <span className="relative z-10 px-3 sm:px-4 py-1 sm:py-1.5 bg-gold-500/10 border border-gold-500/30 text-gold-500 rounded-lg">
+              <span className="relative z-10 px-3 sm:px-4 py-1 sm:py-1.5 text-gold-500 rounded-lg">
                 Performance
               </span>
             </span>

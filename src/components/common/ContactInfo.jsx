@@ -43,8 +43,8 @@ const ContactInfo = () => {
 
       {/* Business Hours */}
       <div className="bg-dark-900 border border-dark-700 rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 text-white">
-        <h3 className="text-lg sm:text-xl md:text-xl font-bold mb-4 sm:mb-6 font-display text-white">Business Hours</h3>
-        <div className="space-y-3 md:space-y-4 text-sm sm:text-base md:text-base text-dark-400 md:text-white/70 font-sans">
+        <h3 className="text-lg font-bold mb-4 sm:mb-6 font-display text-white">Business Hours</h3>
+        <div className="space-y-3 md:space-y-4 text-sm text-dark-400 font-sans">
           <p className="flex flex-col xs:flex-row xs:justify-between gap-1">
             <span>Monday - Friday</span>
             <span className="font-semibold md:font-bold text-white">9:00 AM - 8:00 PM</span>
@@ -62,7 +62,7 @@ const ContactInfo = () => {
 
       {/* Reach Us Card */}
       <div className="bg-dark-900 border border-dark-700 rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 text-white">
-        <h3 className="text-lg sm:text-xl md:text-xl font-bold mb-4 sm:mb-6 font-display text-white">Reach Us</h3>
+        <h3 className="text-lg font-bold mb-4 sm:mb-6 font-display text-white">Reach Us</h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {[
             {
@@ -97,7 +97,7 @@ const ContactInfo = () => {
                 aria-label={item.label}
               >
                 <Icon size={20} className="mb-2 md:w-6 md:h-6 text-dark-400 group-hover:text-gold-500 transition-colors" strokeWidth={2} />
-                <span className="text-xs md:text-sm font-medium text-dark-400 group-hover:text-white transition-colors">
+                <span className="text-xs md:text-[9px] font-medium text-dark-400 group-hover:text-white transition-colors">
                   {item.label}
                 </span>
               </a>

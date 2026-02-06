@@ -2,6 +2,7 @@ import { useRef } from "react";
 import ReactLenis from "lenis/react";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { Analytics } from "@vercel/analytics/react";
 
 // Layout components
 import { Navbar, Footer } from "./components/layout";
@@ -76,6 +77,7 @@ const App = () => {
         <Contact />
       </div>
       <Footer onNavClick={scrollToSection} />
+      <Analytics />
     </ReactLenis >
   );
 };

@@ -165,7 +165,7 @@ const TestimonialsSection = () => {
   return (
     <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-900 text-white" containerClassName="w-full max-w-full">
       <div className="space-y-8 sm:space-y-10 md:space-y-12">
-        
+
         {/* Badge */}
         <div ref={badgeRef} className="flex justify-center">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-500 text-xs sm:text-sm uppercase tracking-widest font-semibold">
@@ -208,12 +208,12 @@ const TestimonialsSection = () => {
                       />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-base sm:text-lg md:text-lg font-semibold md:font-bold text-white font-sans truncate">{item.name}</h3>
-                      <p className="text-xs sm:text-sm md:text-sm text-dark-400 md:text-white/70 font-sans truncate">{item.role}</p>
+                      <h3 className="sm:text-lg md:text-lg font-semibold md:font-bold text-white font-sans truncate">{item.name}</h3>
+                      <p className="text-xs sm:text-sm md:text-sm text-dark-400 font-sans truncate">{item.role}</p>
                     </div>
                   </div>
                   {/* Quote */}
-                  <p className="text-sm sm:text-base md:text-base text-white/90 leading-relaxed font-sans line-clamp-4">{item.text}</p>
+                  <p className="text-sm text-white/90 leading-relaxed font-sans line-clamp-4">{item.text}</p>
                 </div>
               ))}
             </div>
@@ -235,11 +235,11 @@ const TestimonialsSection = () => {
                       />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-base sm:text-lg md:text-lg font-semibold md:font-bold text-white font-sans truncate">{item.name}</h3>
-                      <p className="text-xs sm:text-sm md:text-sm text-dark-400 md:text-white/70 font-sans truncate">{item.role}</p>
+                      <h3 className="sm:text-lg md:text-lg font-semibold md:font-bold text-white font-sans truncate">{item.name}</h3>
+                      <p className="text-xs sm:text-sm md:text-sm text-dark-400 font-sans truncate">{item.role}</p>
                     </div>
                   </div>
-                  <p className="text-sm sm:text-base md:text-base text-white/90 leading-relaxed font-sans line-clamp-4">{item.text}</p>
+                  <p className="text-sm text-white/90 leading-relaxed font-sans line-clamp-4">{item.text}</p>
                 </div>
               ))}
             </div>

@@ -135,7 +135,7 @@ const ComparisonSection = () => {
     // Card hover effects
     const addHoverEffect = (card) => {
       if (!card) return;
-      
+
       card.addEventListener('mouseenter', () => {
         gsap.to(card, {
           scale: 1.02,
@@ -162,7 +162,7 @@ const ComparisonSection = () => {
   return (
     <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-900 text-white">
       <div className="space-y-8 sm:space-y-10 md:space-y-12">
-        
+
         {/* Badge - Mobile Optimized */}
         <div ref={badgeRef} className="flex justify-center">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-500 text-xs sm:text-sm uppercase tracking-widest font-semibold">
@@ -178,17 +178,17 @@ const ComparisonSection = () => {
             subtitle="Because performance demands more than ordinary—it demands precision, power, and purpose."
             align="center"
             titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
-            subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
+            subtitleClassName="text-dark-400 font-sans text-sm"
           />
         </div>
 
         {/* Comparison Cards - Mobile: Stack, Desktop: Side-by-side */}
         <div className="grid gap-4 sm:gap-6 md:gap-8 lg:gap-10 md:grid-cols-2 max-w-6xl mx-auto px-4 lg:px-8">
-          
+
           {/* God Wear - Highlighted Card */}
           <div ref={leftCardRef} className="order-1 rounded-2xl sm:rounded-3xl border-2 border-gold-500/30 bg-gradient-to-br from-dark-800 to-dark-900 p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl shadow-gold-500/10 transition-shadow duration-300 hover:shadow-gold-500/20" style={{ perspective: '1000px' }}>
             <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8 md:mb-10 pb-4 sm:pb-6 md:pb-8 border-b border-gold-500/20">
-              <span className="font-display text-2xl sm:text-3xl md:text-2xl lg:text-3xl xl:text-4xl uppercase text-gold-500 tracking-tight font-bold">
+              <span className="font-display text-2xl uppercase text-gold-500 tracking-tight font-bold">
                 God Wear
               </span>
             </div>
@@ -200,7 +200,7 @@ const ComparisonSection = () => {
                     className="flex items-start gap-3 sm:gap-4 font-sans group"
                   >
                     <CircleCheck className="text-success shrink-0 mt-0.5 sm:mt-1 w-5 h-5 sm:w-6 sm:h-6 md:w-6 md:h-6" strokeWidth={2} />
-                    <p className="text-base sm:text-lg md:text-base text-white leading-relaxed">{item}</p>
+                    <p className="text-base sm:text-lg text-white leading-relaxed">{item}</p>
                   </div>
                   {index !== godWearPoints.length - 1 && (
                     <div className="h-px bg-gradient-to-r from-transparent via-dark-700 to-transparent my-4" />
@@ -213,7 +213,7 @@ const ComparisonSection = () => {
           {/* Others - Subdued Card */}
           <div ref={rightCardRef} className="order-2 rounded-2xl sm:rounded-3xl border border-dark-700 bg-dark-800/50 p-6 sm:p-8 md:p-10 lg:p-12 shadow-xl transition-shadow duration-300 hover:shadow-2xl" style={{ perspective: '1000px' }}>
             <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8 md:mb-10 pb-4 sm:pb-6 md:pb-8 border-b border-dark-700">
-              <span className="font-display text-2xl sm:text-3xl md:text-2xl lg:text-3xl xl:text-4xl uppercase text-dark-400 tracking-tight font-bold">
+              <span className="font-display text-2xl  uppercase text-dark-400 tracking-tight font-bold">
                 Others
               </span>
             </div>
@@ -225,7 +225,7 @@ const ComparisonSection = () => {
                     className="flex items-start gap-3 sm:gap-4 font-sans"
                   >
                     <CircleX className="text-energy-500/70 shrink-0 mt-0.5 sm:mt-1 w-5 h-5 sm:w-6 sm:h-6 md:w-6 md:h-6" strokeWidth={2} />
-                    <p className="text-base sm:text-lg md:text-base text-dark-400 md:text-white/60 leading-relaxed">{item}</p>
+                    <p className="sm:text-lg text-dark-400 leading-relaxed">{item}</p>
                   </div>
                   {index !== othersPoints.length - 1 && (
                     <div className="h-px bg-gradient-to-r from-transparent via-dark-700 to-transparent my-4" />

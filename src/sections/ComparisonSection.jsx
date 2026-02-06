@@ -178,7 +178,7 @@ const ComparisonSection = () => {
             subtitle="Because performance demands more than ordinary—it demands precision, power, and purpose."
             align="center"
             titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
-            subtitleClassName="text-dark-400 font-sans text-sm"
+            subtitleClassName="text-lg text-muted max-w-2xl font-sans mx-auto text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
           />
         </div>
 

@@ -233,10 +233,10 @@ const AboutUsSection = () => {
                                     <Zap size={20} className="text-gold-500 md:w-6 md:h-6" strokeWidth={2.5} />
                                 </div>
                                 <div className="space-y-1 sm:space-y-2">
-                                    <h3 className="text-sm sm:text-base md:text-xl uppercase font-bold font-sans text-white tracking-wide">
+                                    <h3 className="text-sm md:text-xl uppercase font-bold font-sans text-white tracking-wide">
                                         Sustainability
                                     </h3>
-                                    <p className="text-xs sm:text-sm md:text-base font-sans text-dark-400 md:text-white/80 leading-relaxed">
+                                    <p className="text-xs sm:text-sm font-sans text-dark-400 leading-relaxed">
                                         Working alongside international groups of athletes, we create high-performance gym wear from premium materials.
                                     </p>
                                 </div>
@@ -248,10 +248,10 @@ const AboutUsSection = () => {
                                     <Landmark size={20} className="text-gold-500 md:w-6 md:h-6" strokeWidth={2.5} />
                                 </div>
                                 <div className="space-y-1 sm:space-y-2">
-                                    <h3 className="text-sm sm:text-base md:text-xl uppercase font-bold font-sans text-white tracking-wide">
+                                    <h3 className="text-sm md:text-xl uppercase font-bold font-sans text-white tracking-wide">
                                         Mission
                                     </h3>
-                                    <p className="text-xs sm:text-sm md:text-base font-sans text-dark-400 md:text-white/80 leading-relaxed">
+                                    <p className="text-xs sm:text-sm font-sans text-dark-400 leading-relaxed">
                                         We're on a mission to empower people to push their limits and achieve their fitness goals with confidence and style.
                                     </p>
                                 </div>

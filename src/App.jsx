@@ -3,6 +3,7 @@ import ReactLenis from "lenis/react";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 // Layout components
 import { Navbar, Footer } from "./components/layout";
@@ -78,6 +79,7 @@ const App = () => {
       </div>
       <Footer onNavClick={scrollToSection} />
       <Analytics />
+      <SpeedInsights />
     </ReactLenis >
   );
 };

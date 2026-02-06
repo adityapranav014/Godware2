@@ -3,7 +3,7 @@ import { Menu, X } from "lucide-react";
 import { NAV_LINKS } from "../../constants";
 import { useMobileMenu } from "../../hooks";
 import { gsap } from "gsap";
-import { EASE, DURATION, isMobile, getResponsiveDuration } from "../../utils/animations";
+import { EASE, isMobile, getResponsiveDuration } from "../../utils/animations";
 
 const Navbar = ({ activeSection, onNavClick }) => {
   const { isMobileMenuOpen, openMenu, closeMenu } = useMobileMenu();
@@ -20,7 +20,7 @@ const Navbar = ({ activeSection, onNavClick }) => {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const mobile = isMobile();
-      const tl = gsap.timeline({ 
+      const tl = gsap.timeline({
         defaults: { ease: EASE.circ },
         delay: 0.1
       });
@@ -216,14 +216,14 @@ const Navbar = ({ activeSection, onNavClick }) => {
     <>
       <header
         ref={navRef}
-        className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          hasScrolled 
-            ? 'backdrop-blur-xl bg-black/80 shadow-lg shadow-black/20' 
-            : 'backdrop-blur-sm bg-black/40'
-        }`}
+        className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${hasScrolled
+          ? 'bg-base'
+          : 'bg-transparent'
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 py-2 sm:py-0 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
+
             {/* Logo */}
             <button
               ref={logoRef}
@@ -250,10 +250,10 @@ const Navbar = ({ activeSection, onNavClick }) => {
             >
               <img
                 src={`${import.meta.env.BASE_URL}images/logo.webp`}
-                alt="GOD WEAR"
-                className="h-8 sm:h-10 md:h-12 object-contain group-hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.8)] transition-all duration-300"
+                alt="Logo"
+                className="h-8 sm:h-10 object-contain group-hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.8)] transition-all duration-300"
               />
-              <div className="text-xl sm:text-2xl md:text-3xl font-display bg-gold tracking-tight bg-clip-text text-transparent group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)]">
+              <div className="text-xl sm:text-2xl font-display bg-gold tracking-tight bg-clip-text text-transparent group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)]">
                 GOD WEAR <sup className="text-xs">®</sup>
               </div>
             </button>
@@ -265,11 +265,10 @@ const Navbar = ({ activeSection, onNavClick }) => {
                   key={link.name}
                   ref={(el) => (navLinksRef.current[index] = el)}
                   onClick={() => onNavClick(link.name)}
-                  className={`nav-link relative px-4 lg:px-6 py-2.5 rounded-full font-medium text-sm lg:text-base transition-all duration-300 ${
-                    activeSection === link.name
-                      ? "text-gold-500"
-                      : "text-white/80 hover:text-white"
-                  }`}
+                  className={`nav-link relative px-4 lg:px-6 py-2.5 font-medium text-sm transition-all duration-300 cursor-pointer ${activeSection === link.name
+                    ? "text-gold-500"
+                    : "text-white hover:text-gold-400"
+                    }`}
                   onMouseEnter={(e) => {
                     if (activeSection !== link.name) {
                       gsap.to(e.currentTarget, {
@@ -291,9 +290,9 @@ const Navbar = ({ activeSection, onNavClick }) => {
                 >
                   {link.name}
                   {activeSection === link.name && (
-                    <span className="absolute inset-0 bg-gold-500/10 rounded-full border border-gold-500/30 -z-10 animate-pulse" />
+                    <span className="absolute inset-0 -z-10 animate-pulse" />
                   )}
-                  <span className="absolute inset-0 bg-white/5 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300 -z-10" />
+                  <span className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 -z-10" />
                 </button>
               ))}
             </nav>
@@ -332,51 +331,52 @@ const Navbar = ({ activeSection, onNavClick }) => {
       </header>
 
       {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <div
-          ref={mobileMenuRef}
-          className="fixed inset-0 z-[60] md:hidden bg-black/95 backdrop-blur-2xl"
-        >
-          <div className="flex flex-col h-dvh">
-            {/* Close button */}
-            <div className="flex justify-end p-6">
-              <button
-                onClick={closeMenu}
-                className="p-3 rounded-full text-white hover:text-gold-500 hover:bg-white/10 active:scale-95 transition-all duration-200"
-                aria-label="Close menu"
-              >
-                <X size={28} />
-              </button>
-            </div>
-
-            {/* Mobile Navigation Links */}
-            <nav className="flex-1 flex flex-col justify-center px-6 gap-3">
-              {NAV_LINKS.map((link, index) => (
+      {
+        isMobileMenuOpen && (
+          <div
+            ref={mobileMenuRef}
+            className="fixed inset-0 z-[60] md:hidden bg-base"
+          >
+            <div className="flex flex-col h-dvh">
+              {/* Close button */}
+              <div className="flex justify-end p-6">
                 <button
-                  key={link.name}
-                  onClick={() => {
-                    onNavClick(link.name);
-                    closeMenu();
-                  }}
-                  className={`mobile-nav-item relative w-full text-left py-5 px-6 rounded-2xl text-2xl font-semibold transition-all duration-300 hover:bg-white/5 active:scale-98 ${
-                    activeSection === link.name
+                  onClick={closeMenu}
+                  className="p-3 rounded-full text-white hover:text-gold-500 hover:bg-white/10 active:scale-95 transition-all duration-200"
+                  aria-label="Close menu"
+                >
+                  <X size={28} />
+                </button>
+              </div>
+
+              {/* Mobile Navigation Links */}
+              <nav className="flex-1 flex flex-col justify-center px-6 gap-3">
+                {NAV_LINKS.map((link, index) => (
+                  <button
+                    key={link.name}
+                    onClick={() => {
+                      onNavClick(link.name);
+                      closeMenu();
+                    }}
+                    className={`mobile-nav-item relative w-full text-left py-5 px-6 rounded-2xl text-2xl font-semibold transition-all duration-300 hover:bg-white/5 active:scale-98 ${activeSection === link.name
                       ? "text-gold-500 bg-gold-500/10"
                       : "text-white/90"
-                  }`}
-                  style={{ perspective: '1000px' }}
-                >
-                  <span className="block transform transition-transform duration-300">
-                    {link.name}
-                  </span>
-                  {activeSection === link.name && (
-                    <span className="absolute right-6 top-1/2 -translate-y-1/2 w-2 h-2 bg-gold-500 rounded-full animate-pulse" />
-                  )}
-                </button>
-              ))}
-            </nav>
+                      }`}
+                    style={{ perspective: '1000px' }}
+                  >
+                    <span className="block transform transition-transform duration-300">
+                      {link.name}
+                    </span>
+                    {activeSection === link.name && (
+                      <span className="absolute right-6 top-1/2 -translate-y-1/2 w-2 h-2 bg-gold-500 rounded-full animate-pulse" />
+                    )}
+                  </button>
+                ))}
+              </nav>
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }
     </>
   );
 };

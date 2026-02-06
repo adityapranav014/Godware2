@@ -3,13 +3,15 @@ import Section from "../components/layout/Section";
 
 const TaglineSection = () => {
   const items = [
-    "Strength",
-    "Power",
-    "Endurance",
-    "Victory",
-    "Excellence",
-    "Discipline",
-    "Performance"
+    "Free Shipping on All Orders",
+    "Premium Quality, Affordable Price",
+    "Built to Last - Guaranteed",
+    "Trusted by 10,000+ Athletes",
+    "Sweat-Wicking Technology",
+    "100% Money-Back Guarantee",
+    "Limited Stock - Shop Now",
+    "Breathable & Comfortable Fabric",
+    "Engineered for Peak Performance"
   ];
 
   return (

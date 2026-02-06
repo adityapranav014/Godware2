@@ -33,8 +33,8 @@ const CategorySection = () => {
     // Badge entrance - smooth bounce
     tl.fromTo(
       badgeRef.current,
-      { 
-        scale: 0.85, 
+      {
+        scale: 0.85,
         opacity: 0,
         y: -15,
         willChange: 'transform, opacity',
@@ -52,8 +52,8 @@ const CategorySection = () => {
     // Header entrance - silky smooth
     tl.fromTo(
       headerRef.current,
-      { 
-        y: mobile ? 30 : 40, 
+      {
+        y: mobile ? 30 : 40,
         opacity: 0,
         filter: mobile ? 'blur(5px)' : 'blur(8px)',
         willChange: 'transform, opacity, filter',
@@ -74,8 +74,8 @@ const CategorySection = () => {
       const cards = gridRef.current.querySelectorAll(".product-card");
       tl.fromTo(
         cards,
-        { 
-          y: mobile ? 40 : 60, 
+        {
+          y: mobile ? 40 : 60,
           opacity: 0,
           scale: 0.96,
           rotateX: mobile ? -5 : -10,
@@ -98,7 +98,7 @@ const CategorySection = () => {
       if (!mobile) {
         cards.forEach((card) => {
           const video = card.querySelector('video');
-          
+
           card.addEventListener('mouseenter', () => {
             gsap.to(card, {
               scale: 1.02,
@@ -138,7 +138,7 @@ const CategorySection = () => {
   return (
     <Section background="dark" padding="large" className="bg-dark-900 text-white" sectionRef={sectionRef}>
       <div className="space-y-8 sm:space-y-10 md:space-y-12">
-        
+
         {/* Badge */}
         <div ref={badgeRef} className="flex justify-center">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-500 text-xs sm:text-sm uppercase tracking-widest font-semibold">
@@ -190,7 +190,7 @@ const CategorySection = () => {
               <div className="relative z-10 flex flex-col min-h-[480px] sm:min-h-[560px] md:min-h-[640px] p-5 sm:p-6 md:p-8">
                 {/* Spacer - Pushes content to bottom */}
                 <div className="flex-1" />
-                
+
                 {/* Product Info */}
                 <div className="space-y-3 sm:space-y-4">
                   {/* Pricing - Clear Hierarchy */}
@@ -198,7 +198,7 @@ const CategorySection = () => {
                     <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-gold-500">
                       {product.priceAfterDiscount}
                     </span>
-                    <span className="text-sm sm:text-base line-through text-dark-400 mb-1">
+                    <span className="text-sm line-through text-dark-400 mb-1">
                       {product.price}
                     </span>
                     <span className="text-xs sm:text-sm uppercase tracking-wider text-energy-500 font-semibold mb-1 px-2 py-0.5 bg-energy-500/10 rounded">
@@ -213,7 +213,7 @@ const CategorySection = () => {
 
                   {/* CTA Button - Thumb-friendly */}
                   <div className="pt-3 sm:pt-4 border-t border-dark-700">
-                    <span className="flex items-center justify-center gap-2 w-full py-3 sm:py-4 px-6 rounded-xl bg-dark-800 border border-dark-700 text-white text-sm sm:text-base font-semibold uppercase tracking-wider transition-all duration-300 group-hover:bg-gold-500 group-hover:text-dark-900 group-hover:border-gold-500">
+                    <span className="flex items-center justify-center gap-2 w-full py-3 sm:py-4 px-6 rounded-xl bg-dark-800 border border-dark-700 text-white text-sm font-semibold uppercase tracking-wider transition-all duration-300 group-hover:bg-gold-500 group-hover:text-dark-900 group-hover:border-gold-500">
                       View Product
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />

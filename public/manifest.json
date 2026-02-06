@@ -1,0 +1,27 @@
+{
+  "name": "GOD WEAR - Premium Gym Wear & Fitness Apparel",
+  "short_name": "GOD WEAR",
+  "description": "India's Premium Gym Wear Brand. Shop high-performance fitness apparel online.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/images/logo.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "lifestyle", "sports"],
+  "lang": "en-IN",
+  "dir": "ltr"
+}

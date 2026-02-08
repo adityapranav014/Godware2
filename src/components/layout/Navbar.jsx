@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Menu, X } from "lucide-react";
-import { NAV_LINKS } from "../../constants";
+import { Menu, X, Instagram, MessageCircle, Mail, Phone } from "lucide-react";
+import { NAV_LINKS, SOCIAL_LINKS, CONTACT_INFO } from "../../constants";
 import { useMobileMenu } from "../../hooks";
 import { gsap } from "gsap";
 import { EASE, isMobile, getResponsiveDuration } from "../../utils/animations";
@@ -157,54 +157,63 @@ const Navbar = ({ activeSection, onNavClick }) => {
       if (isMobileMenuOpen) {
         const tl = gsap.timeline();
 
-        // Backdrop fade in with scale
+        // 1. Overlay Entrance
         tl.fromTo(
           mobileMenuRef.current,
           {
-            opacity: 0,
-            scale: 1.05,
-            filter: 'blur(10px)',
+            clipPath: "inset(0 0 100% 0)", // Reveal from bottom
           },
           {
-            opacity: 1,
-            scale: 1,
-            filter: 'blur(0px)',
-            duration: getResponsiveDuration('normal'),
-            ease: EASE.circ,
+            clipPath: "inset(0 0 0% 0)",
+            duration: 0.8,
+            ease: "power4.inOut",
           }
         );
 
-        // Menu items premium stagger entrance
-        const menuItems = mobileMenuRef.current.querySelectorAll('.mobile-nav-item');
+        // 2. Links Stagger (Large Text)
+        const links = mobileMenuRef.current.querySelectorAll('.mobile-nav-link');
         tl.fromTo(
-          menuItems,
+          links,
           {
-            x: -50,
+            y: 100,
             opacity: 0,
-            scale: 0.95,
-            rotateY: -15,
-            willChange: 'transform, opacity',
+            rotate: 5,
           },
           {
-            x: 0,
+            y: 0,
             opacity: 1,
-            scale: 1,
-            rotateY: 0,
-            duration: getResponsiveDuration('medium'),
-            stagger: 0.06,
-            ease: EASE.backGentle,
-            clearProps: 'willChange',
+            rotate: 0,
+            duration: 1,
+            stagger: 0.1,
+            ease: "power3.out",
           },
-          '-=0.15'
+          "-=0.4"
         );
+
+        // 3. Footer/Socials Stagger
+        const bottomContent = mobileMenuRef.current.querySelectorAll('.mobile-menu-footer');
+        tl.fromTo(
+          bottomContent,
+          {
+            y: 20,
+            opacity: 0,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            stagger: 0.05,
+            ease: "power2.out",
+          },
+          "-=0.6"
+        );
+
       } else if (mobileMenuRef.current) {
-        // Smooth exit animation
+        // Exit Animation
         gsap.to(mobileMenuRef.current, {
-          opacity: 0,
-          scale: 0.98,
-          filter: 'blur(5px)',
-          duration: getResponsiveDuration('fast'),
-          ease: EASE.power,
+          clipPath: "inset(0 0 100% 0)",
+          duration: 0.6,
+          ease: "power4.inOut",
         });
       }
     }, mobileMenuRef);
@@ -335,44 +344,75 @@ const Navbar = ({ activeSection, onNavClick }) => {
         isMobileMenuOpen && (
           <div
             ref={mobileMenuRef}
-            className="fixed inset-0 z-[60] md:hidden bg-base"
+            className="fixed inset-0 z-[60] md:hidden bg-black/95 backdrop-blur-xl text-white flex flex-col"
+            style={{ clipPath: "inset(0 0 100% 0)" }} // Initial state for animation
           >
-            <div className="flex flex-col h-dvh">
-              {/* Close button */}
-              <div className="flex justify-end p-6">
+            {/* Header: Logo + Close */}
+            <div className="flex items-center justify-between px-6 py-6 border-b border-white/10">
+              <span className="text-xl font-display font-medium text-white tracking-tight">
+                GOD WEAR
+              </span>
+              <button
+                onClick={closeMenu}
+                className="p-2 rounded-full text-white/80 hover:text-gold-500 hover:bg-white/10 transition-colors"
+                aria-label="Close menu"
+              >
+                <X size={32} strokeWidth={1.5} />
+              </button>
+            </div>
+
+            {/* Main Navigation Links */}
+            <nav className="flex-1 flex flex-col justify-center items-center px-8 gap-6 overflow-y-auto">
+              {NAV_LINKS.map((link, index) => (
                 <button
-                  onClick={closeMenu}
-                  className="p-3 rounded-full text-white hover:text-gold-500 hover:bg-white/10 active:scale-95 transition-all duration-200"
-                  aria-label="Close menu"
+                  key={link.name}
+                  onClick={() => {
+                    onNavClick(link.name);
+                    closeMenu();
+                  }}
+                  className={`mobile-nav-link text-center text-[3.5rem] leading-none font-display font-medium tracking-tight transition-all duration-300 group ${activeSection === link.name
+                    ? "text-gold-500"
+                    : "text-white/40 hover:text-white"
+                    }`}
                 >
-                  <X size={28} />
+                  <span className="inline-block group-hover:skew-x-6 transition-transform duration-300">
+                    {link.name}
+                  </span>
                 </button>
+              ))}
+            </nav>
+
+            {/* Footer Information */}
+            <div className="px-8 pb-10 pt-6 border-t border-white/10 grid grid-cols-2 gap-8">
+              {/* Socials */}
+              <div className="mobile-menu-footer flex flex-col gap-4">
+                <span className="text-xs uppercase tracking-[0.2em] text-gold-500">
+                  Follow Us
+                </span>
+                <div className="flex gap-4 text-white/60">
+                  <a href={SOCIAL_LINKS.instagram} className="hover:text-gold-500 transition-colors">
+                    <Instagram size={24} strokeWidth={1.5} />
+                  </a>
+                  <a href={`https://wa.me/${CONTACT_INFO.whatsappNumber}`} className="hover:text-gold-500 transition-colors">
+                    <MessageCircle size={24} strokeWidth={1.5} />
+                  </a>
+                </div>
               </div>
 
-              {/* Mobile Navigation Links */}
-              <nav className="flex-1 flex flex-col justify-center px-6 gap-3">
-                {NAV_LINKS.map((link, index) => (
-                  <button
-                    key={link.name}
-                    onClick={() => {
-                      onNavClick(link.name);
-                      closeMenu();
-                    }}
-                    className={`mobile-nav-item relative w-full text-left py-5 px-6 rounded-2xl text-2xl font-semibold transition-all duration-300 hover:bg-white/5 active:scale-98 ${activeSection === link.name
-                      ? "text-gold-500 bg-gold-500/10"
-                      : "text-white/90"
-                      }`}
-                    style={{ perspective: '1000px' }}
-                  >
-                    <span className="block transform transition-transform duration-300">
-                      {link.name}
-                    </span>
-                    {activeSection === link.name && (
-                      <span className="absolute right-6 top-1/2 -translate-y-1/2 w-2 h-2 bg-gold-500 rounded-full animate-pulse" />
-                    )}
-                  </button>
-                ))}
-              </nav>
+              {/* Contact */}
+              <div className="mobile-menu-footer flex flex-col gap-4">
+                <span className="text-xs uppercase tracking-[0.2em] text-gold-500">
+                  Contact
+                </span>
+                <div className="flex flex-col gap-2 text-sm text-white/60 font-sans">
+                  <a href={`mailto:${CONTACT_INFO.email}`} className="hover:text-white transition-colors">
+                    {CONTACT_INFO.email}
+                  </a>
+                  <a href={`tel:${CONTACT_INFO.phone}`} className="hover:text-white transition-colors">
+                    {CONTACT_INFO.phone}
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         )

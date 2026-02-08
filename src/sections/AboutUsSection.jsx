@@ -46,9 +46,9 @@ const AboutUsSection = () => {
         // Header entrance - silky smooth
         tl.fromTo(
             headerRef.current,
-            { 
-                y: mobile ? 30 : 40, 
-                opacity: 0, 
+            {
+                y: mobile ? 30 : 40,
+                opacity: 0,
                 filter: mobile ? 'blur(5px)' : 'blur(8px)',
                 willChange: 'transform, opacity, filter',
             },
@@ -66,8 +66,8 @@ const AboutUsSection = () => {
         // Image reveal with premium scale and blur
         tl.fromTo(
             imageRef.current,
-            { 
-                y: mobile ? 30 : 40, 
+            {
+                y: mobile ? 30 : 40,
                 opacity: 0,
                 scale: 0.96,
                 filter: mobile ? 'blur(6px)' : 'blur(10px)',
@@ -88,8 +88,8 @@ const AboutUsSection = () => {
         // Content reveal - synchronized
         tl.fromTo(
             contentRef.current,
-            { 
-                y: mobile ? 30 : 40, 
+            {
+                y: mobile ? 30 : 40,
                 opacity: 0,
                 scale: 0.96,
                 filter: mobile ? 'blur(6px)' : 'blur(10px)',
@@ -112,8 +112,8 @@ const AboutUsSection = () => {
         if (featureItems?.length) {
             tl.fromTo(
                 featureItems,
-                { 
-                    y: mobile ? 20 : 30, 
+                {
+                    y: mobile ? 20 : 30,
                     opacity: 0,
                     willChange: 'transform, opacity',
                 },

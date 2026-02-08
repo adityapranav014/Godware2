@@ -345,7 +345,7 @@ const HeroSection = ({ onShopClick }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

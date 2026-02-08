@@ -73,7 +73,7 @@ const ContactForm = () => {
   return (
     <div className="space-y-6">
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-        
+
         {/* Name & Email - Mobile: Stack, Desktop: Grid */}
         <div className="grid gap-4 sm:grid-cols-2">
           <Input
@@ -117,7 +117,7 @@ const ContactForm = () => {
           name="message"
           value={formData.message}
           onChange={handleChange}
-          placeholder="Tell us about your project *"
+          placeholder="Tell us about your order *"
           required
           rows={5}
           error={errors.message}

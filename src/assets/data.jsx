@@ -5,8 +5,8 @@ const productData = [
     details:
       "Precision-knit compression that sculpts the upper body, balances airflow, and stays locked during high reps.",
     price: "₹2,299",
-    priceAfterDiscount: "₹676",
-    discount: "70% off",
+    priceAfterDiscount: "₹697",
+    discount: "69% off",
     tag: "NEW ARRIVAL",
     imgHeight: "aspect-[3/4]",
     bgUrl: "/video/product-1.mp4?updatedAt=1770004639401",
@@ -18,8 +18,8 @@ const productData = [
     details:
       "Dual-layer dry-fit weave that keeps you cool while amplifying mobility through every lift.",
     price: "₹2,399",
-    priceAfterDiscount: "₹799",
-    discount: "70% off",
+    priceAfterDiscount: "₹820",
+    discount: "65% off",
     tag: "NEW ARRIVAL",
     imgHeight: "aspect-[3/4]",
     bgUrl: "/video/product-2.mp4?updatedAt=1770004746595",

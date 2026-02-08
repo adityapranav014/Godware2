@@ -10,9 +10,9 @@ import { EASE, DURATION, STAGGER } from '../utils/animations';
 gsap.registerPlugin(ScrollTrigger);
 
 const godWearPoints = [
-  "Engineered fit with compression-grade structure",
+  "Engineered fit with compression grade structure",
   "Premium fabric blends for heat and sweat control",
-  "Athlete-tested patterns and performance cuts",
+  "Athlete tested patterns and performance cuts",
   "Durable stitching for heavy training cycles",
   "Direct performance support community"
 ];
@@ -20,9 +20,9 @@ const godWearPoints = [
 const othersPoints = [
   "Basic fits with generic sizing",
   "Average fabrics with weak sweat control",
-  "Off-the-shelf silhouettes",
+  "Off the shelf silhouettes",
   "Lower durability under high intensity",
-  "No athlete-led feedback loop"
+  "No athlete led feedback loop"
 ];
 
 const ComparisonSection = () => {
@@ -175,7 +175,7 @@ const ComparisonSection = () => {
         <div ref={headerRef}>
           <SectionHeader
             title="Why God Wear"
-            subtitle="Because performance demands more than ordinary—it demands precision, power, and purpose."
+            subtitle="Because performance demands more than ordinary, it demands precision, power, and purpose."
             align="center"
             titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
             subtitleClassName="text-lg text-muted max-w-2xl font-sans mx-auto text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"

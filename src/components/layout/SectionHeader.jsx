@@ -25,7 +25,7 @@ const SectionHeader = ({
 
   return (
     <div className={`mb-16 ${alignments[align]} ${className}`}>
-      <h2 className={`text-5xl md:text-7xl font-display uppercase text-ink mb-4 ${titleClassName}`}>
+      <h2 className={`text-4xl md:text-7xl font-display uppercase text-ink mb-4 ${titleClassName}`}>
         {title}
       </h2>
       {subtitle && (

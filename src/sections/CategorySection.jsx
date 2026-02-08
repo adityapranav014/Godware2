@@ -151,9 +151,9 @@ const CategorySection = () => {
         <div ref={headerRef}>
           <SectionHeader
             title="Compression T-Shirts"
-            subtitle="Your second layer of skin—4-way stretch, muscle support, and moisture control for peak performance."
+            subtitle="Your second layer of skin, 4 way stretch, muscle support, and moisture control for peak performance."
             align="center"
-            titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold break-words"
+            titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
             subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
           />
         </div>

@@ -289,6 +289,20 @@ a.active hr {
       transform: translateX(-100%);
     }
   }
+
+  --animate-arrow-right: arrow-right 1.5s ease-in-out infinite;
+
+  @keyframes arrow-right {
+
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+
+    50% {
+      transform: translateX(4px);
+    }
+  }
 }
 
 /* CUSTOM_UTIITIES */

@@ -256,7 +256,7 @@ const HeroSection = ({ onShopClick }) => {
         {/* Hero Text on Video */}
         <h1
           ref={textRef}
-          className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-display text-center leading-tight tracking-tight mb-8 sm:mb-12 md:mb-16 max-w-[90vw] sm:max-w-none text-video-safe"
+          className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-display text-center leading-tight tracking-tight mb-8 sm:mb-12 md:mb-16 max-w-[90vw] sm:max-w-none mix-blend-overlay text-white/90"
           style={{
             perspective: '1200px',
             transformStyle: 'preserve-3d'
@@ -266,33 +266,30 @@ const HeroSection = ({ onShopClick }) => {
         </h1>
 
         {/* Shop Now Button - Professional Video Overlay CTA */}
-        <div ref={buttonRef} className="relative">
-          {/* Button glow effect container */}
-          <div className="absolute inset-0 blur-xl opacity-60 bg-gold-500/30 rounded-2xl scale-105 transition-opacity duration-300 pointer-events-none" />
+        <div ref={buttonRef} className="relative mix-blend-overlay">
+          {/* Button glow effect container - Changed to white for seamless integration */}
+          <div className="absolute inset-0 blur-2xl opacity-40 bg-white/20 rounded-2xl scale-110 transition-opacity duration-300 pointer-events-none" />
 
           <button
             onClick={onShopClick}
             className="group relative w-full sm:w-auto min-w-[280px] sm:min-w-[300px] md:min-w-[320px] lg:min-w-[320px] max-w-[90vw] sm:max-w-[360px] 
                        px-8 sm:px-10 md:px-11 lg:px-12 
                        py-4 sm:py-[1.0rem] md:py-[1.125rem] lg:py-[1.125rem]
-                       bg-gold-500/95 backdrop-blur-sm
-                       hover:bg-gold-500 active:bg-gold-600
-                       text-black font-bold 
+                       bg-white/10 backdrop-blur-md
+                       hover:bg-white/20 active:bg-white/30
+                       text-white font-bold 
                        text-base sm:text-lg md:text-lg lg:text-lg
                        rounded-xl sm:rounded-xl md:rounded-xl lg:rounded-xl
                        transition-all duration-300
-                       shadow-[0_8px_32px_rgba(0,0,0,0.4),0_2px_8px_rgba(201,139,58,0.3)]
-                       hover:shadow-[0_20px_60px_rgba(201,139,58,0.6),0_8px_16px_rgba(0,0,0,0.5)]
-                       active:scale-[0.98]
-                       border border-gold-500/20
+                       border border-white/30
                        overflow-hidden
-                       focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:ring-offset-2 focus:ring-offset-black/50"
+                       focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black/50"
             aria-label="Shop Now - Browse our premium gym wear collection"
             onMouseEnter={(e) => {
               if (!isMobile()) {
                 gsap.to(e.currentTarget, {
-                  y: -4,
-                  scale: 1.02,
+                  y: -2,
+                  scale: 1.01,
                   duration: getResponsiveDuration('fast'),
                   ease: EASE.backGentle,
                 });
@@ -310,23 +307,23 @@ const HeroSection = ({ onShopClick }) => {
             }}
           >
             {/* Animated gradient overlay - Shine effect */}
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
 
             {/* Corner accents for premium feel */}
-            <span className="absolute top-0 left-0 w-2 h-2 bg-white/40 rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <span className="absolute bottom-0 right-0 w-2 h-2 bg-white/40 rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <span className="absolute top-0 left-0 w-2 h-2 bg-white/60 rounded-br-full opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+            <span className="absolute bottom-0 right-0 w-2 h-2 bg-white/60 rounded-tl-full opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
 
             {/* Button content */}
             <span className="relative flex items-center justify-center gap-2.5 sm:gap-3 font-sans tracking-wide">
               <span className="relative">
                 Shop Now
                 {/* Text underline animation on hover */}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black/40 group-hover:w-full transition-all duration-300" />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white/60 group-hover:w-full transition-all duration-300" />
               </span>
 
               {/* Animated arrow icon */}
               <svg
-                className="w-5 h-5 sm:w-[1.375rem] sm:h-[1.375rem] md:w-6 md:h-6 transition-transform duration-300 group-hover:translate-x-1.5 group-active:translate-x-0.5"
+                className="w-5 h-5 sm:w-[1.375rem] sm:h-[1.375rem] md:w-6 md:h-6 animate-arrow-right"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

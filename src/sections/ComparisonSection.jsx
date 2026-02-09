@@ -1,38 +1,128 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { CircleCheck, CircleX } from "lucide-react";
+import {
+  Scaling,
+  Thermometer,
+  Trophy,
+  ShieldCheck,
+  Users,
+  Zap,
+  Dumbbell
+} from "lucide-react";
 import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
 import { EASE, DURATION, STAGGER } from '../utils/animations';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const godWearPoints = [
-  "Engineered fit with compression grade structure",
-  "Premium fabric blends for heat and sweat control",
-  "Athlete tested patterns and performance cuts",
-  "Durable stitching for heavy training cycles",
-  "Direct performance support community"
+const featurePoints = [
+  {
+    title: "Engineered Fit",
+    description: "Compression grade structure that adapts to your body's movement.",
+    icon: Scaling,
+    colSpan: "md:col-span-2",
+  },
+  {
+    title: "Thermal Control",
+    description: "Premium fabric blends optimize heat and sweat regulation.",
+    icon: Thermometer,
+    colSpan: "md:col-span-1",
+  },
+  {
+    title: "Elite Durability",
+    description: "Reinforced stitching designed for heavy training cycles.",
+    icon: ShieldCheck,
+    colSpan: "md:col-span-1",
+  },
+  {
+    title: "Athlete Tested",
+    description: "Patterns refined by pro athletes for peak performance.",
+    icon: Trophy,
+    colSpan: "md:col-span-2",
+  },
+  {
+    title: "Performance Community",
+    description: "Join a network of athletes dedicated to pushing limits.",
+    icon: Users,
+    colSpan: "md:col-span-1",
+  },
+  {
+    title: "Impact Resistant",
+    description: "Materials built to withstand high-intensity friction.",
+    icon: Dumbbell,
+    colSpan: "md:col-span-1",
+  },
+  {
+    title: "Reactive Power",
+    description: "Fabric that snaps back, enhancing your natural power output.",
+    icon: Zap,
+    colSpan: "md:col-span-1",
+  }
 ];
 
-const othersPoints = [
-  "Basic fits with generic sizing",
-  "Average fabrics with weak sweat control",
-  "Off the shelf silhouettes",
-  "Lower durability under high intensity",
-  "No athlete led feedback loop"
-];
+const FeatureCard = ({ feature, index }) => {
+  const cardRef = useRef(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    setOpacity(1);
+  };
+
+  const handleMouseLeave = () => {
+    setOpacity(0);
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`${feature.colSpan} group relative overflow-hidden rounded-3xl bg-dark-800/40 border border-white/5 p-8 transition-all duration-500 hover:border-white/10`}
+    >
+      {/* Spotlight Effect */}
+      <div
+        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100"
+        style={{
+          opacity,
+          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(201, 139, 58, 0.15), transparent 40%)`,
+        }}
+      />
+
+      {/* Noise Texture Overlay */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+      <div className="relative z-10 flex flex-col h-full justify-between gap-6 pointer-events-none">
+
+        {/* Icon Container */}
+        <div className="relative w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-gold-500/30 group-hover:bg-gold-500/10 transition-colors duration-500">
+          <feature.icon className="w-6 h-6 text-white group-hover:text-gold-500 transition-colors duration-500" strokeWidth={1.5} />
+        </div>
+
+        <div>
+          <h3 className="text-xl sm:text-2xl font-display font-bold text-white mb-3 tracking-tight group-hover:text-gold-500 transition-colors duration-300">
+            {feature.title}
+          </h3>
+          <p className="text-white/60 leading-relaxed font-sans text-sm font-light tracking-wide">
+            {feature.description}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 
 const ComparisonSection = () => {
   const sectionRef = useRef(null);
   const badgeRef = useRef(null);
   const headerRef = useRef(null);
-  const leftCardRef = useRef(null);
-  const rightCardRef = useRef(null);
-  const leftItemsRef = useRef([]);
-  const rightItemsRef = useRef([]);
+  const gridRef = useRef(null);
 
   useGSAP(() => {
     if (!sectionRef.current) return;
@@ -60,7 +150,7 @@ const ComparisonSection = () => {
     // Header entrance
     tl.fromTo(
       headerRef.current,
-      { y: 40, opacity: 0, filter: 'blur(8px)' },
+      { y: 40, opacity: 0, filter: 'blur(10px)' },
       {
         y: 0,
         opacity: 1,
@@ -71,103 +161,44 @@ const ComparisonSection = () => {
       '-=0.3'
     );
 
-    // Cards split reveal
-    tl.fromTo(
-      leftCardRef.current,
-      { y: 40, opacity: 0, scale: 0.95 },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: DURATION.slow,
-        ease: EASE.expo,
-      },
-      '-=0.2'
-    );
-
-    tl.fromTo(
-      rightCardRef.current,
-      { y: 40, opacity: 0, scale: 0.95 },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: DURATION.slow,
-        ease: EASE.expo,
-      },
-      '<'
-    );
-
-    // Stagger list items
-    const leftItems = leftItemsRef.current.filter(Boolean);
-    const rightItems = rightItemsRef.current.filter(Boolean);
-
-    if (leftItems.length > 0) {
+    // Grid Staggered Reveal
+    if (gridRef.current) {
       tl.fromTo(
-        leftItems,
-        { y: 20, opacity: 0 },
+        gridRef.current.children,
+        { y: 60, opacity: 0, scale: 0.95 },
         {
           y: 0,
           opacity: 1,
-          duration: DURATION.normal,
-          stagger: STAGGER.fast,
-          ease: EASE.power,
-        },
-        '-=0.6'
-      );
-    }
-
-    if (rightItems.length > 0) {
-      tl.fromTo(
-        rightItems,
-        { y: 20, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: DURATION.normal,
-          stagger: STAGGER.fast,
-          ease: EASE.power,
-        },
-        '<+=0.1'
-      );
-    }
-
-    // Card hover effects
-    const addHoverEffect = (card) => {
-      if (!card) return;
-
-      card.addEventListener('mouseenter', () => {
-        gsap.to(card, {
-          scale: 1.02,
-          y: -5,
-          duration: DURATION.fast,
-          ease: EASE.power,
-        });
-      });
-
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
           scale: 1,
-          y: 0,
-          duration: DURATION.fast,
-          ease: EASE.power,
-        });
-      });
-    };
+          duration: DURATION.slow,
+          stagger: {
+            amount: 0.6,
+            grid: "auto",
+            from: "start"
+          },
+          ease: EASE.expo,
+        },
+        '-=0.4'
+      );
+    }
 
-    addHoverEffect(leftCardRef.current);
-    addHoverEffect(rightCardRef.current);
   }, { scope: sectionRef });
 
   return (
-    <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-900 text-white">
-      <div className="space-y-8 sm:space-y-10 md:space-y-12">
+    <Section background="dark" padding="large" sectionRef={sectionRef} className="relative bg-dark-900 text-white overflow-hidden border-t border-white/5">
 
-        {/* Badge - Mobile Optimized */}
+      {/* Background Ambience */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
+        <div className="absolute top-[20%] left-[20%] w-96 h-96 bg-gold-500/5 rounded-full blur-[120px] animate-pulse-glow" />
+        <div className="absolute bottom-[20%] right-[20%] w-96 h-96 bg-accent/5 rounded-full blur-[120px] animate-pulse-glow" style={{ animationDelay: '1s' }} />
+      </div>
+
+      <div className="relative z-10 space-y-12 sm:space-y-16">
+
+        {/* Badge */}
         <div ref={badgeRef} className="flex justify-center">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-500 text-xs sm:text-sm uppercase tracking-widest font-semibold">
-            <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
-            Built Different
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/5 border border-gold-500/20 text-gold-500 text-xs sm:text-xs uppercase tracking-[0.2em] font-medium backdrop-blur-sm">
+            God Tier Engineering
           </span>
         </div>
 
@@ -175,66 +206,20 @@ const ComparisonSection = () => {
         <div ref={headerRef}>
           <SectionHeader
             title="Why God Wear"
-            subtitle="Because performance demands more than ordinary, it demands precision, power, and purpose."
+            subtitle="Precision-engineered gear for those who refuse to settle for ordinary."
             align="center"
-            titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
-            subtitleClassName="text-lg text-muted max-w-2xl font-sans mx-auto text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
+            titleClassName="text-white font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter"
+            subtitleClassName="text-lg text-white/50 max-w-xl font-sans mx-auto font-light leading-relaxed"
           />
         </div>
 
-        {/* Comparison Cards - Mobile: Stack, Desktop: Side-by-side */}
-        <div className="grid gap-4 sm:gap-6 md:gap-8 lg:gap-10 md:grid-cols-2 max-w-6xl mx-auto px-4 lg:px-8">
-
-          {/* God Wear - Highlighted Card */}
-          <div ref={leftCardRef} className="order-1 rounded-2xl sm:rounded-3xl border-2 border-gold-500/30 bg-gradient-to-br from-dark-800 to-dark-900 p-6 sm:p-8 md:p-10 lg:p-12 shadow-2xl shadow-gold-500/10 transition-shadow duration-300 hover:shadow-gold-500/20" style={{ perspective: '1000px' }}>
-            <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8 md:mb-10 pb-4 sm:pb-6 md:pb-8 border-b border-gold-500/20">
-              <span className="font-display text-2xl uppercase text-gold-500 tracking-tight font-bold">
-                God Wear
-              </span>
-            </div>
-            <div className="space-y-4 sm:space-y-5 md:space-y-6">
-              {godWearPoints.map((item, index) => (
-                <div key={item}>
-                  <div
-                    ref={(el) => (leftItemsRef.current[index] = el)}
-                    className="flex items-start gap-3 sm:gap-4 font-sans group"
-                  >
-                    <CircleCheck className="text-success shrink-0 mt-0.5 sm:mt-1 w-5 h-5 sm:w-6 sm:h-6 md:w-6 md:h-6" strokeWidth={2} />
-                    <p className="text-base sm:text-lg text-white leading-relaxed">{item}</p>
-                  </div>
-                  {index !== godWearPoints.length - 1 && (
-                    <div className="h-px bg-gradient-to-r from-transparent via-dark-700 to-transparent my-4" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Others - Subdued Card */}
-          <div ref={rightCardRef} className="order-2 rounded-2xl sm:rounded-3xl border border-dark-700 bg-dark-800/50 p-6 sm:p-8 md:p-10 lg:p-12 shadow-xl transition-shadow duration-300 hover:shadow-2xl" style={{ perspective: '1000px' }}>
-            <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8 md:mb-10 pb-4 sm:pb-6 md:pb-8 border-b border-dark-700">
-              <span className="font-display text-2xl  uppercase text-dark-400 tracking-tight font-bold">
-                Others
-              </span>
-            </div>
-            <div className="space-y-4 sm:space-y-5 md:space-y-6">
-              {othersPoints.map((item, index) => (
-                <div key={item}>
-                  <div
-                    ref={(el) => (rightItemsRef.current[index] = el)}
-                    className="flex items-start gap-3 sm:gap-4 font-sans"
-                  >
-                    <CircleX className="text-energy-500/70 shrink-0 mt-0.5 sm:mt-1 w-5 h-5 sm:w-6 sm:h-6 md:w-6 md:h-6" strokeWidth={2} />
-                    <p className="sm:text-lg text-dark-400 leading-relaxed">{item}</p>
-                  </div>
-                  {index !== othersPoints.length - 1 && (
-                    <div className="h-px bg-gradient-to-r from-transparent via-dark-700 to-transparent my-4" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Bento Grid */}
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 max-w-7xl mx-auto">
+          {featurePoints.map((feature, index) => (
+            <FeatureCard key={index} feature={feature} index={index} />
+          ))}
         </div>
+
       </div>
     </Section>
   );

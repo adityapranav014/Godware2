@@ -30,11 +30,21 @@ const Marquee = ({
           ref={marqueeRef}
           className={`flex ${reverse ? "marquee-reverse" : "marquee"}`}
         >
-          {items.concat(items).map((text, index) => (
-            <span key={index} className="flex items-center px-16 md:px-20 gap-x-32 md:gap-x-40">
-              {text} <Icon icon={icon} className={iconClassName} />
-            </span>
-          ))}
+          {items.concat(items).map((item, index) => {
+            const isObject = typeof item === 'object' && item !== null;
+            const text = isObject ? item.text : item;
+            const ItemIcon = isObject ? item.icon : null;
+
+            return (
+              <span key={index} className="flex items-center px-8 sm:px-12 md:px-20 gap-x-12 sm:gap-x-24 md:gap-x-40">
+                <span className="flex items-center gap-3 sm:gap-4">
+                  {ItemIcon && <ItemIcon className="w-7 h-7 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-gold-500" strokeWidth={1.5} />}
+                  {text}
+                </span>
+                <Icon icon={icon} className={iconClassName} />
+              </span>
+            );
+          })}
         </div>
       </div>
     </div>

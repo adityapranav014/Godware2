@@ -116,8 +116,8 @@ const Navbar = ({ activeSection, onNavClick }) => {
       // Update scrolled state for backdrop blur
       setHasScrolled(currentScrollY > 20);
 
-      // Show navbar when at top of page
-      if (currentScrollY < 10) {
+      // Show navbar when at top of page or when mobile menu is open
+      if (currentScrollY < 10 || isMobileMenuOpen) {
         setIsVisible(true);
       }
       // Hide on scroll down, show on scroll up
@@ -135,16 +135,17 @@ const Navbar = ({ activeSection, onNavClick }) => {
     return () => {
       window.removeEventListener('scroll', controlNavbar);
     };
-  }, [lastScrollY]);
+  }, [lastScrollY, isMobileMenuOpen]);
 
   // Hide/show animation - Smoother on mobile
+  // Hide/show animation - Fluid and premium
   useEffect(() => {
     if (navRef.current) {
       gsap.to(navRef.current, {
         y: isVisible ? 0 : -100,
-        opacity: isVisible ? 1 : 0,
-        duration: getResponsiveDuration('fast'),
-        ease: isVisible ? EASE.circ : EASE.power,
+        autoAlpha: isVisible ? 1 : 0, // handles opacity + visibility
+        duration: 0.6,
+        ease: isVisible ? "power3.out" : "power3.in",
       });
     }
   }, [isVisible]);
@@ -157,16 +158,16 @@ const Navbar = ({ activeSection, onNavClick }) => {
       if (isMobileMenuOpen) {
         const tl = gsap.timeline();
 
-        // 1. Overlay Entrance
+        // 1. Overlay Entrance - "Heavy Curtain" feel
         tl.fromTo(
           mobileMenuRef.current,
           {
-            clipPath: "inset(0 0 100% 0)", // Reveal from bottom
+            clipPath: "inset(0 0 100% 0)",
           },
           {
             clipPath: "inset(0 0 0% 0)",
-            duration: 0.8,
-            ease: "power4.inOut",
+            duration: 1,
+            ease: "expo.inOut", // More dramatic start/end
           }
         );
 
@@ -175,19 +176,19 @@ const Navbar = ({ activeSection, onNavClick }) => {
         tl.fromTo(
           links,
           {
-            y: 100,
+            y: 50, // Reduced from 100 for tighter feel
             opacity: 0,
-            rotate: 5,
+            skewY: 5, // Modern skew effect
           },
           {
             y: 0,
             opacity: 1,
-            rotate: 0,
-            duration: 1,
-            stagger: 0.1,
+            skewY: 0,
+            duration: 0.8,
+            stagger: 0.08,
             ease: "power3.out",
           },
-          "-=0.4"
+          "-=0.5" // Start earlier
         );
 
         // 3. Footer/Socials Stagger
@@ -212,8 +213,8 @@ const Navbar = ({ activeSection, onNavClick }) => {
         // Exit Animation
         gsap.to(mobileMenuRef.current, {
           clipPath: "inset(0 0 100% 0)",
-          duration: 0.6,
-          ease: "power4.inOut",
+          duration: 0.8,
+          ease: "expo.inOut",
         });
       }
     }, mobileMenuRef);
@@ -225,9 +226,9 @@ const Navbar = ({ activeSection, onNavClick }) => {
     <>
       <header
         ref={navRef}
-        className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${hasScrolled
-          ? 'bg-base'
-          : 'bg-transparent'
+        className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${hasScrolled || isMobileMenuOpen
+          ? 'bg-black/60 backdrop-blur-xl border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] py-2'
+          : 'bg-transparent py-4 sm:py-6'
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 py-2 sm:py-0 sm:px-6 lg:px-8">
@@ -309,9 +310,9 @@ const Navbar = ({ activeSection, onNavClick }) => {
             {/* Mobile Menu Button */}
             <button
               ref={menuButtonRef}
-              onClick={openMenu}
+              onClick={() => isMobileMenuOpen ? closeMenu() : openMenu()}
               className="md:hidden p-2.5 rounded-full text-white hover:text-gold-500 hover:bg-white/10 active:scale-95 transition-all duration-200"
-              aria-label="Open menu"
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               onMouseEnter={(e) => {
                 if (!isMobile()) {
                   gsap.to(e.currentTarget, {
@@ -333,7 +334,7 @@ const Navbar = ({ activeSection, onNavClick }) => {
                 }
               }}
             >
-              <Menu size={24} />
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
@@ -344,22 +345,9 @@ const Navbar = ({ activeSection, onNavClick }) => {
         isMobileMenuOpen && (
           <div
             ref={mobileMenuRef}
-            className="fixed inset-0 z-[60] md:hidden bg-black/95 backdrop-blur-xl text-white flex flex-col"
+            className="fixed top-14 sm:top-16 md:top-20 bottom-0 left-0 right-0 z-[49] md:hidden bg-black/95 backdrop-blur-xl text-white flex flex-col border-t border-white/10"
             style={{ clipPath: "inset(0 0 100% 0)" }} // Initial state for animation
           >
-            {/* Header: Logo + Close */}
-            <div className="flex items-center justify-between px-6 py-6 border-b border-white/10">
-              <span className="text-xl font-display font-medium text-white tracking-tight">
-                GOD WEAR
-              </span>
-              <button
-                onClick={closeMenu}
-                className="p-2 rounded-full text-white/80 hover:text-gold-500 hover:bg-white/10 transition-colors"
-                aria-label="Close menu"
-              >
-                <X size={32} strokeWidth={1.5} />
-              </button>
-            </div>
 
             {/* Main Navigation Links */}
             <nav className="flex-1 flex flex-col justify-center items-center px-8 gap-6 overflow-y-auto">

@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
+import Badge from "../components/ui/Badge";
 import { Video } from '@imagekit/react';
 import { EASE, DURATION, STAGGER, isMobile, getResponsiveDuration, getResponsiveStagger } from '../utils/animations';
 
@@ -176,13 +177,9 @@ const AboutUsSection = () => {
         <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-900 text-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 xl:px-0">
 
-                {/* Header */}
                 <div ref={headerRef} className="mb-8 sm:mb-10 md:mb-12 lg:mb-14 space-y-6 sm:space-y-8">
-                    <div ref={badgeRef} className="flex justify-center">
-                        <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-500 text-xs sm:text-sm uppercase tracking-widest font-semibold">
-                            <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
-                            About
-                        </span>
+                    <div ref={badgeRef}>
+                        <Badge>About</Badge>
                     </div>
                     <SectionHeader
                         title="Built for Warriors"

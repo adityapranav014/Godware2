@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
+import Badge from "../components/ui/Badge";
 import { EASE, DURATION, STAGGER } from '../utils/animations';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -196,10 +197,8 @@ const ComparisonSection = () => {
       <div className="relative z-10 space-y-12 sm:space-y-16">
 
         {/* Badge */}
-        <div ref={badgeRef} className="flex justify-center">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/5 border border-gold-500/20 text-gold-500 text-xs sm:text-xs uppercase tracking-[0.2em] font-medium backdrop-blur-sm">
-            God Tier Engineering
-          </span>
+        <div ref={badgeRef}>
+          <Badge>God Tier Engineering</Badge>
         </div>
 
         {/* Section Header */}

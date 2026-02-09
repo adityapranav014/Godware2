@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
+import Badge from "../components/ui/Badge";
 import { EASE, DURATION, STAGGER } from '../utils/animations';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -243,11 +244,8 @@ const TestimonialsSection = () => {
       <div className="space-y-8 sm:space-y-10 md:space-y-12">
 
         {/* Badge */}
-        <div ref={badgeRef} className="flex justify-center">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-500 text-xs sm:text-sm uppercase tracking-widest font-semibold">
-            <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
-            Voices
-          </span>
+        <div ref={badgeRef}>
+          <Badge>Voices</Badge>
         </div>
 
         {/* Header */}

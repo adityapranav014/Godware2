@@ -1,112 +1,24 @@
-import { useEffect, useRef, useState } from "react";
-import { Menu, X, Instagram, MessageCircle, Mail, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Menu, X, Instagram, MessageCircle } from "lucide-react";
 import { NAV_LINKS, SOCIAL_LINKS, CONTACT_INFO } from "../../constants";
-import { useMobileMenu } from "../../hooks";
+import { useMobileMenu, useNavbarAnimations } from "../../hooks";
 import { gsap } from "gsap";
 import { EASE, isMobile, getResponsiveDuration } from "../../utils/animations";
 
 const Navbar = ({ activeSection, onNavClick }) => {
   const { isMobileMenuOpen, openMenu, closeMenu } = useMobileMenu();
-  const navRef = useRef(null);
-  const logoRef = useRef(null);
-  const navLinksRef = useRef([]);
-  const mobileMenuRef = useRef(null);
-  const menuButtonRef = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hasScrolled, setHasScrolled] = useState(false);
 
-  // Initial entrance animation - Mobile optimized
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const mobile = isMobile();
-      const tl = gsap.timeline({
-        defaults: { ease: EASE.circ },
-        delay: 0.1
-      });
-
-      // Navbar slides down with premium blur effect
-      tl.fromTo(
-        navRef.current,
-        {
-          y: -100,
-          opacity: 0,
-          filter: mobile ? 'blur(5px)' : 'blur(10px)',
-          willChange: 'transform, opacity, filter',
-        },
-        {
-          y: 0,
-          opacity: 1,
-          filter: 'blur(0px)',
-          duration: getResponsiveDuration('slow'),
-          ease: EASE.expo,
-          clearProps: 'willChange',
-        }
-      );
-
-      // Logo scales in with bounce
-      tl.fromTo(
-        logoRef.current,
-        {
-          scale: 0.85,
-          opacity: 0,
-          willChange: 'transform, opacity',
-        },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: getResponsiveDuration('medium'),
-          ease: EASE.backGentle,
-          clearProps: 'willChange',
-        },
-        '-=0.45'
-      );
-
-      // Mobile menu button appears after logo
-      if (menuButtonRef.current) {
-        tl.fromTo(
-          menuButtonRef.current,
-          {
-            scale: 0.85,
-            opacity: 0,
-            willChange: 'transform, opacity',
-          },
-          {
-            scale: 1,
-            opacity: 1,
-            duration: getResponsiveDuration('medium'),
-            ease: EASE.backGentle,
-            clearProps: 'willChange',
-          },
-          '-=0.3'
-        );
-      }
-
-      // Nav links stagger in (desktop only)
-      const links = navLinksRef.current.filter(Boolean);
-      if (links.length > 0 && !mobile) {
-        tl.fromTo(
-          links,
-          {
-            y: -15,
-            opacity: 0,
-            willChange: 'transform, opacity',
-          },
-          {
-            y: 0,
-            opacity: 1,
-            duration: getResponsiveDuration('fast'),
-            stagger: 0.06,
-            ease: EASE.circ,
-            clearProps: 'willChange',
-          },
-          '-=0.35'
-        );
-      }
-    }, navRef);
-
-    return () => ctx.revert();
-  }, []);
+  // Use custom animation hook
+  const {
+    navRef,
+    logoRef,
+    navLinksRef,
+    mobileMenuRef,
+    menuButtonRef
+  } = useNavbarAnimations(isMobileMenuOpen, isVisible);
 
   // Scroll behavior
   useEffect(() => {
@@ -137,91 +49,6 @@ const Navbar = ({ activeSection, onNavClick }) => {
     };
   }, [lastScrollY, isMobileMenuOpen]);
 
-  // Hide/show animation - Smoother on mobile
-  // Hide/show animation - Fluid and premium
-  useEffect(() => {
-    if (navRef.current) {
-      gsap.to(navRef.current, {
-        y: isVisible ? 0 : -100,
-        autoAlpha: isVisible ? 1 : 0, // handles opacity + visibility
-        duration: 0.6,
-        ease: isVisible ? "power3.out" : "power3.in",
-      });
-    }
-  }, [isVisible]);
-
-  // Mobile menu animations - Premium and smooth
-  useEffect(() => {
-    if (!mobileMenuRef.current) return;
-
-    const ctx = gsap.context(() => {
-      if (isMobileMenuOpen) {
-        const tl = gsap.timeline();
-
-        // 1. Overlay Entrance - "Heavy Curtain" feel
-        tl.fromTo(
-          mobileMenuRef.current,
-          {
-            clipPath: "inset(0 0 100% 0)",
-          },
-          {
-            clipPath: "inset(0 0 0% 0)",
-            duration: 1,
-            ease: "expo.inOut", // More dramatic start/end
-          }
-        );
-
-        // 2. Links Stagger (Large Text)
-        const links = mobileMenuRef.current.querySelectorAll('.mobile-nav-link');
-        tl.fromTo(
-          links,
-          {
-            y: 50, // Reduced from 100 for tighter feel
-            opacity: 0,
-            skewY: 5, // Modern skew effect
-          },
-          {
-            y: 0,
-            opacity: 1,
-            skewY: 0,
-            duration: 0.8,
-            stagger: 0.08,
-            ease: "power3.out",
-          },
-          "-=0.5" // Start earlier
-        );
-
-        // 3. Footer/Socials Stagger
-        const bottomContent = mobileMenuRef.current.querySelectorAll('.mobile-menu-footer');
-        tl.fromTo(
-          bottomContent,
-          {
-            y: 20,
-            opacity: 0,
-          },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            stagger: 0.05,
-            ease: "power2.out",
-          },
-          "-=0.6"
-        );
-
-      } else if (mobileMenuRef.current) {
-        // Exit Animation
-        gsap.to(mobileMenuRef.current, {
-          clipPath: "inset(0 0 100% 0)",
-          duration: 0.8,
-          ease: "expo.inOut",
-        });
-      }
-    }, mobileMenuRef);
-
-    return () => ctx.revert();
-  }, [isMobileMenuOpen]);
-
   return (
     <>
       <header
@@ -235,9 +62,13 @@ const Navbar = ({ activeSection, onNavClick }) => {
           <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
 
             {/* Logo */}
-            <button
+            <a
+              href="#Home"
               ref={logoRef}
-              onClick={() => onNavClick("Home")}
+              onClick={(e) => {
+                e.preventDefault();
+                onNavClick("Home");
+              }}
               className="flex items-center gap-2 sm:gap-3 transition-all duration-300 hover:scale-105 active:scale-95 group"
               onMouseEnter={(e) => {
                 if (!isMobile()) {
@@ -266,15 +97,19 @@ const Navbar = ({ activeSection, onNavClick }) => {
               <div className="text-xl sm:text-2xl font-display bg-gold tracking-tight bg-clip-text text-transparent group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)]">
                 GOD WEAR <sup className="text-xs">®</sup>
               </div>
-            </button>
+            </a>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-1 lg:gap-2">
               {NAV_LINKS.map((link, index) => (
-                <button
+                <a
                   key={link.name}
+                  href={`#${link.name}`}
                   ref={(el) => (navLinksRef.current[index] = el)}
-                  onClick={() => onNavClick(link.name)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavClick(link.name);
+                  }}
                   className={`nav-link relative px-4 lg:px-6 py-2.5 font-medium text-sm transition-all duration-300 cursor-pointer ${activeSection === link.name
                     ? "text-gold-500"
                     : "text-white hover:text-gold-400"
@@ -303,7 +138,7 @@ const Navbar = ({ activeSection, onNavClick }) => {
                     <span className="absolute inset-0 -z-10 animate-pulse" />
                   )}
                   <span className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 -z-10" />
-                </button>
+                </a>
               ))}
             </nav>
 
@@ -352,9 +187,11 @@ const Navbar = ({ activeSection, onNavClick }) => {
             {/* Main Navigation Links */}
             <nav className="flex-1 flex flex-col justify-center items-center px-8 gap-6 overflow-y-auto">
               {NAV_LINKS.map((link, index) => (
-                <button
+                <a
                   key={link.name}
-                  onClick={() => {
+                  href={`#${link.name}`}
+                  onClick={(e) => {
+                    e.preventDefault();
                     onNavClick(link.name);
                     closeMenu();
                   }}
@@ -366,7 +203,7 @@ const Navbar = ({ activeSection, onNavClick }) => {
                   <span className="inline-block group-hover:skew-x-6 transition-transform duration-300">
                     {link.name}
                   </span>
-                </button>
+                </a>
               ))}
             </nav>
 

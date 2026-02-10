@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Star, Quote, BadgeCheck } from "lucide-react";
 import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
 import Badge from "../components/ui/Badge";
@@ -240,7 +241,7 @@ const TestimonialsSection = () => {
   useInfiniteScroll(row2Ref, 0.9);
 
   return (
-    <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-900 text-white" containerClassName="w-full max-w-full">
+    <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-950 text-white section-gradient-alt noise-overlay" containerClassName="w-full max-w-full">
       <div className="space-y-8 sm:space-y-10 md:space-y-12">
 
         {/* Badge */}
@@ -272,9 +273,28 @@ const TestimonialsSection = () => {
               className="flex gap-4 sm:gap-6 px-4 pb-4 overflow-x-auto scrollbar-hide touch-pan-x"
             >
               {[...testimonials, ...testimonials, ...testimonials, ...testimonials].map((item, index) => (
-                <div key={`${item.name}-${index}`} className="flex-shrink-0 bg-dark-800 border border-dark-700 rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] hover:border-gold-500/30 transition-all duration-300 select-none testimonial-card">
+                <div key={`${item.name}-${index}`} className="flex-shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] select-none testimonial-card">
+                  {/* Quote Icon */}
+                  <Quote size={20} className="text-gold-500/30 mb-3" strokeWidth={2} />
+
+                  {/* Star Rating */}
+                  <div className="flex items-center gap-0.5 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        size={14}
+                        className={i < (index % 3 === 0 ? 4 : 5) ? "star-gold" : "text-dark-600"}
+                        fill={i < (index % 3 === 0 ? 4 : 5) ? "currentColor" : "none"}
+                        strokeWidth={1.5}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Quote */}
+                  <p className="text-sm text-white/90 leading-relaxed font-sans line-clamp-4 mb-5">{item.text}</p>
+
                   {/* Header */}
-                  <div className="flex items-center gap-3 sm:gap-4 pb-4 md:pb-5 mb-4 md:mb-5 border-b border-dark-700">
+                  <div className="flex items-center gap-3 sm:gap-4 pt-4 md:pt-5 mt-auto border-t border-dark-700">
                     <div className="h-11 w-11 sm:h-12 sm:w-12 md:h-12 md:w-12 rounded-full overflow-hidden ring-2 ring-dark-700 shrink-0">
                       <img
                         className="h-full w-full object-cover"
@@ -285,13 +305,15 @@ const TestimonialsSection = () => {
                         draggable="false"
                       />
                     </div>
-                    <div className="min-w-0">
-                      <h3 className="sm:text-lg md:text-lg font-semibold md:font-bold text-white font-sans truncate">{item.name}</h3>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <h3 className="sm:text-lg md:text-lg font-semibold md:font-bold text-white font-sans truncate">{item.name}</h3>
+                        <BadgeCheck size={14} className="text-green-500 shrink-0" />
+                      </div>
                       <p className="text-xs sm:text-sm md:text-sm text-dark-400 font-sans truncate">{item.role}</p>
                     </div>
+                    <span className="verified-badge shrink-0 hidden sm:inline-flex">Verified</span>
                   </div>
-                  {/* Quote */}
-                  <p className="text-sm text-white/90 leading-relaxed font-sans line-clamp-4">{item.text}</p>
                 </div>
               ))}
             </div>
@@ -304,8 +326,28 @@ const TestimonialsSection = () => {
               className="flex gap-4 sm:gap-6 px-4 pb-4 overflow-x-auto scrollbar-hide touch-pan-x"
             >
               {[...testimonials].reverse().concat([...testimonials].reverse(), [...testimonials].reverse(), [...testimonials].reverse()).map((item, index) => (
-                <div key={`${item.role}-${index}`} className="flex-shrink-0 bg-dark-800 border border-dark-700 rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] hover:border-gold-500/30 transition-all duration-300 select-none">
-                  <div className="flex items-center gap-3 sm:gap-4 pb-4 md:pb-5 mb-4 md:mb-5 border-b border-dark-700">
+                <div key={`${item.role}-${index}`} className="flex-shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] select-none">
+                  {/* Quote Icon */}
+                  <Quote size={20} className="text-gold-500/30 mb-3" strokeWidth={2} />
+
+                  {/* Star Rating */}
+                  <div className="flex items-center gap-0.5 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        size={14}
+                        className={i < (index % 2 === 0 ? 5 : 4) ? "star-gold" : "text-dark-600"}
+                        fill={i < (index % 2 === 0 ? 5 : 4) ? "currentColor" : "none"}
+                        strokeWidth={1.5}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Quote */}
+                  <p className="text-sm text-white/90 leading-relaxed font-sans line-clamp-4 mb-5">{item.text}</p>
+
+                  {/* Author */}
+                  <div className="flex items-center gap-3 sm:gap-4 pt-4 md:pt-5 mt-auto border-t border-dark-700">
                     <div className="h-11 w-11 sm:h-12 sm:w-12 md:h-12 md:w-12 rounded-full overflow-hidden ring-2 ring-dark-700 shrink-0">
                       <img
                         className="h-full w-full object-cover"
@@ -316,12 +358,15 @@ const TestimonialsSection = () => {
                         draggable="false"
                       />
                     </div>
-                    <div className="min-w-0">
-                      <h3 className="sm:text-lg md:text-lg font-semibold md:font-bold text-white font-sans truncate">{item.name}</h3>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <h3 className="sm:text-lg md:text-lg font-semibold md:font-bold text-white font-sans truncate">{item.name}</h3>
+                        <BadgeCheck size={14} className="text-green-500 shrink-0" />
+                      </div>
                       <p className="text-xs sm:text-sm md:text-sm text-dark-400 font-sans truncate">{item.role}</p>
                     </div>
+                    <span className="verified-badge shrink-0 hidden sm:inline-flex">Verified</span>
                   </div>
-                  <p className="text-sm text-white/90 leading-relaxed font-sans line-clamp-4">{item.text}</p>
                 </div>
               ))}
             </div>

@@ -7,6 +7,8 @@ import {
   Heart,
   MessageCircle,
   Sparkles,
+  ArrowUp,
+  ShieldCheck,
 } from "lucide-react";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
@@ -72,7 +74,13 @@ const Footer = ({ onNavClick }) => {
   }, { scope: footerRef });
 
   return (
-    <footer ref={footerRef} className="relative bg-dark-800 border-t border-dark-700 text-white overflow-hidden pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-8">
+    <footer ref={footerRef} className="relative z-10 bg-dark-800 text-white overflow-x-hidden pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-8"
+      style={{
+        borderTop: '1px solid var(--color-dark-700)',
+        borderTopColor: 'rgba(255,255,255,0.06)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 -4px 16px rgba(0,0,0,0.3)'
+      }}>
+
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 space-y-12 sm:space-y-16">
 
         {/* Brand Section */}
@@ -101,7 +109,7 @@ const Footer = ({ onNavClick }) => {
                 href={SOCIAL_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 md:p-3 rounded-lg bg-dark-900 border border-dark-700 text-dark-400 hover:text-gold-500 hover:border-gold-500/30 transition-all duration-200"
+                className="p-2 md:p-3 rounded-lg depth-card text-dark-400 hover:text-gold-500 transition-all duration-200"
                 aria-label="Instagram"
               >
                 <Instagram size={18} strokeWidth={2} />
@@ -111,7 +119,7 @@ const Footer = ({ onNavClick }) => {
                 href={`https://wa.me/${CONTACT_INFO.whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 md:p-3 rounded-lg bg-dark-900 border border-dark-700 text-dark-400 hover:text-gold-500 hover:border-gold-500/30 transition-all duration-200"
+                className="p-2 md:p-3 rounded-lg depth-card text-dark-400 hover:text-gold-500 transition-all duration-200"
                 aria-label="WhatsApp"
               >
                 <MessageCircle size={18} strokeWidth={2} />
@@ -119,7 +127,7 @@ const Footer = ({ onNavClick }) => {
               <a
                 ref={(el) => (socialLinksRef.current[2] = el)}
                 href={`mailto:${CONTACT_INFO.email}`}
-                className="p-2 md:p-3 rounded-lg bg-dark-900 border border-dark-700 text-dark-400 hover:text-gold-500 hover:border-gold-500/30 transition-all duration-200"
+                className="p-2 md:p-3 rounded-lg depth-card text-dark-400 hover:text-gold-500 transition-all duration-200"
                 aria-label="Email"
               >
                 <Mail size={18} strokeWidth={2} />
@@ -127,7 +135,7 @@ const Footer = ({ onNavClick }) => {
               <a
                 ref={(el) => (socialLinksRef.current[3] = el)}
                 href={`tel:${CONTACT_INFO.phone.replace(/\s|-/g, '')}`}
-                className="p-2 md:p-3 rounded-lg bg-dark-900 border border-dark-700 text-dark-400 hover:text-gold-500 hover:border-gold-500/30 transition-all duration-200"
+                className="p-2 md:p-3 rounded-lg depth-card text-dark-400 hover:text-gold-500 transition-all duration-200"
                 aria-label="Phone"
               >
                 <Phone size={18} strokeWidth={2} />
@@ -178,6 +186,20 @@ const Footer = ({ onNavClick }) => {
         <div className="border-t border-dark-700 pt-8 md:pt-10 lg:pt-12">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8 text-xs text-dark-400">
             <p>© {currentYear} GOD WEAR. All rights reserved.</p>
+
+            {/* Payment/Security Badges */}
+            <div className="flex items-center gap-3 text-[10px] sm:text-xs text-dark-500 font-sans">
+              <div className="flex items-center gap-1">
+                <ShieldCheck size={12} className="text-green-500/60" />
+                <span>Secure Checkout</span>
+              </div>
+              <span className="text-dark-600">•</span>
+              <span>COD</span>
+              <span className="text-dark-600">•</span>
+              <span>UPI</span>
+              <span className="text-dark-600">•</span>
+              <span>Card</span>
+            </div>
             <div className="flex items-center gap-2 md:gap-3">
               <Heart size={14} className="text-red-500" fill="currentColor" />
               Crafted in India with love.
@@ -188,7 +210,7 @@ const Footer = ({ onNavClick }) => {
               href={APP_CONFIG.developer.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-3 px-4 py-3 bg-dark-900 rounded-xl border border-dark-700 hover:border-gold-500/30 transition-all duration-300 w-fit"
+              className="group flex items-center gap-3 px-4 py-3 depth-glow rounded-xl w-fit"
             >
               <div className="p-2 bg-gold-500/10 border border-gold-500/20 rounded-lg group-hover:bg-gold-500/20 transition-all duration-300">
                 <Code size={15} className="text-gold-500" />

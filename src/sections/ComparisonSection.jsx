@@ -84,7 +84,7 @@ const FeatureCard = ({ feature, index }) => {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`${feature.colSpan} group relative overflow-hidden rounded-3xl bg-dark-800/40 border border-white/5 p-8 transition-all duration-500 hover:border-white/10`}
+      className={`${feature.colSpan} group relative overflow-hidden rounded-3xl p-8 depth-card`}
     >
       {/* Spotlight Effect */}
       <div
@@ -101,7 +101,8 @@ const FeatureCard = ({ feature, index }) => {
       <div className="relative z-10 flex flex-col h-full justify-between gap-6 pointer-events-none">
 
         {/* Icon Container */}
-        <div className="relative w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-gold-500/30 group-hover:bg-gold-500/10 transition-colors duration-500">
+        <div className="relative w-14 h-14 rounded-2xl bg-dark-750 border border-dark-600 flex items-center justify-center group-hover:border-gold-500/30 group-hover:bg-gold-500/10 transition-colors duration-500"
+          style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.4)' }}>
           <feature.icon className="w-6 h-6 text-white group-hover:text-gold-500 transition-colors duration-500" strokeWidth={1.5} />
         </div>
 
@@ -186,7 +187,7 @@ const ComparisonSection = () => {
   }, { scope: sectionRef });
 
   return (
-    <Section background="dark" padding="large" sectionRef={sectionRef} className="relative bg-dark-900 text-white overflow-hidden border-t border-white/5">
+    <Section background="dark" padding="large" sectionRef={sectionRef} className="relative bg-dark-950 text-white overflow-hidden noise-overlay section-gradient-warm">
 
       {/* Background Ambience */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
@@ -207,8 +208,8 @@ const ComparisonSection = () => {
             title="Why God Wear"
             subtitle="Precision-engineered gear for those who refuse to settle for ordinary."
             align="center"
-            titleClassName="text-white font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter"
-            subtitleClassName="text-lg text-white/50 max-w-xl font-sans mx-auto font-light leading-relaxed"
+            titleClassName="animated-gradient-text font-display text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight"
+            subtitleClassName="text-dark-400 md:text-white/60 max-w-xl font-sans mx-auto font-light leading-relaxed text-sm sm:text-base"
           />
         </div>
 

@@ -8,6 +8,9 @@ const productData = [
     priceAfterDiscount: "₹697",
     discount: "69% off",
     tag: "NEW ARRIVAL",
+    badge: "BESTSELLER",
+    rating: 4.5,
+    reviewCount: 523,
     imgHeight: "aspect-[3/4]",
     bgUrl: "/video/product-1.mp4?updatedAt=1770004639401",
     flipkartLink: "https://www.flipkart.com/godwear-pro-solid-dry-fit-t-shirt-men-compression/p/itm8524a29e212e3?pid=CMRHGUXRXPGAXZ46&lid=LSTCMRHGUXRXPGAXZ4672QEAN&marketplace=FLIPKART&store=abc%2Fg9d&srno=b_1_4&otracker=product_breadCrumbs_godwear%20Sport%20Accessories&fm=organic&iid=ff2298e6-8b63-4b58-bd03-dffe5ebeba15.CMRHGUXRXPGAXZ46.SEARCH&ppt=browse&ppn=browse&ssid=ecfupejvi80000001769579997160",
@@ -21,6 +24,9 @@ const productData = [
     priceAfterDiscount: "₹820",
     discount: "65% off",
     tag: "NEW ARRIVAL",
+    badge: "LIMITED STOCK",
+    rating: 4.3,
+    reviewCount: 348,
     imgHeight: "aspect-[3/4]",
     bgUrl: "/video/product-2.mp4?updatedAt=1770004746595",
     flipkartLink: "https://www.flipkart.com/godwear-pro-dry-fit-skins-t-shirt-men-compression/p/itm30f7983aef95f?pid=CMRHJ27DCXHYVJHS&lid=LSTCMRHJ27DCXHYVJHS2NGQMP&marketplace=FLIPKART&store=abc%2Fg9d&srno=b_1_7&otracker=product_breadCrumbs_godwear%20Sport%20Accessories&fm=organic&iid=ff2298e6-8b63-4b58-bd03-dffe5ebeba15.CMRHJ27DCXHYVJHS.SEARCH&ppt=browse&ppn=browse&ssid=ecfupejvi80000001769579997160",
@@ -32,3 +38,4 @@ const productData = [
 export {
   productData,
 };
+

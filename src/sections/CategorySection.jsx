@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
+import { Star, Truck, Shield, RotateCcw } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Section from "../components/layout/Section";
@@ -137,7 +138,7 @@ const CategorySection = () => {
   }, { scope: sectionRef });
 
   return (
-    <Section background="dark" padding="large" className="bg-dark-900 text-white" sectionRef={sectionRef}>
+    <Section background="dark" padding="large" className="bg-dark-950 text-white section-gradient-warm noise-overlay" sectionRef={sectionRef}>
       <div className="space-y-8 sm:space-y-10 md:space-y-12">
 
         {/* Badge */}
@@ -164,7 +165,12 @@ const CategorySection = () => {
               href={product.flipkartLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="product-card group relative overflow-hidden rounded-2xl sm:rounded-3xl border border-dark-700 bg-dark-800 hover:border-gold-500/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-gold-500/10 active:scale-100"
+              className="product-card group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-dark-800 transition-all duration-300 hover:scale-[1.02] active:scale-100"
+              style={{
+                border: '1px solid var(--color-dark-700)',
+                borderTopColor: 'rgba(255,255,255,0.08)',
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 4px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.4)'
+              }}
             >
               {/* Product Video Background */}
               <div className="absolute inset-0 bg-dark-900">
@@ -184,6 +190,18 @@ const CategorySection = () => {
                 <div className="absolute inset-0 bg-gradient-to-b from-dark-900/60 via-dark-900/40 to-dark-900/95" />
               </div>
 
+              {/* Badge Overlay */}
+              {product.badge && (
+                <div className="absolute top-4 left-4 sm:top-5 sm:left-5 z-20">
+                  <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider backdrop-blur-md ${product.badge === 'BESTSELLER'
+                      ? 'bg-gold-500/90 text-dark-900'
+                      : 'bg-red-500/90 text-white'
+                    }`}>
+                    {product.badge}
+                  </span>
+                </div>
+              )}
+
               {/* Content - Mobile Optimized */}
               <div className="relative z-10 flex flex-col min-h-[480px] sm:min-h-[560px] md:min-h-[640px] p-5 sm:p-6 md:p-8">
                 {/* Spacer - Pushes content to bottom */}
@@ -191,6 +209,32 @@ const CategorySection = () => {
 
                 {/* Product Info */}
                 <div className="space-y-3 sm:space-y-4">
+
+                  {/* Product Name */}
+                  <h3 className="text-lg sm:text-xl font-bold text-white font-display tracking-tight">
+                    {product.description}
+                  </h3>
+
+                  {/* Star Rating */}
+                  {product.rating && (
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-0.5">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            size={13}
+                            className={i < Math.floor(product.rating) ? "star-gold" : "text-dark-600"}
+                            fill={i < Math.floor(product.rating) ? "currentColor" : "none"}
+                            strokeWidth={1.5}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-xs text-dark-400 font-sans">
+                        {product.rating} ({product.reviewCount}+ reviews)
+                      </span>
+                    </div>
+                  )}
+
                   {/* Pricing - Clear Hierarchy */}
                   <div className="flex flex-wrap items-end gap-2 sm:gap-3">
                     <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-gold-500">
@@ -204,15 +248,10 @@ const CategorySection = () => {
                     </span>
                   </div>
 
-                  {/* Flipkart Label */}
-                  <p className="text-xs sm:text-sm uppercase tracking-wider text-dark-400 font-medium">
-                    Buy from Flipkart
-                  </p>
-
                   {/* CTA Button - Thumb-friendly */}
                   <div className="pt-3 sm:pt-4 border-t border-dark-700">
-                    <span className="flex items-center justify-center gap-2 w-full py-3 sm:py-4 px-6 rounded-xl bg-dark-800 border border-dark-700 text-white text-sm font-semibold uppercase tracking-wider transition-all duration-300 group-hover:bg-gold-500 group-hover:text-dark-900 group-hover:border-gold-500">
-                      View Product
+                    <span className="flex items-center justify-center gap-2 w-full py-3 sm:py-4 px-6 rounded-xl text-white text-sm font-semibold uppercase tracking-wider depth-btn-gold group-hover:text-dark-900 transition-colors duration-300">
+                      Buy on Flipkart
                       <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
@@ -222,6 +261,23 @@ const CategorySection = () => {
               </div>
             </a>
           ))}
+        </div>
+
+        {/* Trust Badges Bar */}
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-8 sm:mt-10">
+          {[
+            { icon: Truck, text: "Free Shipping" },
+            { icon: Shield, text: "Quality Guaranteed" },
+            { icon: RotateCcw, text: "Easy Returns" },
+          ].map((badge) => {
+            const BadgeIcon = badge.icon;
+            return (
+              <div key={badge.text} className="trust-badge">
+                <BadgeIcon size={14} className="text-gold-500" strokeWidth={2} />
+                <span>{badge.text}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </Section>

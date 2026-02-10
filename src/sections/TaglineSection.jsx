@@ -15,8 +15,9 @@ const TaglineSection = () => {
   ];
 
   return (
-    <Section background="dark" padding="none" className="bg-dark-900 border-y border-dark-700" containerClassName="w-full max-w-full">
-      <Marquee items={items} className="text-white bg-dark-800/50" iconClassName="text-black" />
+    <Section background="dark" padding="none" className="bg-dark-950 border-y border-dark-700" containerClassName="w-full max-w-full"
+      style={{ boxShadow: 'inset 0 4px 12px rgba(0,0,0,0.6), inset 0 -2px 8px rgba(0,0,0,0.4)' }}>
+      <Marquee items={items} className="text-white bg-dark-950/80" iconClassName="text-black" />
     </Section>
   );
 };

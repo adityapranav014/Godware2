@@ -174,7 +174,7 @@ const AboutUsSection = () => {
     }, { scope: sectionRef });
 
     return (
-        <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-900 text-white">
+        <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-950 text-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 xl:px-0">
 
                 <div ref={headerRef} className="mb-8 sm:mb-10 md:mb-12 lg:mb-14 space-y-6 sm:space-y-8">
@@ -194,8 +194,8 @@ const AboutUsSection = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 items-stretch">
 
                     {/* Video/Image - Mobile First */}
-                    <div ref={imageRef} className="relative h-80 sm:h-96 lg:h-auto lg:min-h-[560px] rounded-2xl sm:rounded-3xl overflow-hidden border border-dark-700 shadow-2xl shadow-dark-900/50">
-                        <div className="size-full bg-dark-800 flex items-center justify-center">
+                    <div ref={imageRef} className="relative h-80 sm:h-96 lg:h-auto lg:min-h-[560px] rounded-2xl sm:rounded-3xl overflow-hidden depth-surface-recessed">
+                        <div className="size-full bg-dark-900 flex items-center justify-center">
                             <Video
                                 urlEndpoint="https://ik.imagekit.io/fr3yiiin6"
                                 src="/video/video-tag-line.mp4"
@@ -212,7 +212,7 @@ const AboutUsSection = () => {
                     </div>
 
                     {/* Content Card */}
-                    <div ref={contentRef} className="bg-dark-800 border border-dark-700 rounded-2xl sm:rounded-3xl lg:col-span-2 flex flex-col justify-between p-6 sm:p-8 lg:p-12 space-y-6 sm:space-y-8">
+                    <div ref={contentRef} className="depth-card rounded-2xl sm:rounded-3xl lg:col-span-2 flex flex-col justify-between p-6 sm:p-8 lg:p-12 space-y-6 sm:space-y-8">
 
                         {/* Headline */}
                         <h2 className="text-2xl sm:text-3xl md:text-2xl lg:text-3xl xl:text-4xl font-display leading-tight font-bold uppercase text-white">
@@ -226,7 +226,8 @@ const AboutUsSection = () => {
 
                             {/* Feature 1 */}
                             <div className="about-feature flex items-start gap-3 sm:gap-4">
-                                <div className="shrink-0 size-10 sm:size-12 md:size-12 flex items-center justify-center rounded-full bg-gold-500/10 border border-gold-500/20">
+                                <div className="shrink-0 size-10 sm:size-12 md:size-12 flex items-center justify-center rounded-full bg-dark-750 border border-dark-600"
+                                    style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.4)' }}>
                                     <Zap size={20} className="text-gold-500 md:w-6 md:h-6" strokeWidth={2.5} />
                                 </div>
                                 <div className="space-y-1 sm:space-y-2">
@@ -241,7 +242,8 @@ const AboutUsSection = () => {
 
                             {/* Feature 2 */}
                             <div className="about-feature flex items-start gap-3 sm:gap-4">
-                                <div className="shrink-0 size-10 sm:size-12 md:size-12 flex items-center justify-center rounded-full bg-gold-500/10 border border-gold-500/20">
+                                <div className="shrink-0 size-10 sm:size-12 md:size-12 flex items-center justify-center rounded-full bg-dark-750 border border-dark-600"
+                                    style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.4)' }}>
                                     <Landmark size={20} className="text-gold-500 md:w-6 md:h-6" strokeWidth={2.5} />
                                 </div>
                                 <div className="space-y-1 sm:space-y-2">

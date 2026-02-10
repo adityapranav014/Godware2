@@ -275,13 +275,10 @@ const HeroSection = ({ onShopClick }) => {
             className="group relative w-full sm:w-auto min-w-[280px] sm:min-w-[300px] md:min-w-[320px] lg:min-w-[320px] max-w-[90vw] sm:max-w-[360px] 
                        px-8 sm:px-10 md:px-11 lg:px-12 
                        py-4 sm:py-[1.0rem] md:py-[1.125rem] lg:py-[1.125rem]
-                       bg-white/10 backdrop-blur-md
-                       hover:bg-white/20 active:bg-white/30
+                       depth-btn backdrop-blur-md
                        text-white font-bold 
                        text-base sm:text-lg md:text-lg lg:text-lg
                        rounded-xl sm:rounded-xl md:rounded-xl lg:rounded-xl
-                       transition-all duration-300
-                       border border-white/30
                        overflow-hidden
                        focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black/50"
             aria-label="Shop Now - Browse our premium gym wear collection"

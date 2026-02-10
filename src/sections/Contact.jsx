@@ -85,8 +85,9 @@ const Contact = () => {
       );
     }
   }, { scope: sectionRef });
+
   return (
-    <Section padding="large" className="relative overflow-hidden bg-dark-900" sectionRef={sectionRef}>
+    <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-950 text-white noise-overlay">
       <div className="relative mx-auto max-w-5xl space-y-8 sm:space-y-10 px-4 sm:px-6">
 
         {/* Badge */}
@@ -100,35 +101,91 @@ const Contact = () => {
             title="Bulk & Corporate Orders"
             subtitle="Send us your requirements for custom and on demand orders."
             align="center"
-            titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
-            subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
+            titleClassName="animated-gradient-text font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
+            subtitleClassName="text-dark-400 md:text-white/60 font-sans text-sm sm:text-base md:text-base"
           />
         </div>
 
-        {/* Contact Container */}
-        <div ref={containerRef} className="relative bg-dark-800 border border-dark-700 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8">
-          <div className="relative space-y-4 sm:space-y-6">
+        {/* Contact Container — Layer 1 (Base level, darkest) */}
+        <div
+          ref={containerRef}
+          className="relative rounded-2xl sm:rounded-3xl p-1.5 sm:p-2"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0.06), rgba(255,255,255,0.01))',
+          }}
+        >
+          {/* Inner container — Layer 2 (slightly elevated) */}
+          <div
+            className="relative rounded-[14px] sm:rounded-[22px] p-5 sm:p-6 md:p-8 lg:p-10"
+            style={{
+              background: 'linear-gradient(180deg, #1a1a1f 0%, #141418 100%)',
+              borderTop: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 24px rgba(0,0,0,0.5), 0 12px 48px rgba(0,0,0,0.3)',
+            }}
+          >
+            <div className="space-y-5 sm:space-y-6 md:space-y-8">
 
-            {/* Header Card */}
-            <div className="contact-card bg-dark-900 border border-dark-700 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              {/* Header Card — Layer 3 (elevated) */}
+              <div
+                className="contact-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8"
+                style={{
+                  background: 'linear-gradient(180deg, #1e1e24 0%, #18181d 100%)',
+                  borderTop: '1px solid rgba(255,255,255,0.07)',
+                  borderLeft: '1px solid rgba(255,255,255,0.04)',
+                  borderRight: '1px solid rgba(255,255,255,0.04)',
+                  borderBottom: '1px solid rgba(0,0,0,0.3)',
+                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 8px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2)',
+                }}
+              >
                 <div>
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold font-sans text-white">Start the Conversation</h3>
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold font-display text-white tracking-tight">Start the Conversation</h3>
+                  <p className="text-sm text-dark-400 font-sans mt-1">We&apos;d love to hear about your project</p>
                 </div>
-                <div className="flex items-center gap-2 rounded-full border border-gold-500/20 bg-gold-500/10 px-4 py-2 text-xs sm:text-sm text-gold-500 font-medium">
-                  <Sparkles size={16} />
+                <div
+                  className="flex items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm text-gold-500 font-medium"
+                  style={{
+                    background: 'linear-gradient(180deg, rgba(201,139,58,0.15) 0%, rgba(201,139,58,0.05) 100%)',
+                    border: '1px solid rgba(201,139,58,0.2)',
+                    boxShadow: 'inset 0 1px 0 rgba(201,139,58,0.1), 0 1px 3px rgba(0,0,0,0.3)',
+                  }}
+                >
+                  <Sparkles size={14} />
                   <span>3-hour reply</span>
                 </div>
               </div>
-            </div>
 
-            {/* Form and Info Grid - Mobile: Stack, Desktop: Side-by-side */}
-            <div className="grid gap-4 sm:gap-6 md:gap-8 lg:grid-cols-2">
-              <div className="contact-card bg-dark-900 border border-dark-700 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8">
-                <ContactInfo />
-              </div>
-              <div className="contact-card bg-dark-900 border border-dark-700 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8">
-                <ContactForm />
+              {/* Form and Info Grid */}
+              <div className="grid gap-5 sm:gap-6 md:gap-8 lg:grid-cols-2">
+
+                {/* Contact Info Card — Layer 3 */}
+                <div
+                  className="contact-card rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8"
+                  style={{
+                    background: 'linear-gradient(180deg, #1c1c22 0%, #151519 100%)',
+                    borderTop: '1px solid rgba(255,255,255,0.06)',
+                    borderLeft: '1px solid rgba(255,255,255,0.03)',
+                    borderRight: '1px solid rgba(255,255,255,0.03)',
+                    borderBottom: '1px solid rgba(0,0,0,0.3)',
+                    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 8px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2)',
+                  }}
+                >
+                  <ContactInfo />
+                </div>
+
+                {/* Contact Form Card — Layer 3 */}
+                <div
+                  className="contact-card rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8"
+                  style={{
+                    background: 'linear-gradient(180deg, #1c1c22 0%, #151519 100%)',
+                    borderTop: '1px solid rgba(255,255,255,0.06)',
+                    borderLeft: '1px solid rgba(255,255,255,0.03)',
+                    borderRight: '1px solid rgba(255,255,255,0.03)',
+                    borderBottom: '1px solid rgba(0,0,0,0.3)',
+                    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 8px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2)',
+                  }}
+                >
+                  <ContactForm />
+                </div>
               </div>
             </div>
           </div>

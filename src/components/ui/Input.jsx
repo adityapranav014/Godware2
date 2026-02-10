@@ -13,7 +13,9 @@ const Input = ({
   disabled = false,
   className = '',
   rows = 4,
-  error = null
+  error = null,
+  style = {},
+  autocomplete
 }) => {
   const baseClasses =
     'w-full px-4 py-3 border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/20';
@@ -36,6 +38,8 @@ const Input = ({
           disabled={disabled}
           rows={rows}
           className={combinedClasses}
+          style={style}
+          autoComplete={autocomplete}
         />
         {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
       </div>
@@ -53,6 +57,8 @@ const Input = ({
         required={required}
         disabled={disabled}
         className={combinedClasses}
+        style={style}
+        autoComplete={autocomplete}
       />
       {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
     </div>

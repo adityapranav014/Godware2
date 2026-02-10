@@ -54,9 +54,13 @@ const Navbar = ({ activeSection, onNavClick }) => {
       <header
         ref={navRef}
         className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${hasScrolled || isMobileMenuOpen
-          ? 'bg-black/60 backdrop-blur-xl border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] py-2'
+          ? 'bg-dark-850/90 backdrop-blur-xl border-b border-dark-700 py-2'
           : 'bg-transparent py-4 sm:py-6'
           }`}
+        style={hasScrolled || isMobileMenuOpen ? {
+          borderTopColor: 'rgba(255,255,255,0.06)',
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 2px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.4)'
+        } : {}}
       >
         <div className="max-w-7xl mx-auto px-4 py-2 sm:py-0 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
@@ -110,10 +114,11 @@ const Navbar = ({ activeSection, onNavClick }) => {
                     e.preventDefault();
                     onNavClick(link.name);
                   }}
-                  className={`nav-link relative px-4 lg:px-6 py-2.5 font-medium text-sm transition-all duration-300 cursor-pointer ${activeSection === link.name
-                    ? "text-gold-500"
-                    : "text-white hover:text-gold-400"
+                  className={`nav-link relative px-4 lg:px-6 py-2.5 font-medium text-sm transition-all duration-300 cursor-pointer rounded-lg ${activeSection === link.name
+                    ? "text-gold-500 bg-dark-750/50"
+                    : "text-white hover:text-gold-400 hover:bg-dark-750/40"
                     }`}
+                  style={{ transition: 'all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1)' }}
                   onMouseEnter={(e) => {
                     if (activeSection !== link.name) {
                       gsap.to(e.currentTarget, {

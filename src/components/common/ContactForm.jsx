@@ -1,25 +1,7 @@
 import { useState } from 'react';
-import { Clock3, ShieldCheck, Sparkles } from 'lucide-react';
+import { Clock3, ShieldCheck, MessageSquare } from 'lucide-react';
 import { Input } from '../ui';
 import { sendWhatsAppMessage, validateContactForm } from '../../utils';
-
-const quickFacts = [
-  {
-    icon: ShieldCheck,
-    label: 'Dedicated Partner',
-    description: 'Strategists walk you through every milestone.'
-  },
-  {
-    icon: Clock3,
-    label: '3h Response',
-    description: 'WhatsApp reply within three hours.'
-  },
-  {
-    icon: Sparkles,
-    label: 'Studio Crafted',
-    description: 'Concepts aligned with premium brand systems.'
-  }
-];
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -70,12 +52,35 @@ const ContactForm = () => {
     setErrors({});
   };
 
-  return (
-    <div className="space-y-6">
-      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+  /* Shared input style — recessed (inset shadow = field is "pressed into" the card) */
+  const inputDepthStyle = {
+    background: 'linear-gradient(180deg, #111115 0%, #141418 100%)',
+    border: 'none',
+    boxShadow: 'inset 0 2px 6px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.04)',
+  };
 
-        {/* Name & Email - Mobile: Stack, Desktop: Grid */}
-        <div className="grid gap-4 sm:grid-cols-2">
+  const inputClassName = "text-white placeholder-dark-500 focus:ring-2 focus:ring-gold-500/30 rounded-xl transition-all text-sm";
+
+  return (
+    <div className="space-y-5">
+      {/* Form heading */}
+      <div className="flex items-center gap-2.5 mb-4">
+        <div
+          className="p-1.5 rounded-lg"
+          style={{
+            background: 'linear-gradient(180deg, rgba(201,139,58,0.15) 0%, rgba(201,139,58,0.05) 100%)',
+            boxShadow: 'inset 0 1px 0 rgba(201,139,58,0.1)',
+          }}
+        >
+          <MessageSquare size={14} className="text-gold-500" />
+        </div>
+        <span className="text-xs font-medium uppercase tracking-wider text-dark-400 font-sans">Send a Message</span>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-3.5">
+
+        {/* Name & Email */}
+        <div className="grid gap-3.5 sm:grid-cols-2">
           <Input
             type="text"
             name="name"
@@ -85,7 +90,8 @@ const ContactForm = () => {
             placeholder="Full Name *"
             required
             error={errors.name}
-            className="bg-dark-900 border-dark-700 text-white placeholder-dark-400 focus:border-gold-500 focus:ring-1 focus:ring-gold-500/20 rounded-xl transition-all"
+            className={inputClassName}
+            style={inputDepthStyle}
           />
           <Input
             type="email"
@@ -96,7 +102,8 @@ const ContactForm = () => {
             placeholder="Email Address *"
             required
             error={errors.email}
-            className="bg-dark-900 border-dark-700 text-white placeholder-dark-400 focus:border-gold-500 focus:ring-1 focus:ring-gold-500/20 rounded-xl transition-all"
+            className={inputClassName}
+            style={inputDepthStyle}
           />
         </div>
 
@@ -108,7 +115,8 @@ const ContactForm = () => {
           value={formData.phone}
           onChange={handleChange}
           placeholder="Phone Number (Optional)"
-          className="bg-dark-900 border-dark-700 text-white placeholder-dark-400 focus:border-gold-500 focus:ring-1 focus:ring-gold-500/20 rounded-xl transition-all"
+          className={inputClassName}
+          style={inputDepthStyle}
         />
 
         {/* Message */}
@@ -121,14 +129,21 @@ const ContactForm = () => {
           required
           rows={5}
           error={errors.message}
-          className="bg-dark-900 border-dark-700 text-white placeholder-dark-400 focus:border-gold-500 focus:ring-1 focus:ring-gold-500/20 rounded-xl min-h-[140px] sm:min-h-[160px] transition-all"
+          className={`${inputClassName} min-h-[130px] sm:min-h-[150px]`}
+          style={inputDepthStyle}
         />
 
-        {/* Submit Button - Thumb-friendly */}
-        <div className="pt-2">
+        {/* Submit Button — Elevated (Level 3 shadow, top highlight = "light hitting the top") */}
+        <div className="pt-1">
           <button
             type="submit"
-            className="group w-full py-4 md:py-5 px-8 md:px-10 bg-gold-500 hover:bg-gold-600 active:bg-gold-700 text-dark-900 text-base sm:text-lg md:text-lg font-bold rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-gold-500/30 active:scale-100"
+            className="group w-full py-4 md:py-5 px-8 md:px-10 text-dark-900 text-base sm:text-lg font-bold rounded-xl active:scale-[0.98] transition-all duration-300 cursor-pointer"
+            style={{
+              background: 'linear-gradient(180deg, #d4a04a 0%, #b8872e 50%, #a67724 100%)',
+              borderTop: '1px solid rgba(255,255,255,0.3)',
+              borderBottom: '2px solid rgba(0,0,0,0.3)',
+              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25), 0 2px 4px rgba(0,0,0,0.3), 0 6px 20px rgba(201,139,58,0.2)',
+            }}
           >
             <span className="flex items-center justify-center gap-2 font-sans">
               Send Message
@@ -139,6 +154,22 @@ const ContactForm = () => {
           </button>
         </div>
       </form>
+
+      {/* Trust indicators — recessed strip */}
+      <div className="flex flex-wrap gap-4 justify-center pt-2">
+        {[
+          { icon: ShieldCheck, text: "Your data is safe" },
+          { icon: Clock3, text: "3h response time" },
+        ].map((item) => {
+          const Icon = item.icon;
+          return (
+            <div key={item.text} className="flex items-center gap-1.5 text-[10px] text-dark-500 font-sans">
+              <Icon size={11} className="text-dark-500" />
+              <span>{item.text}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

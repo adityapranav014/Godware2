@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -65,11 +65,21 @@ const featurePoints = [
 
 const FeatureCard = ({ feature, index }) => {
   const cardRef = useRef(null);
+  const [hasMouse, setHasMouse] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
+  // Detect if the device has a fine pointer (mouse) — skip spotlight on touch devices
+  useEffect(() => {
+    const mql = window.matchMedia('(pointer: fine)');
+    setHasMouse(mql.matches);
+    const handler = (e) => setHasMouse(e.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
+
   const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
+    if (!hasMouse || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     setOpacity(1);
@@ -82,18 +92,20 @@ const FeatureCard = ({ feature, index }) => {
   return (
     <div
       ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseMove={hasMouse ? handleMouseMove : undefined}
+      onMouseLeave={hasMouse ? handleMouseLeave : undefined}
       className={`${feature.colSpan} group relative overflow-hidden rounded-3xl p-8 depth-card`}
     >
-      {/* Spotlight Effect */}
-      <div
-        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100"
-        style={{
-          opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(201, 139, 58, 0.15), transparent 40%)`,
-        }}
-      />
+      {/* Spotlight Effect — only rendered on mouse devices */}
+      {hasMouse && (
+        <div
+          className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100"
+          style={{
+            opacity,
+            background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(201, 139, 58, 0.15), transparent 40%)`,
+          }}
+        />
+      )}
 
       {/* Noise Texture Overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />

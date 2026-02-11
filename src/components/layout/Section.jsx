@@ -22,9 +22,9 @@ const Section = ({
 
   const paddings = {
     none: '',
-    small: 'py-16',
-    default: 'py-24',
-    large: 'py-32'
+    small: 'py-10 sm:py-12 md:py-16',
+    default: 'py-12 sm:py-16 md:py-20 lg:py-24',
+    large: 'py-16 sm:py-20 md:py-24 lg:py-32'
   };
 
   return (

@@ -59,7 +59,7 @@ const ContactForm = () => {
     boxShadow: 'inset 0 2px 6px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.04)',
   };
 
-  const inputClassName = "text-white placeholder-dark-500 focus:ring-2 focus:ring-gold-500/30 rounded-xl transition-all text-sm";
+  const inputClassName = "text-white placeholder-dark-500 focus:ring-2 focus:ring-gold-500/30 rounded-xl transition-all text-sm py-3.5 sm:py-3";
 
   return (
     <div className="space-y-5">
@@ -137,7 +137,7 @@ const ContactForm = () => {
         <div className="pt-1">
           <button
             type="submit"
-            className="group w-full py-4 md:py-5 px-8 md:px-10 text-dark-900 text-base sm:text-lg font-bold rounded-xl active:scale-[0.98] transition-all duration-300 cursor-pointer"
+            className="group w-full py-4 md:py-5 px-8 md:px-10 text-dark-900 text-base sm:text-lg font-bold rounded-xl active:scale-[0.97] transition-all duration-300 cursor-pointer"
             style={{
               background: 'linear-gradient(180deg, #d4a04a 0%, #b8872e 50%, #a67724 100%)',
               borderTop: '1px solid rgba(255,255,255,0.3)',

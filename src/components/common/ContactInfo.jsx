@@ -43,7 +43,7 @@ const ContactInfo = () => {
       {/* Reach Us — Elevated icon buttons (Level 2 shadow) */}
       <div>
         <h3 className="text-sm font-bold uppercase tracking-wider font-display text-white/80 mb-4">Reach Us</h3>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+        <div className="grid  grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
           {[
             { icon: Phone, label: "Call", href: `tel:${CONTACT_INFO.phone.replace(/\s|-/g, "")}` },
             { icon: MessageCircle, label: "WhatsApp", href: `https://wa.me/${CONTACT_INFO.whatsappNumber}` },

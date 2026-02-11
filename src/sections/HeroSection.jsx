@@ -256,31 +256,32 @@ const HeroSection = ({ onShopClick }) => {
         {/* Hero Text on Video */}
         <h1
           ref={textRef}
-          className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-display text-center leading-tight tracking-tight mb-8 sm:mb-12 md:mb-16 max-w-[90vw] sm:max-w-none mix-blend-overlay text-white/90"
+          className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-display text-center leading-tight tracking-tight mb-8 sm:mb-12 md:mb-16 max-w-[90vw] sm:max-w-none text-white"
           style={{
             perspective: '1200px',
-            transformStyle: 'preserve-3d'
+            transformStyle: 'preserve-3d',
+            textShadow: '0 2px 12px rgba(0,0,0,0.6), 0 1px 4px rgba(0,0,0,0.8)'
           }}
         >
           Your Second Layer of Skin
         </h1>
 
         {/* Shop Now Button - Professional Video Overlay CTA */}
-        <div ref={buttonRef} className="relative mix-blend-overlay">
-          {/* Button glow effect container - Changed to white for seamless integration */}
-          <div className="absolute inset-0 blur-2xl opacity-40 bg-white/20 rounded-2xl scale-110 transition-opacity duration-300 pointer-events-none" />
+        <div ref={buttonRef} className="relative">
+          {/* Button glow effect container */}
+          <div className="absolute inset-0 blur-xl opacity-50 bg-gold-500/25 rounded-2xl scale-110 transition-opacity duration-300 pointer-events-none" />
 
           <button
             onClick={onShopClick}
             className="group relative w-full sm:w-auto min-w-[280px] sm:min-w-[300px] md:min-w-[320px] lg:min-w-[320px] max-w-[90vw] sm:max-w-[360px] 
                        px-8 sm:px-10 md:px-11 lg:px-12 
                        py-4 sm:py-[1.0rem] md:py-[1.125rem] lg:py-[1.125rem]
-                       depth-btn backdrop-blur-md
-                       text-white font-bold 
+                       depth-btn-gold
+                       text-dark-900 font-bold 
                        text-base sm:text-lg md:text-lg lg:text-lg
-                       rounded-xl sm:rounded-xl md:rounded-xl lg:rounded-xl
-                       overflow-hidden
-                       focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black/50"
+                       rounded-xl
+                       overflow-hidden active:scale-[0.97]
+                       focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:ring-offset-2 focus:ring-offset-black/50"
             aria-label="Shop Now - Browse our premium gym wear collection"
             onMouseEnter={(e) => {
               if (!isMobile()) {
@@ -333,9 +334,9 @@ const HeroSection = ({ onShopClick }) => {
         </div>
 
         {/* Scroll Indicator */}
-        <div ref={scrollIndicatorRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block">
-          <div className="w-6 h-10 border-2 border-white/40 rounded-full flex items-start justify-center p-2 animate-pulse">
-            <div className="w-1.5 h-3 bg-gold-500 rounded-full animate-bounce" />
+        <div ref={scrollIndicatorRef} className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2">
+          <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-1.5 sm:p-2">
+            <div className="w-1 h-2 sm:w-1.5 sm:h-3 bg-gold-500 rounded-full animate-bounce" />
           </div>
         </div>
       </div>

@@ -74,7 +74,7 @@ const Footer = ({ onNavClick }) => {
   }, { scope: footerRef });
 
   return (
-    <footer ref={footerRef} className="relative z-10 bg-dark-800 text-white overflow-x-hidden pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-8"
+    <footer ref={footerRef} className="relative z-10 bg-dark-800 text-white overflow-x-hidden pt-10 sm:pt-14 md:pt-20 lg:pt-24 pb-8"
       style={{
         borderTop: '1px solid var(--color-dark-700)',
         borderTopColor: 'rgba(255,255,255,0.06)',
@@ -112,7 +112,7 @@ const Footer = ({ onNavClick }) => {
                 className="p-2 md:p-3 rounded-lg depth-card text-dark-400 hover:text-gold-500 transition-all duration-200"
                 aria-label="Instagram"
               >
-                <Instagram size={18} strokeWidth={2} />
+                <Instagram size={20} strokeWidth={1.8} />
               </a>
               <a
                 ref={(el) => (socialLinksRef.current[1] = el)}
@@ -122,7 +122,7 @@ const Footer = ({ onNavClick }) => {
                 className="p-2 md:p-3 rounded-lg depth-card text-dark-400 hover:text-gold-500 transition-all duration-200"
                 aria-label="WhatsApp"
               >
-                <MessageCircle size={18} strokeWidth={2} />
+                <MessageCircle size={20} strokeWidth={1.8} />
               </a>
               <a
                 ref={(el) => (socialLinksRef.current[2] = el)}
@@ -130,7 +130,7 @@ const Footer = ({ onNavClick }) => {
                 className="p-2 md:p-3 rounded-lg depth-card text-dark-400 hover:text-gold-500 transition-all duration-200"
                 aria-label="Email"
               >
-                <Mail size={18} strokeWidth={2} />
+                <Mail size={20} strokeWidth={1.8} />
               </a>
               <a
                 ref={(el) => (socialLinksRef.current[3] = el)}
@@ -138,7 +138,7 @@ const Footer = ({ onNavClick }) => {
                 className="p-2 md:p-3 rounded-lg depth-card text-dark-400 hover:text-gold-500 transition-all duration-200"
                 aria-label="Phone"
               >
-                <Phone size={18} strokeWidth={2} />
+                <Phone size={20} strokeWidth={1.8} />
               </a>
             </div>
             <div className="space-y-1 md:space-y-2 text-sm text-dark-400">

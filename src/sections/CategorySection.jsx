@@ -165,7 +165,7 @@ const CategorySection = () => {
               href={product.flipkartLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="product-card group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-dark-800 transition-all duration-300 hover:scale-[1.02] active:scale-100"
+              className="product-card group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-dark-800 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
               style={{
                 border: '1px solid var(--color-dark-700)',
                 borderTopColor: 'rgba(255,255,255,0.08)',
@@ -194,8 +194,8 @@ const CategorySection = () => {
               {product.badge && (
                 <div className="absolute top-4 left-4 sm:top-5 sm:left-5 z-20">
                   <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider backdrop-blur-md ${product.badge === 'BESTSELLER'
-                      ? 'bg-gold-500/90 text-dark-900'
-                      : 'bg-red-500/90 text-white'
+                    ? 'bg-gold-500/90 text-dark-900'
+                    : 'bg-red-500/90 text-white'
                     }`}>
                     {product.badge}
                   </span>
@@ -203,7 +203,7 @@ const CategorySection = () => {
               )}
 
               {/* Content - Mobile Optimized */}
-              <div className="relative z-10 flex flex-col min-h-[480px] sm:min-h-[560px] md:min-h-[640px] p-5 sm:p-6 md:p-8">
+              <div className="relative z-10 flex flex-col min-h-[420px] sm:min-h-[500px] md:min-h-[580px] lg:min-h-[640px] p-5 sm:p-6 md:p-8">
                 {/* Spacer - Pushes content to bottom */}
                 <div className="flex-1" />
 

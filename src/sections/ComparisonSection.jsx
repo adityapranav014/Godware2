@@ -94,7 +94,7 @@ const FeatureCard = ({ feature, index }) => {
       ref={cardRef}
       onMouseMove={hasMouse ? handleMouseMove : undefined}
       onMouseLeave={hasMouse ? handleMouseLeave : undefined}
-      className={`${feature.colSpan} group relative overflow-hidden rounded-3xl p-8 depth-card`}
+      className={`${feature.colSpan} group relative overflow-hidden rounded-2xl sm:rounded-3xl p-6 sm:p-8 depth-card hover:border-gold-500/20 transition-all duration-500`}
     >
       {/* Spotlight Effect — only rendered on mouse devices */}
       {hasMouse && (

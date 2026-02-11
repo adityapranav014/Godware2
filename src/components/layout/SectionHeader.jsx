@@ -24,7 +24,7 @@ const SectionHeader = ({
   };
 
   return (
-    <div className={`mb-16 ${alignments[align]} ${className}`}>
+    <div className={`mb-6 sm:mb-8 md:mb-12 lg:mb-16 ${alignments[align]} ${className}`}>
       <h2 className={`text-4xl md:text-7xl font-display uppercase text-ink mb-4 ${titleClassName}`}>
         {title}
       </h2>

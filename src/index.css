@@ -1003,28 +1003,9 @@ a.active hr {
   }
 }
 
-/* If Needed try: Small-Screen SpecialCase Fix */
-@media (max-width: 380px) {
-  .test {
-    /* background: salmon; */
-    font-size: 75px;
-  }
-
-  .something {
-    /* background: chocolate; */
-    font-size: 16px;
-    width: 340px;
-    position: absolute;
-    bottom: -380px;
-    left: 5px;
-    gap: 10px;
-  }
-}
-
-/* Full HD Layout Tweaks: special-case */
+/* Full HD Layout Tweaks */
 @media (min-width: 1920px) {
   .hero-img {
-    /* background-color: #fff; */
     width: 1024px;
   }
 }

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -304,6 +304,18 @@ const TestimonialsSection = () => {
   const marqueeRef = useRef(null);
   const row1Ref = useRef(null);
   const row2Ref = useRef(null);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
+
+  // Hide swipe hint after 3 seconds or on first touch
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSwipeHint(false), 3500);
+    const hideOnTouch = () => setShowSwipeHint(false);
+    window.addEventListener('touchstart', hideOnTouch, { once: true });
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('touchstart', hideOnTouch);
+    };
+  }, []);
 
   useGSAP(() => {
     if (!sectionRef.current) return;
@@ -393,7 +405,7 @@ const TestimonialsSection = () => {
               className="flex gap-4 sm:gap-6 will-change-transform"
             >
               {[...testimonials, ...testimonials, ...testimonials, ...testimonials].map((item, index) => (
-                <div key={`${item.name}-${index}`} className="flex-shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] select-none testimonial-card">
+                <div key={`${item.name}-${index}`} className="flex-shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[78vw] sm:w-[55vw] md:w-[45vw] lg:w-[32vw] select-none testimonial-card">
                   {/* Quote Icon */}
                   <Quote size={20} className="text-gold-500/30 mb-3" strokeWidth={2} />
 
@@ -446,7 +458,7 @@ const TestimonialsSection = () => {
               className="flex gap-4 sm:gap-6 will-change-transform"
             >
               {[...testimonials].reverse().concat([...testimonials].reverse(), [...testimonials].reverse(), [...testimonials].reverse()).map((item, index) => (
-                <div key={`${item.role}-${index}`} className="flex-shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] select-none">
+                <div key={`${item.role}-${index}`} className="flex-shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[78vw] sm:w-[55vw] md:w-[45vw] lg:w-[32vw] select-none">
                   {/* Quote Icon */}
                   <Quote size={20} className="text-gold-500/30 mb-3" strokeWidth={2} />
 
@@ -490,6 +502,12 @@ const TestimonialsSection = () => {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Mobile Swipe Hint */}
+          <div className={`flex md:hidden items-center justify-center gap-2 mt-4 text-xs text-dark-400/80 font-sans transition-opacity duration-700 ${showSwipeHint ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-gold-500/60"><path d="M5 12h14M5 12l4-4M5 12l4 4M19 12l-4-4M19 12l-4 4" /></svg>
+            <span>Swipe to explore</span>
           </div>
         </div>
       </div>

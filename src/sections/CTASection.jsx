@@ -98,8 +98,12 @@ const CTASection = ({ onShopClick }) => {
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6 sm:space-y-8">
         {/* Urgency Badge */}
         <div className="mb-4 sm:mb-6">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider bg-red-500/10 border border-red-500/20 text-red-400 glow-gold-pulse">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider bg-red-500/15 border border-red-500/30 text-red-400 glow-gold-pulse"
+            style={{ boxShadow: '0 0 20px rgba(239,68,68,0.15), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+            </span>
             Limited Time — 69% Off Sale
           </span>
         </div>
@@ -120,7 +124,7 @@ const CTASection = ({ onShopClick }) => {
         <div className="pt-4">
           <div ref={buttonRef} className="relative">
             {/* Button glow effect container */}
-            <div className="absolute inset-0 blur-xl opacity-60 bg-gold-500/30 rounded-2xl scale-105 transition-opacity duration-300 pointer-events-none" />
+            <div className="absolute inset-0 blur-xl opacity-70 bg-gold-500/35 rounded-2xl scale-105 transition-opacity duration-300 pointer-events-none" />
 
             <button
               onClick={onShopClick}

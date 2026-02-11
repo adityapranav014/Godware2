@@ -252,7 +252,7 @@ const HeroSection = ({ onShopClick }) => {
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-dvh px-6 sm:px-8 lg:px-12 mt-[37dvh] md:mt-0">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-dvh px-6 sm:px-8 lg:px-12 mt-[35dvh] md:mt-0">
         {/* Hero Text on Video */}
         <h1
           ref={textRef}

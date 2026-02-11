@@ -111,7 +111,7 @@ const CTASection = ({ onShopClick }) => {
         </h2>
 
         {/* Social Proof Counter */}
-        <div className="flex items-center justify-center gap-2 text-sm text-white/60 font-sans">
+        <div className="flex items-center justify-center items-start gap-2 text-sm text-white/60 font-sans">
           <Users size={16} className="text-gold-500" />
           <span>Join <strong className="text-white">10,000+</strong> athletes who chose GOD WEAR</span>
         </div>

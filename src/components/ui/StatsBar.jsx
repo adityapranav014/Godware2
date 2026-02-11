@@ -11,13 +11,13 @@ const StatsBar = () => {
     return (
         <div className="w-full py-6 sm:py-8 bg-dark-950 border-y border-white/5">
             <div className="max-w-5xl mx-auto px-4 sm:px-6">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 place-items-center">
                     {stats.map((stat) => {
                         const Icon = stat.icon;
                         return (
                             <div
                                 key={stat.label}
-                                className="flex items-center gap-3 justify-center"
+                                className="flex items-center gap-3 justify-start sm:justify-center w-full max-w-[160px]"
                             >
                                 <div className={`p-2 rounded-lg ${stat.highlight ? 'bg-gold-500/10' : 'bg-white/5'}`}>
                                     <Icon

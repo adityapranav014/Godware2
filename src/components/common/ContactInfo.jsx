@@ -23,17 +23,17 @@ const ContactInfo = () => {
           <h3 className="text-sm font-bold uppercase tracking-wider font-display text-white/80">Business Hours</h3>
         </div>
         <div className="space-y-2.5 text-sm text-dark-400 font-sans">
-          <p className="flex justify-between gap-2">
+          <p className="flex flex-col sm:flex-row sm:justify-between gap-2">
             <span>Monday – Friday</span>
             <span className="font-semibold text-white/90">9 AM – 8 PM</span>
           </p>
           <div className="border-t border-white/5" />
-          <p className="flex justify-between gap-2">
+          <p className="flex flex-col sm:flex-row sm:justify-between gap-2">
             <span>Saturday</span>
             <span className="font-semibold text-white/90">10 AM – 6 PM</span>
           </p>
           <div className="border-t border-white/5" />
-          <p className="flex justify-between gap-2">
+          <p className="flex flex-col sm:flex-row sm:justify-between gap-2">
             <span>Sunday</span>
             <span className="font-semibold text-dark-500">Closed</span>
           </p>

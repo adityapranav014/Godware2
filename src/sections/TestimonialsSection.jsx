@@ -139,43 +139,162 @@ const testimonials = [
   }
 ];
 
-const useInfiniteScroll = (ref, speed = 1) => {
-  const animationRef = useRef(null);
+/**
+ * Professional GSAP-powered infinite marquee hook.
+ * Uses GPU-accelerated transforms for buttery-smooth animation.
+ * 
+ * @param {React.RefObject} containerRef - ref to the flex row container
+ * @param {number} speed - pixels per frame (default 0.5)
+ * @param {boolean} reverse - if true, scrolls right instead of left
+ */
+const useMarquee = (containerRef, speed = 0.5, reverse = false) => {
+  const xRef = useRef(0);
+  const animRef = useRef(null);
   const isPaused = useRef(false);
+  const isDragging = useRef(false);
+  const dragState = useRef({ startX: 0, scrollX: 0 });
+  const touchState = useRef({ startX: 0, startY: 0, scrollX: 0, isHorizontal: null });
+  const wheelTimer = useRef(null);
 
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
+    const el = containerRef.current;
+    if (!el) return;
 
-    const scroll = () => {
+    const getHalfWidth = () => el.scrollWidth / 2;
+
+    // Initialize reverse row position
+    if (reverse) {
+      xRef.current = -getHalfWidth();
+      gsap.set(el, { x: xRef.current });
+    }
+
+    // --- Animation loop (GPU-accelerated via GSAP transforms) ---
+    const animate = () => {
       if (!isPaused.current) {
-        if (element.scrollLeft >= element.scrollWidth / 2) {
-          element.scrollLeft = 0;
+        const halfWidth = getHalfWidth();
+        if (reverse) {
+          xRef.current += speed;
+          if (xRef.current >= 0) xRef.current -= halfWidth;
         } else {
-          element.scrollLeft += speed;
+          xRef.current -= speed;
+          if (xRef.current <= -halfWidth) xRef.current += halfWidth;
         }
+        gsap.set(el, { x: xRef.current });
       }
-      animationRef.current = requestAnimationFrame(scroll);
+      animRef.current = requestAnimationFrame(animate);
+    };
+    animRef.current = requestAnimationFrame(animate);
+
+    // --- Mouse Drag (desktop) ---
+    const onMouseDown = (e) => {
+      isDragging.current = true;
+      isPaused.current = true;
+      dragState.current = { startX: e.clientX, scrollX: xRef.current };
+      el.style.cursor = 'grabbing';
     };
 
-    animationRef.current = requestAnimationFrame(scroll);
+    const onMouseMove = (e) => {
+      if (!isDragging.current) return;
+      e.preventDefault();
+      const delta = e.clientX - dragState.current.startX;
+      const halfWidth = getHalfWidth();
+      let newX = dragState.current.scrollX + delta;
+      // Seamless wrap
+      while (newX > 0) newX -= halfWidth;
+      while (newX < -halfWidth) newX += halfWidth;
+      xRef.current = newX;
+      gsap.set(el, { x: xRef.current });
+    };
 
-    const pause = () => { isPaused.current = true; };
-    const resume = () => { isPaused.current = false; };
+    const onMouseUp = () => {
+      if (!isDragging.current) return;
+      isDragging.current = false;
+      isPaused.current = false;
+      el.style.cursor = 'grab';
+    };
 
-    element.addEventListener('mouseenter', pause);
-    element.addEventListener('mouseleave', resume);
-    element.addEventListener('touchstart', pause, { passive: true });
-    element.addEventListener('touchend', resume, { passive: true });
+    // --- Touch Drag (mobile) ---
+    const onTouchStart = (e) => {
+      isPaused.current = true;
+      touchState.current = {
+        startX: e.touches[0].clientX,
+        startY: e.touches[0].clientY,
+        scrollX: xRef.current,
+        isHorizontal: null,
+      };
+    };
+
+    const onTouchMove = (e) => {
+      const { startX, startY, scrollX } = touchState.current;
+      const dx = e.touches[0].clientX - startX;
+      const dy = e.touches[0].clientY - startY;
+
+      // Determine swipe direction once
+      if (touchState.current.isHorizontal === null) {
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+          touchState.current.isHorizontal = Math.abs(dx) > Math.abs(dy);
+        }
+        return;
+      }
+
+      // Vertical swipe → let page scroll naturally
+      if (!touchState.current.isHorizontal) return;
+
+      e.preventDefault();
+      const halfWidth = getHalfWidth();
+      let newX = scrollX + dx;
+      while (newX > 0) newX -= halfWidth;
+      while (newX < -halfWidth) newX += halfWidth;
+      xRef.current = newX;
+      gsap.set(el, { x: xRef.current });
+    };
+
+    const onTouchEnd = () => {
+      isPaused.current = false;
+      touchState.current.isHorizontal = null;
+    };
+
+    // --- Mouse wheel (convert vertical to horizontal) ---
+    const onWheel = (e) => {
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (Math.abs(delta) < 1) return;
+      e.preventDefault();
+
+      const halfWidth = getHalfWidth();
+      xRef.current -= delta;
+      while (xRef.current > 0) xRef.current -= halfWidth;
+      while (xRef.current < -halfWidth) xRef.current += halfWidth;
+      gsap.set(el, { x: xRef.current });
+
+      isPaused.current = true;
+      clearTimeout(wheelTimer.current);
+      wheelTimer.current = setTimeout(() => { isPaused.current = false; }, 800);
+    };
+
+    el.style.cursor = 'grab';
+
+    el.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    el.addEventListener('mouseleave', onMouseUp);
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchmove', onTouchMove, { passive: false });
+    el.addEventListener('touchend', onTouchEnd, { passive: true });
+    el.addEventListener('wheel', onWheel, { passive: false });
 
     return () => {
-      cancelAnimationFrame(animationRef.current);
-      element.removeEventListener('mouseenter', pause);
-      element.removeEventListener('mouseleave', resume);
-      element.removeEventListener('touchstart', pause);
-      element.removeEventListener('touchend', resume);
+      cancelAnimationFrame(animRef.current);
+      clearTimeout(wheelTimer.current);
+      el.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+      el.removeEventListener('mouseleave', onMouseUp);
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchmove', onTouchMove);
+      el.removeEventListener('touchend', onTouchEnd);
+      el.removeEventListener('wheel', onWheel);
     };
-  }, [ref, speed]);
+  }, [containerRef, speed, reverse]);
 };
 
 const TestimonialsSection = () => {
@@ -237,8 +356,9 @@ const TestimonialsSection = () => {
     );
   }, { scope: sectionRef });
 
-  useInfiniteScroll(row1Ref, 0.8);
-  useInfiniteScroll(row2Ref, 0.9);
+  // Row 1: scrolls LEFT  |  Row 2: scrolls RIGHT (opposite)
+  useMarquee(row1Ref, 0.8, false);
+  useMarquee(row2Ref, 0.6, true);
 
   return (
     <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-950 text-white section-gradient-alt noise-overlay" containerClassName="w-full max-w-full">
@@ -266,11 +386,11 @@ const TestimonialsSection = () => {
           <div className="pointer-events-none absolute inset-y-0 left-0 w-[5%] sm:w-[10%] bg-gradient-to-r from-dark-900 via-dark-900/80 to-transparent z-10" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-[5%] sm:w-[10%] bg-gradient-to-l from-dark-900 via-dark-900/80 to-transparent z-10" />
 
-          {/* First Row */}
-          <div className="mb-4 sm:mb-6">
+          {/* Row 1 → scrolls LEFT */}
+          <div className="mb-4 sm:mb-6 overflow-hidden">
             <div
               ref={row1Ref}
-              className="flex gap-4 sm:gap-6 px-4 pb-4 overflow-x-auto scrollbar-hide touch-pan-x"
+              className="flex gap-4 sm:gap-6 will-change-transform"
             >
               {[...testimonials, ...testimonials, ...testimonials, ...testimonials].map((item, index) => (
                 <div key={`${item.name}-${index}`} className="flex-shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] select-none testimonial-card">
@@ -319,11 +439,11 @@ const TestimonialsSection = () => {
             </div>
           </div>
 
-          {/* Second Row */}
-          <div>
+          {/* Row 2 → scrolls RIGHT (opposite) */}
+          <div className="overflow-hidden">
             <div
               ref={row2Ref}
-              className="flex gap-4 sm:gap-6 px-4 pb-4 overflow-x-auto scrollbar-hide touch-pan-x"
+              className="flex gap-4 sm:gap-6 will-change-transform"
             >
               {[...testimonials].reverse().concat([...testimonials].reverse(), [...testimonials].reverse(), [...testimonials].reverse()).map((item, index) => (
                 <div key={`${item.role}-${index}`} className="flex-shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[32vw] select-none">

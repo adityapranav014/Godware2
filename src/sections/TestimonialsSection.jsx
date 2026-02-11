@@ -12,13 +12,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   {
-    name: "Rahul Sharma",
+    name: "Dhruv Sharma",
     role: "Strength Coach",
     text: "The fit and durability are unreal. After heavy sessions, the compression tee still holds its shape perfectly.",
     image: "https://randomuser.me/api/portraits/men/32.jpg"
   },
   {
-    name: "Vikram Singh",
+    name: "Tarun Thakur",
     role: "CrossFit Athlete",
     text: "Finally, a compression shirt that handles high-intensity intervals without riding up or losing tension.",
     image: "https://randomuser.me/api/portraits/men/44.jpg"
@@ -42,7 +42,7 @@ const testimonials = [
     image: "https://randomuser.me/api/portraits/men/22.jpg"
   },
   {
-    name: "Aditya Roy",
+    name: "Aarav Joshi",
     role: "Fast Bowler (Cricket)",
     text: "Bowling long spells in heat demands sweat control. This gear keeps my shoulders loose and recovery fast.",
     image: "https://randomuser.me/api/portraits/men/15.jpg"
@@ -54,7 +54,7 @@ const testimonials = [
     image: "https://randomuser.me/api/portraits/men/11.jpg"
   },
   {
-    name: "Kunal Pandya",
+    name: "Yash Kulkarni",
     role: "Batsman (Cricket)",
     text: "Running between wickets feels effortless. The shirt moves with my body during drives and pulls.",
     image: "https://randomuser.me/api/portraits/men/33.jpg"
@@ -66,7 +66,7 @@ const testimonials = [
     image: "https://randomuser.me/api/portraits/men/76.jpg"
   },
   {
-    name: "Ishaan Kishan",
+    name: "Pranav Chauhan",
     role: "Football Winger",
     text: "Under my jersey, this base layer is essential. Keeps my core engaged during sprints and tackles.",
     image: "https://randomuser.me/api/portraits/men/41.jpg"
@@ -78,19 +78,19 @@ const testimonials = [
     image: "https://randomuser.me/api/portraits/men/54.jpg"
   },
   {
-    name: "Sandeep Narwal",
+    name: "Gaurav Tanwar",
     role: "Kabaddi Defender",
     text: "Grip and durability are key. This fabric survives the mat burns and holds me tight during raids.",
     image: "https://randomuser.me/api/portraits/men/62.jpg"
   },
   {
-    name: "Samar Verma",
+    name: "Lakshya Tiwari",
     role: "Weightlifting Coach",
     text: "My clients ask about this gear constantly. It stays locked in for every snatch and provides excellent core support.",
     image: "https://randomuser.me/api/portraits/men/88.jpg"
   },
   {
-    name: "Rohan Bopanna",
+    name: "Kartik Menon",
     role: "Tennis Player",
     text: "Serve motion feels unrestricted. The compression helps with arm fatigue deep in the third set.",
     image: "https://randomuser.me/api/portraits/men/36.jpg"
@@ -102,7 +102,7 @@ const testimonials = [
     image: "https://randomuser.me/api/portraits/men/29.jpg"
   },
   {
-    name: "Vijender Singh",
+    name: "Rajveer Chahal",
     role: "Pro Boxer",
     text: "Sparring puts gear to the test. This shirt stays intact and protects my skin during clinches.",
     image: "https://randomuser.me/api/portraits/men/58.jpg"
@@ -114,7 +114,7 @@ const testimonials = [
     image: "https://randomuser.me/api/portraits/men/66.jpg"
   },
   {
-    name: "Neeraj Chopra",
+    name: "Deepak Rathore",
     role: "Javelin Thrower",
     text: "Explosive power needs stability. This compression top supports my rotation perfectly during throws.",
     image: "https://randomuser.me/api/portraits/men/71.jpg"
@@ -126,13 +126,13 @@ const testimonials = [
     image: "https://randomuser.me/api/portraits/men/90.jpg"
   },
   {
-    name: "Sushil Kumar",
+    name: "Piyush Yadav",
     role: "Wrestler",
     text: "Grappling requires freedom of movement. This shirt shows off the gains and supports the grind.",
     image: "https://randomuser.me/api/portraits/men/14.jpg"
   },
   {
-    name: "Manish Pandey",
+    name: "Saurabh Nair",
     role: "Cyclist",
     text: "Aerodynamics matter. This fits perfectly under my kit and wicks sweat on long rides.",
     image: "https://randomuser.me/api/portraits/men/25.jpg"

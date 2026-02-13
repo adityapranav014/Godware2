@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { Star, Truck, Shield, RotateCcw } from "lucide-react";
+import { Star, Truck, Shield, RotateCcw, ShoppingBag } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Section from "../components/layout/Section";
@@ -250,9 +250,11 @@ const CategorySection = () => {
 
                   {/* CTA Button - Thumb-friendly */}
                   <div className="pt-3 sm:pt-4 border-t border-dark-700">
-                    <span className="flex items-center justify-center gap-2 w-full py-3 sm:py-4 px-6 rounded-xl text-white text-sm font-semibold uppercase tracking-wider depth-btn-gold group-hover:text-dark-900 transition-colors duration-300">
+                    <span className="flex items-center justify-center gap-2.5 w-full py-3 sm:py-4 px-6 rounded-xl text-white text-sm font-semibold uppercase tracking-wider depth-btn-gold group-hover:text-dark-900 transition-colors duration-300">
+                      {/* Shopping Bag Icon */}
+                      <ShoppingBag size={16} className="sm:w-5 sm:h-5 flex-shrink-0 stroke-[2]" />
                       Buy on Flipkart
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
                     </span>

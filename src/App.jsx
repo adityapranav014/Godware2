@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import GlobalSEO from "./seo/GlobalSEO";
 import Badge from "./components/ui/Badge";
 import StatsBar from "./components/ui/StatsBar";
 
@@ -54,6 +55,7 @@ const App = () => {
 
   return (
     <ReactLenis root className="relative w-full min-h-screen overflow-x-hidden">
+      <GlobalSEO />
 
       <Navbar
         activeSection={activeSection}
@@ -76,13 +78,15 @@ const App = () => {
         {/* Gold divider */}
         <div className="section-divider" />
 
-        <ComparisonSection />
+        <div id="comparison" data-section="Comparison">
+          <ComparisonSection />
+        </div>
 
         <div className="section-divider-subtle" />
 
-        <TestimonialsSection />
-
-        <div className="section-divider" />
+        <div id="testimonials" data-section="Testimonials">
+          <TestimonialsSection />
+        </div>
 
         <div id="Shop" ref={categorySectionRef} data-section="Shop">
           <CategorySection />
@@ -96,7 +100,9 @@ const App = () => {
 
         <div className="section-divider" />
 
-        <CTASection onShopClick={handleShopClick} />
+        <div id="cta" data-section="CTA">
+          <CTASection onShopClick={handleShopClick} />
+        </div>
 
         <div className="section-divider-subtle" />
 

@@ -95,7 +95,7 @@ const Navbar = ({ activeSection, onNavClick }) => {
             >
               <img
                 src={`${import.meta.env.BASE_URL}images/logo.webp`}
-                alt="Logo"
+                alt="GOD WEAR Premium Gym Wear Logo"
                 className="h-8 sm:h-10 object-contain group-hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.8)] transition-all duration-300"
               />
               <div className="text-xl sm:text-2xl font-display bg-gold tracking-tight bg-clip-text text-transparent group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.6)]">

@@ -15,53 +15,26 @@ import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
 import Badge from "../components/ui/Badge";
 import { EASE, DURATION, STAGGER } from '../utils/animations';
+import { comparisonFeaturesData } from '../assets/data';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const featurePoints = [
-  {
-    title: "Engineered Fit",
-    description: "Compression grade structure that adapts to your body's movement.",
-    icon: Scaling,
-    colSpan: "md:col-span-2",
-  },
-  {
-    title: "Thermal Control",
-    description: "Premium fabric blends optimize heat and sweat regulation.",
-    icon: Thermometer,
-    colSpan: "md:col-span-1",
-  },
-  {
-    title: "Elite Durability",
-    description: "Reinforced stitching designed for heavy training cycles.",
-    icon: ShieldCheck,
-    colSpan: "md:col-span-1",
-  },
-  {
-    title: "Athlete Tested",
-    description: "Patterns refined by pro athletes for peak performance.",
-    icon: Trophy,
-    colSpan: "md:col-span-2",
-  },
-  {
-    title: "Performance Community",
-    description: "Join a network of athletes dedicated to pushing limits.",
-    icon: Users,
-    colSpan: "md:col-span-1",
-  },
-  {
-    title: "Impact Resistant",
-    description: "Materials built to withstand high-intensity friction.",
-    icon: Dumbbell,
-    colSpan: "md:col-span-1",
-  },
-  {
-    title: "Reactive Power",
-    description: "Fabric that snaps back, enhancing your natural power output.",
-    icon: Zap,
-    colSpan: "md:col-span-1",
-  }
-];
+// Icon map for feature points
+const iconMap = {
+  Scaling,
+  Thermometer,
+  Trophy,
+  ShieldCheck,
+  Users,
+  Zap,
+  Dumbbell
+};
+
+// Create featurePoints array with actual icon components
+const featurePoints = comparisonFeaturesData.map(feature => ({
+  ...feature,
+  icon: iconMap[feature.iconName]
+}));
 
 const FeatureCard = ({ feature, index }) => {
   const cardRef = useRef(null);

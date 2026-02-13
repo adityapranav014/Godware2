@@ -7,137 +7,9 @@ import Section from "../components/layout/Section";
 import SectionHeader from "../components/layout/SectionHeader";
 import Badge from "../components/ui/Badge";
 import { EASE, DURATION, STAGGER } from '../utils/animations';
+import { testimonialsData, uiConfigData } from '../assets/data';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const testimonials = [
-  {
-    name: "Dhruv Sharma",
-    role: "Strength Coach",
-    text: "The fit and durability are unreal. After heavy sessions, the compression tee still holds its shape perfectly.",
-    image: "https://randomuser.me/api/portraits/men/32.jpg"
-  },
-  {
-    name: "Tarun Thakur",
-    role: "CrossFit Athlete",
-    text: "Finally, a compression shirt that handles high-intensity intervals without riding up or losing tension.",
-    image: "https://randomuser.me/api/portraits/men/44.jpg"
-  },
-  {
-    name: "Rohan Gupta",
-    role: "Marathon Runner",
-    text: "Breathable and light. The compression reduces muscle fatigue significantly during my long training blocks.",
-    image: "https://randomuser.me/api/portraits/men/68.jpg"
-  },
-  {
-    name: "Arjun Malik",
-    role: "Bodybuilder",
-    text: "The stitching and cut are premium. This compression gear makes my physique look sharp in and out of the gym.",
-    image: "https://randomuser.me/api/portraits/men/45.jpg"
-  },
-  {
-    name: "Karan Mehta",
-    role: "Functional Athlete",
-    text: "This compression T-shirt locks my torso in place without restricting movement—ideal for stabilizing heavy lifts.",
-    image: "https://randomuser.me/api/portraits/men/22.jpg"
-  },
-  {
-    name: "Aarav Joshi",
-    role: "Fast Bowler (Cricket)",
-    text: "Bowling long spells in heat demands sweat control. This gear keeps my shoulders loose and recovery fast.",
-    image: "https://randomuser.me/api/portraits/men/15.jpg"
-  },
-  {
-    name: "Aniket Rao",
-    role: "Triathlete",
-    text: "The moisture-wicking on this compression top is top-tier. Keeps me dry and supported mile after mile.",
-    image: "https://randomuser.me/api/portraits/men/11.jpg"
-  },
-  {
-    name: "Yash Kulkarni",
-    role: "Batsman (Cricket)",
-    text: "Running between wickets feels effortless. The shirt moves with my body during drives and pulls.",
-    image: "https://randomuser.me/api/portraits/men/33.jpg"
-  },
-  {
-    name: "Devansh Patel",
-    role: "HIIT Specialist",
-    text: "Hugs the right places so my form stays locked during plyometric drills. Best compression layer I've owned.",
-    image: "https://randomuser.me/api/portraits/men/76.jpg"
-  },
-  {
-    name: "Pranav Chauhan",
-    role: "Football Winger",
-    text: "Under my jersey, this base layer is essential. Keeps my core engaged during sprints and tackles.",
-    image: "https://randomuser.me/api/portraits/men/41.jpg"
-  },
-  {
-    name: "Nikhil Kapoor",
-    role: "Circuit Racer",
-    text: "I wear this under my race suit. The compressive feel keeps my muscles warm and responsive on track days.",
-    image: "https://randomuser.me/api/portraits/men/54.jpg"
-  },
-  {
-    name: "Gaurav Tanwar",
-    role: "Kabaddi Defender",
-    text: "Grip and durability are key. This fabric survives the mat burns and holds me tight during raids.",
-    image: "https://randomuser.me/api/portraits/men/62.jpg"
-  },
-  {
-    name: "Lakshya Tiwari",
-    role: "Weightlifting Coach",
-    text: "My clients ask about this gear constantly. It stays locked in for every snatch and provides excellent core support.",
-    image: "https://randomuser.me/api/portraits/men/88.jpg"
-  },
-  {
-    name: "Kartik Menon",
-    role: "Tennis Player",
-    text: "Serve motion feels unrestricted. The compression helps with arm fatigue deep in the third set.",
-    image: "https://randomuser.me/api/portraits/men/36.jpg"
-  },
-  {
-    name: "Aryan Desai",
-    role: "Fitness Model",
-    text: "Perfect for shoots. It never creases, and the compression accentuates muscle definition like nothing else.",
-    image: "https://randomuser.me/api/portraits/men/29.jpg"
-  },
-  {
-    name: "Rajveer Chahal",
-    role: "Pro Boxer",
-    text: "Sparring puts gear to the test. This shirt stays intact and protects my skin during clinches.",
-    image: "https://randomuser.me/api/portraits/men/58.jpg"
-  },
-  {
-    name: "Himanshu Dixit",
-    role: "Trail Runner",
-    text: "Heat and humidity are no match; the tee moves with me while supporting my midsection on uneven terrain.",
-    image: "https://randomuser.me/api/portraits/men/66.jpg"
-  },
-  {
-    name: "Deepak Rathore",
-    role: "Javelin Thrower",
-    text: "Explosive power needs stability. This compression top supports my rotation perfectly during throws.",
-    image: "https://randomuser.me/api/portraits/men/71.jpg"
-  },
-  {
-    name: "Kabir Seth",
-    role: "Powerlifter",
-    text: "Compression panels feel like a second skin. The tightness gives me that extra confidence under the heavy bar.",
-    image: "https://randomuser.me/api/portraits/men/90.jpg"
-  },
-  {
-    name: "Piyush Yadav",
-    role: "Wrestler",
-    text: "Grappling requires freedom of movement. This shirt shows off the gains and supports the grind.",
-    image: "https://randomuser.me/api/portraits/men/14.jpg"
-  },
-  {
-    name: "Saurabh Nair",
-    role: "Cyclist",
-    text: "Aerodynamics matter. This fits perfectly under my kit and wicks sweat on long rides.",
-    image: "https://randomuser.me/api/portraits/men/25.jpg"
-  }
-];
 
 /**
  * Professional GSAP-powered infinite marquee hook.
@@ -404,7 +276,7 @@ const TestimonialsSection = () => {
               ref={row1Ref}
               className="flex gap-4 sm:gap-6 will-change-transform"
             >
-              {[...testimonials, ...testimonials, ...testimonials, ...testimonials].map((item, index) => (
+              {[...testimonialsData, ...testimonialsData, ...testimonialsData, ...testimonialsData].map((item, index) => (
                 <div key={`${item.name}-${index}`} className="flex-shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[78vw] sm:w-[55vw] md:w-[45vw] lg:w-[32vw] select-none testimonial-card">
                   {/* Quote Icon */}
                   <Quote size={20} className="text-gold-500/30 mb-3" strokeWidth={2} />
@@ -457,7 +329,7 @@ const TestimonialsSection = () => {
               ref={row2Ref}
               className="flex gap-4 sm:gap-6 will-change-transform"
             >
-              {[...testimonials].reverse().concat([...testimonials].reverse(), [...testimonials].reverse(), [...testimonials].reverse()).map((item, index) => (
+              {[...testimonialsData].reverse().concat([...testimonialsData].reverse(), [...testimonialsData].reverse(), [...testimonialsData].reverse()).map((item, index) => (
                 <div key={`${item.role}-${index}`} className="flex-shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[78vw] sm:w-[55vw] md:w-[45vw] lg:w-[32vw] select-none">
                   {/* Quote Icon */}
                   <Quote size={20} className="text-gold-500/30 mb-3" strokeWidth={2} />
@@ -497,7 +369,7 @@ const TestimonialsSection = () => {
                       </div>
                       <p className="text-xs sm:text-sm md:text-sm text-dark-400 font-sans truncate">{item.role}</p>
                     </div>
-                    <span className="verified-badge shrink-0 hidden sm:inline-flex">Verified</span>
+                    <span className="verified-badge shrink-0 hidden sm:inline-flex">{uiConfigData.testimonials.verifiedBadge}</span>
                   </div>
                 </div>
               ))}
@@ -507,7 +379,7 @@ const TestimonialsSection = () => {
           {/* Mobile Swipe Hint */}
           <div className={`flex md:hidden items-center justify-center gap-2 mt-4 text-xs text-dark-400/80 font-sans transition-opacity duration-700 ${showSwipeHint ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-gold-500/60"><path d="M5 12h14M5 12l4-4M5 12l4 4M19 12l-4-4M19 12l-4 4" /></svg>
-            <span>Swipe to explore</span>
+            <span>{uiConfigData.testimonials.swipeHint}</span>
           </div>
         </div>
       </div>

@@ -5,8 +5,24 @@
 
 import { Mail, Phone, Instagram, MessageCircle, Clock, MapPin } from 'lucide-react';
 import { CONTACT_INFO, SOCIAL_LINKS } from '../../constants';
+import { contactInfoLabelsData } from '../../assets/data';
+
+// Icon map for contact reach us
+const iconMap = {
+  Phone,
+  MessageCircle,
+  Instagram,
+  Mail
+};
 
 const ContactInfo = () => {
+  // Contact reach items with actual icons
+  const reachUsItems = [
+    { icon: Phone, label: contactInfoLabelsData.call, href: `tel:${CONTACT_INFO.phone.replace(/\s|-/g, "")}` },
+    { icon: MessageCircle, label: contactInfoLabelsData.whatsapp, href: `https://wa.me/${CONTACT_INFO.whatsappNumber}` },
+    { icon: Instagram, label: contactInfoLabelsData.instagram, href: SOCIAL_LINKS.instagram },
+    { icon: Mail, label: contactInfoLabelsData.email, href: `mailto:${CONTACT_INFO.email}` }
+  ];
   return (
     <div className="space-y-5 sm:space-y-6">
 
@@ -20,36 +36,26 @@ const ContactInfo = () => {
       >
         <div className="flex items-center gap-2 mb-4">
           <Clock size={18} className="text-gold-500/70" />
-          <h3 className="text-sm font-bold uppercase tracking-wider font-display text-white/80">Business Hours</h3>
+          <h3 className="text-sm font-bold uppercase tracking-wider font-display text-white/80">{contactInfoLabelsData.businessHours}</h3>
         </div>
         <div className="space-y-2.5 text-sm text-dark-400 font-sans">
-          <p className="flex flex-col sm:flex-row sm:justify-between gap-2">
-            <span>Monday – Friday</span>
-            <span className="font-semibold text-white/90">9 AM – 8 PM</span>
-          </p>
-          <div className="border-t border-white/5" />
-          <p className="flex flex-col sm:flex-row sm:justify-between gap-2">
-            <span>Saturday</span>
-            <span className="font-semibold text-white/90">10 AM – 6 PM</span>
-          </p>
-          <div className="border-t border-white/5" />
-          <p className="flex flex-col sm:flex-row sm:justify-between gap-2">
-            <span>Sunday</span>
-            <span className="font-semibold text-dark-500">Closed</span>
-          </p>
+          {contactInfoLabelsData.schedule.map((scheduleItem, index) => (
+            <div key={index}>
+              <p className="flex flex-col sm:flex-row sm:justify-between gap-2">
+                <span>{scheduleItem.day}</span>
+                <span className={scheduleItem.time === "Closed" ? "font-semibold text-dark-500" : "font-semibold text-white/90"}>{scheduleItem.time}</span>
+              </p>
+              {index < contactInfoLabelsData.schedule.length - 1 && <div className="border-t border-white/5" />}
+            </div>
+          ))}
         </div>
       </div>
 
       {/* Reach Us — Elevated icon buttons (Level 2 shadow) */}
       <div>
-        <h3 className="text-sm font-bold uppercase tracking-wider font-display text-white/80 mb-4">Reach Us</h3>
+        <h3 className="text-sm font-bold uppercase tracking-wider font-display text-white/80 mb-4">{contactInfoLabelsData.reachUs}</h3>
         <div className="grid  grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
-          {[
-            { icon: Phone, label: "Call", href: `tel:${CONTACT_INFO.phone.replace(/\s|-/g, "")}` },
-            { icon: MessageCircle, label: "WhatsApp", href: `https://wa.me/${CONTACT_INFO.whatsappNumber}` },
-            { icon: Instagram, label: "Instagram", href: SOCIAL_LINKS.instagram },
-            { icon: Mail, label: "Email", href: `mailto:${CONTACT_INFO.email}` },
-          ].map((item) => {
+          {reachUsItems.map((item) => {
             const Icon = item.icon;
             return (
               <a

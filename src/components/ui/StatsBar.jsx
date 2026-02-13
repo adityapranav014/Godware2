@@ -3,15 +3,23 @@ import { useRef, useEffect, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { statsData } from '../../assets/data';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const stats = [
-    { icon: Users, value: "10,000", suffix: "+", label: "Athletes", highlight: false },
-    { icon: Star, value: "4.5", suffix: "★", label: "Avg Rating", highlight: true },
-    { icon: Truck, value: "Free", suffix: "", label: "Shipping", highlight: false, isText: true },
-    { icon: Zap, value: "69", suffix: "%", label: "Off Sale", highlight: true },
-];
+// Icon map for stats
+const iconMap = {
+  Users,
+  Star,
+  Truck,
+  Zap
+};
+
+// Create stats array with actual icon components
+const stats = statsData.map(stat => ({
+  ...stat,
+  icon: iconMap[stat.iconName]
+}));
 
 const AnimatedNumber = ({ value, suffix, isText, highlight }) => {
     const numRef = useRef(null);

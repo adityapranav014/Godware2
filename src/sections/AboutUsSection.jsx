@@ -8,8 +8,21 @@ import SectionHeader from "../components/layout/SectionHeader";
 import Badge from "../components/ui/Badge";
 import { Video } from '@imagekit/react';
 import { EASE, DURATION, STAGGER, isMobile, getResponsiveDuration, getResponsiveStagger } from '../utils/animations';
+import { aboutFeaturesData } from '../assets/data';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Icon map for about features
+const iconMap = {
+  Landmark,
+  Zap
+};
+
+// Create features array with actual icon components
+const features = aboutFeaturesData.map(feature => ({
+  ...feature,
+  icon: iconMap[feature.iconName]
+}));
 
 const AboutUsSection = () => {
     const sectionRef = useRef(null);
@@ -223,38 +236,25 @@ const AboutUsSection = () => {
 
                         {/* Feature Cards - Mobile: Stack, Desktop: Grid */}
                         <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 border-t border-dark-700 pt-6 sm:pt-8">
-
-                            {/* Feature 1 */}
-                            <div className="about-feature flex items-start gap-3 sm:gap-4">
-                                <div className="shrink-0 size-10 sm:size-12 md:size-12 flex items-center justify-center rounded-full bg-dark-750 border border-dark-600"
-                                    style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.4)' }}>
-                                    <Zap size={20} className="text-gold-500 md:w-6 md:h-6" strokeWidth={2.5} />
-                                </div>
-                                <div className="space-y-1 sm:space-y-2">
-                                    <h3 className="text-sm md:text-xl uppercase font-bold font-sans text-white tracking-wide">
-                                        Sustainability
-                                    </h3>
-                                    <p className="text-xs sm:text-sm font-sans text-dark-400 leading-relaxed">
-                                        Working alongside international groups of athletes, we create high-performance gym wear from premium materials.
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Feature 2 */}
-                            <div className="about-feature flex items-start gap-3 sm:gap-4">
-                                <div className="shrink-0 size-10 sm:size-12 md:size-12 flex items-center justify-center rounded-full bg-dark-750 border border-dark-600"
-                                    style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.4)' }}>
-                                    <Landmark size={20} className="text-gold-500 md:w-6 md:h-6" strokeWidth={2.5} />
-                                </div>
-                                <div className="space-y-1 sm:space-y-2">
-                                    <h3 className="text-sm md:text-xl uppercase font-bold font-sans text-white tracking-wide">
-                                        Mission
-                                    </h3>
-                                    <p className="text-xs sm:text-sm font-sans text-dark-400 leading-relaxed">
-                                        We're on a mission to empower people to push their limits and achieve their fitness goals with confidence and style.
-                                    </p>
-                                </div>
-                            </div>
+                            {features.map((feature) => {
+                                const Icon = feature.icon;
+                                return (
+                                    <div key={feature.title} className="about-feature flex items-start gap-3 sm:gap-4">
+                                        <div className="shrink-0 size-10 sm:size-12 md:size-12 flex items-center justify-center rounded-full bg-dark-750 border border-dark-600"
+                                            style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.4)' }}>
+                                            <Icon size={20} className="text-gold-500 md:w-6 md:h-6" strokeWidth={2.5} />
+                                        </div>
+                                        <div className="space-y-1 sm:space-y-2">
+                                            <h3 className="text-sm md:text-xl uppercase font-bold font-sans text-white tracking-wide">
+                                                {feature.title}
+                                            </h3>
+                                            <p className="text-xs sm:text-sm font-sans text-dark-400 leading-relaxed">
+                                                {feature.description}
+                                            </p>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

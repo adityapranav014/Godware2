@@ -3,6 +3,7 @@ import { Video } from '@imagekit/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { EASE, DURATION, isMobile, getResponsiveDuration } from '../utils/animations';
+import { uiConfigData } from '../assets/data';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -263,7 +264,7 @@ const HeroSection = ({ onShopClick }) => {
             textShadow: '0 2px 12px rgba(0,0,0,0.6), 0 1px 4px rgba(0,0,0,0.8)'
           }}
         >
-          Your Second Layer of Skin
+          {uiConfigData.hero.mainHeading}
         </h1>
 
         {/* Shop Now Button - Professional Video Overlay CTA */}
@@ -314,7 +315,7 @@ const HeroSection = ({ onShopClick }) => {
             {/* Button content */}
             <span className="relative flex items-center justify-center gap-2.5 sm:gap-3 font-sans tracking-wide">
               <span className="relative">
-                Shop Now
+                {uiConfigData.hero.ctaButton}
                 {/* Text underline animation on hover */}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white/60 group-hover:w-full transition-all duration-300" />
               </span>

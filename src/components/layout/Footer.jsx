@@ -15,6 +15,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { APP_CONFIG, CONTACT_INFO, NAV_LINKS, SOCIAL_LINKS } from "../../constants";
+import { footerContentData } from "../../assets/data";
 import { Logo } from "../ui";
 import { EASE, DURATION, STAGGER } from "../../utils/animations";
 
@@ -88,9 +89,7 @@ const Footer = ({ onNavClick }) => {
           <div className="flex-1 space-y-4 sm:space-y-6">
             <Logo onClick={() => onNavClick("Home")} size="small" />
             <p className="text-dark-400 leading-relaxed max-w-xl text-sm">
-              Premium fitness and lifestyle brand for those who train with
-              discipline and live with confidence, built with powerful
-              compression, bold design, and lasting comfort.
+              {footerContentData.brandDescription}
             </p>
           </div>
         </div>
@@ -101,7 +100,7 @@ const Footer = ({ onNavClick }) => {
           {/* Connect */}
           <div className="footer-section space-y-4 sm:space-y-5 md:space-y-6">
             <p className="text-xs uppercase tracking-widest text-dark-400 font-semibold">
-              Connect
+              {footerContentData.sectionLabels.connect}
             </p>
             <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
               <a
@@ -150,21 +149,21 @@ const Footer = ({ onNavClick }) => {
           {/* Shop */}
           <div className="footer-section space-y-4 sm:space-y-5 md:space-y-6">
             <p className="text-xs uppercase tracking-widest text-dark-400 font-semibold">
-              Shop
+              {footerContentData.sectionLabels.shop}
             </p>
             <button
               onClick={() => onNavClick && onNavClick("Shop")}
               className="flex items-center gap-2.5 md:gap-3 text-dark-400 text-sm hover:text-gold-500 transition-colors duration-200"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-dark-400" />
-              Compression T-Shirts
+              {footerContentData.products.primaryLine}
             </button>
           </div>
 
           {/* Company */}
           <div className="footer-section space-y-4 sm:space-y-5 md:space-y-6">
             <p className="text-xs uppercase tracking-widest text-dark-400 font-semibold">
-              Company
+              {footerContentData.sectionLabels.company}
             </p>
             <ul className="space-y-3 md:space-y-4 text-dark-400 text-sm">
               {NAV_LINKS.map((link) => (
@@ -185,24 +184,27 @@ const Footer = ({ onNavClick }) => {
         {/* Footer Bottom */}
         <div className="border-t border-dark-700 pt-8 md:pt-10 lg:pt-12">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8 text-xs text-dark-400">
-            <p>© {currentYear} GOD WEAR. All rights reserved.</p>
+            <p>© {currentYear} {footerContentData.copyrightBrand}. {footerContentData.copyright}</p>
 
             {/* Payment/Security Badges */}
             <div className="flex items-center gap-3 text-[10px] sm:text-xs text-dark-500 font-sans">
-              <div className="flex items-center gap-1">
-                <ShieldCheck size={12} className="text-green-500/60" />
-                <span>Secure Checkout</span>
-              </div>
-              <span className="text-dark-600">•</span>
-              <span>COD</span>
-              <span className="text-dark-600">•</span>
-              <span>UPI</span>
-              <span className="text-dark-600">•</span>
-              <span>Card</span>
+              {footerContentData.paymentMethods.map((method, index) => (
+                <div key={method.label}>
+                  {method.icon ? (
+                    <div className="flex items-center gap-1">
+                      <ShieldCheck size={12} className="text-green-500/60" />
+                      <span>{method.label}</span>
+                    </div>
+                  ) : (
+                    <span>{method.label}</span>
+                  )}
+                  {index < footerContentData.paymentMethods.length - 1 && <span className="ml-3 text-dark-600">•</span>}
+                </div>
+              ))}
             </div>
             <div className="flex items-center gap-2 md:gap-3">
               <Heart size={14} className="text-red-500" fill="currentColor" />
-              Crafted in India with love.
+              {footerContentData.craftedBy}
             </div>
 
             {/* Developer Card */}
@@ -217,7 +219,7 @@ const Footer = ({ onNavClick }) => {
               </div>
               <div className="flex flex-col leading-tight">
                 <span className="text-[10px]  text-dark-400 uppercase tracking-wide">
-                  Crafted by
+                  {footerContentData.crafatedByLabel}
                 </span>
                 <span className="text-sm font-bold text-white group-hover:text-gold-500 transition-colors">
                   {APP_CONFIG.developer.name}

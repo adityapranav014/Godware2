@@ -2,6 +2,19 @@ import { useState } from 'react';
 import { Clock3, ShieldCheck, MessageSquare } from 'lucide-react';
 import { Input } from '../ui';
 import { sendWhatsAppMessage, validateContactForm } from '../../utils';
+import { trustIndicatorsData, contactFormLabelsData } from '../../assets/data';
+
+// Icon map for trust indicators
+const iconMap = {
+  ShieldCheck,
+  Clock3
+};
+
+// Create trust indicators with actual icon components
+const trustIndicators = trustIndicatorsData.map(indicator => ({
+  ...indicator,
+  icon: iconMap[indicator.iconName]
+}));
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -74,7 +87,7 @@ const ContactForm = () => {
         >
           <MessageSquare size={14} className="text-gold-500" />
         </div>
-        <span className="text-xs font-medium uppercase tracking-wider text-dark-400 font-sans">Send a Message</span>
+        <span className="text-xs font-medium uppercase tracking-wider text-dark-400 font-sans">{contactFormLabelsData.formHeading}</span>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-3.5">
@@ -87,7 +100,7 @@ const ContactForm = () => {
             autocomplete="on"
             value={formData.name}
             onChange={handleChange}
-            placeholder="Full Name *"
+            placeholder={contactFormLabelsData.nameRequired}
             required
             error={errors.name}
             className={inputClassName}
@@ -99,7 +112,7 @@ const ContactForm = () => {
             autocomplete="on"
             value={formData.email}
             onChange={handleChange}
-            placeholder="Email Address *"
+            placeholder={contactFormLabelsData.emailRequired}
             required
             error={errors.email}
             className={inputClassName}
@@ -114,7 +127,7 @@ const ContactForm = () => {
           autocomplete="on"
           value={formData.phone}
           onChange={handleChange}
-          placeholder="Phone Number (Optional)"
+          placeholder={contactFormLabelsData.phoneOptional}
           className={inputClassName}
           style={inputDepthStyle}
         />
@@ -125,7 +138,7 @@ const ContactForm = () => {
           name="message"
           value={formData.message}
           onChange={handleChange}
-          placeholder="Tell us about your order *"
+          placeholder={contactFormLabelsData.messageRequired}
           required
           rows={5}
           error={errors.message}
@@ -146,7 +159,7 @@ const ContactForm = () => {
             }}
           >
             <span className="flex items-center justify-center gap-2 font-sans">
-              Send
+              {contactFormLabelsData.submitButton}
               <svg className="w-5 h-5 md:w-6 md:h-6 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
@@ -157,10 +170,7 @@ const ContactForm = () => {
 
       {/* Trust indicators — recessed strip */}
       <div className="flex flex-wrap gap-4 justify-center pt-2">
-        {[
-          { icon: ShieldCheck, text: "Your data is safe" },
-          { icon: Clock3, text: "3h response time" },
-        ].map((item) => {
+        {trustIndicators.map((item) => {
           const Icon = item.icon;
           return (
             <div key={item.text} className="flex items-center gap-1.5 text-[10px] text-dark-500 font-sans">

@@ -139,7 +139,7 @@ const Contact = () => {
               >
                 <div>
                   <h3 className="text-lg sm:text-xl md:text-2xl font-bold font-display text-white tracking-tight">Start the Conversation</h3>
-                  <p className="text-sm text-dark-400 font-sans mt-1">We&apos;d love to hear about your </p>
+                  <p className="text-sm text-dark-400 font-sans mt-1">We&apos;d love to hear about how we can assist you today.</p>
                 </div>
                 <div
                   className="flex items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm text-gold-500 font-medium"

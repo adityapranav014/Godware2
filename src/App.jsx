@@ -22,6 +22,7 @@ const Contact = lazy(() => import("./sections/Contact"));
 const ComparisonSection = lazy(() => import("./sections/ComparisonSection"));
 const TestimonialsSection = lazy(() => import("./sections/TestimonialsSection"));
 const CTASection = lazy(() => import("./sections/CTASection"));
+const SEOHomepageCopy = lazy(() => import("./sections/SEOHomepageCopy"));
 
 // Custom hooks
 import { useScrollSpy, useScrollToSection } from "./hooks";
@@ -109,6 +110,10 @@ const App = () => {
         <div id="Contact" ref={contactSectionRef} data-section="Contact">
           <Contact />
         </div>
+
+        {/* SEO copy — crawlable text content, below fold */}
+        <div className="section-divider-subtle" />
+        <SEOHomepageCopy />
       </Suspense>
 
       {/* Back to Top */}

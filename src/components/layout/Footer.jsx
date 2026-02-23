@@ -189,23 +189,18 @@ const Footer = ({ onNavClick }) => {
             {/* Payment/Security Badges */}
             <div className="flex items-center gap-3 text-[10px] sm:text-xs text-dark-500 font-sans">
               {footerContentData.paymentMethods.map((method, index) => (
-                <div key={method.label}>
-                  {method.icon ? (
-                    <div className="flex items-center gap-1">
-                      <ShieldCheck size={12} className="text-green-500/60" />
-                      <span>{method.label}</span>
-                    </div>
-                  ) : (
-                    <span>{method.label}</span>
-                  )}
+                <div key={method.label} className="flex items-center gap-1">
+                  {method.icon && <ShieldCheck size={12} className="text-green-500/60" />}
+                  <span>{method.label}</span>
                   {index < footerContentData.paymentMethods.length - 1 && <span className="ml-3 text-dark-600">•</span>}
                 </div>
               ))}
             </div>
-            <div className="flex items-center gap-2 md:gap-3">
+            
+            {/* <div className="flex items-center gap-2 md:gap-3">
               <Heart size={14} className="text-red-500" fill="currentColor" />
               {footerContentData.craftedBy}
-            </div>
+            </div> */}
 
             {/* Developer Card */}
             <a

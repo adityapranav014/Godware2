@@ -92,7 +92,7 @@ const CTASection = ({ onShopClick }) => {
     >
       {/* Background Image - Subtle */}
       <div className="absolute inset-0 cta-bg" />
-      <div className="absolute inset-0 bg-gradient-to-b from-dark-900/50 via-dark-900/60 to-dark-900/70" />
+      <div className="absolute inset-0 bg-linear-to-b from-dark-900/50 via-dark-900/60 to-dark-900/70" />
 
       {/* Content - Mobile First */}
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6 sm:space-y-8">
@@ -115,7 +115,7 @@ const CTASection = ({ onShopClick }) => {
         </h2>
 
         {/* Social Proof Counter */}
-        <div className="flex items-center justify-center items-start gap-2 text-sm text-white/60 font-sans">
+        <div className="flex items-center justify-center gap-2 text-sm text-white/60 font-sans">
           <Users size={16} className="text-gold-500" />
           <span>Join <strong className="text-white">10,000+</strong> athletes who chose GOD WEAR</span>
         </div>
@@ -128,16 +128,17 @@ const CTASection = ({ onShopClick }) => {
 
             <button
               onClick={onShopClick}
-              className="group relative w-full sm:w-auto min-w-[280px] sm:min-w-[300px] md:min-w-[320px] lg:min-w-[320px] max-w-[90vw] sm:max-w-[360px] 
+              className="group relative w-full sm:w-auto min-w-70 sm:min-w-75 md:min-w-[320px] lg:min-w-[320px] max-w-[90vw] sm:max-w-90 
                          px-8 sm:px-10 md:px-11 lg:px-12 
-                         py-4 sm:py-[1.0rem] md:py-[1.125rem] lg:py-[1.125rem]
+                         py-4 sm:py-4 md:py-4.5 lg:py-4.5
                          depth-btn-gold
-                         text-black font-bold 
+                         font-bold 
                          text-base sm:text-lg md:text-lg lg:text-lg
                          rounded-xl sm:rounded-xl md:rounded-xl lg:rounded-xl
                          active:scale-[0.98]
                          overflow-hidden
                          focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:ring-offset-2 focus:ring-offset-black/50"
+              style={{ color: 'var(--color-dark-900)' }}
               aria-label="Shop Now - Browse our premium compression t-shirts"
               onMouseEnter={(e) => {
                 if (!isMobile()) {
@@ -161,7 +162,7 @@ const CTASection = ({ onShopClick }) => {
               }}
             >
               {/* Animated gradient overlay - Shine effect */}
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+              <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
 
               {/* Corner accents for premium feel */}
               <span className="absolute top-0 left-0 w-2 h-2 bg-white/40 rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -177,7 +178,7 @@ const CTASection = ({ onShopClick }) => {
 
                 {/* Animated arrow icon */}
                 <svg
-                  className="w-5 h-5 sm:w-[1.375rem] sm:h-[1.375rem] md:w-6 md:h-6 transition-transform duration-300 group-hover:translate-x-1.5 group-active:translate-x-0.5"
+                  className="w-5 h-5 sm:w-5.5 sm:h-5.5 md:w-6 md:h-6 transition-transform duration-300 group-hover:translate-x-1.5 group-active:translate-x-0.5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

@@ -184,10 +184,11 @@ const CategorySection = () => {
                     playsInline
                     controls={false}
                     className="w-full h-full object-cover"
+                    aria-hidden="true"
                   />
                 </div>
                 {/* Gradient Overlay - Ensures text readability */}
-                <div className="absolute inset-0 bg-gradient-to-b from-dark-900/60 via-dark-900/40 to-dark-900/95" />
+                <div className="absolute inset-0 bg-linear-to-b from-dark-900/60 via-dark-900/40 to-dark-900/95" />
               </div>
 
               {/* Badge Overlay */}
@@ -203,7 +204,7 @@ const CategorySection = () => {
               )}
 
               {/* Content - Mobile Optimized */}
-              <div className="relative z-10 flex flex-col min-h-[420px] sm:min-h-[500px] md:min-h-[580px] lg:min-h-[640px] p-5 sm:p-6 md:p-8">
+              <div className="relative z-10 flex flex-col min-h-105 sm:min-h-125 md:min-h-145 lg:min-h-160 p-5 sm:p-6 md:p-8">
                 {/* Spacer - Pushes content to bottom */}
                 <div className="flex-1" />
 
@@ -252,9 +253,9 @@ const CategorySection = () => {
                   <div className="pt-3 sm:pt-4 border-t border-dark-700">
                     <span className="flex items-center justify-center gap-2.5 w-full py-3 sm:py-4 px-6 rounded-xl text-white text-sm font-semibold uppercase tracking-wider depth-btn-gold group-hover:text-dark-900 transition-colors duration-300">
                       {/* Shopping Bag Icon */}
-                      <ShoppingBag size={16} className="sm:w-5 sm:h-5 flex-shrink-0 stroke-[2]" />
+                      <ShoppingBag size={16} className="sm:w-5 sm:h-5 shrink-0 stroke-2" />
                       Buy on Flipkart
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
                     </span>

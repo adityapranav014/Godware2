@@ -3,8 +3,10 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="/images/logo.webp">
-  <link rel="apple-touch-icon" href="/images/logo.webp">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/images/icon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GOD WEAR® — Compression T-Shirts for Athletes | India</title>
 
@@ -62,9 +64,9 @@
   <meta property="product:availability" content="in stock">
   <meta property="product:condition" content="new">
   <meta property="product:price:currency" content="INR">
-  <meta property="business:contact_data:street_address" content="India">
-  <meta property="business:contact_data:locality" content="India">
-  <meta property="business:contact_data:region" content="India">
+  <meta property="business:contact_data:street_address" content="1st floor, Bajrangi Chowk, Deo">
+  <meta property="business:contact_data:locality" content="Deo">
+  <meta property="business:contact_data:region" content="Jharkhand">
   <meta property="business:contact_data:country_name" content="India">
 
   <!-- Additional SEO Meta Tags -->
@@ -73,8 +75,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="GOD WEAR">
   <meta name="format-detection" content="telephone=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-
   <!-- Structured Data - Organization -->
   <script type="application/ld+json">
   {
@@ -89,7 +89,7 @@
       "addressCountry": "IN"
     },
     "sameAs": [
-      "https://godwear.co.in/"
+      "https://www.instagram.com/godwearofficial"
     ]
   }
   </script>
@@ -100,12 +100,7 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "GOD WEAR",
-    "url": "https://godwear.co.in/",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://godwear.co.in/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+    "url": "https://godwear.co.in/"
   }
   </script>
 
@@ -118,9 +113,13 @@
     "image": "https://godwear.co.in/images/logo.webp",
     "description": "Premium compression t-shirts for athletes and fitness enthusiasts.",
     "url": "https://godwear.co.in/",
-    "telephone": "",
+    "telephone": "+91 79-03598844",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "1st floor, Bajrangi Chowk",
+      "addressLocality": "Deo",
+      "addressRegion": "JH",
+      "postalCode": "814112",
       "addressCountry": "IN"
     },
     "priceRange": "₹₹",
@@ -132,8 +131,7 @@
         "Wednesday",
         "Thursday",
         "Friday",
-        "Saturday",
-        "Sunday"
+        "Saturday"
       ],
       "opens": "00:00",
       "closes": "23:59"
@@ -150,13 +148,25 @@
     "description": "Premium compression t-shirts collection",
     "itemListElement": [
       {
-        "@type": "Product",
+        "@type": "ListItem",
         "position": 1,
-        "name": "GOD WEAR Compression T-Shirts",
-        "description": "Premium compression t-shirts for workout and fitness",
-        "brand": {
-          "@type": "Brand",
-          "name": "GOD WEAR"
+        "item": {
+          "@type": "Product",
+          "name": "GOD WEAR Compression T-Shirts",
+          "description": "Premium compression t-shirts for workout and fitness",
+          "image": "https://godwear.co.in/images/hero-1.webp",
+          "url": "https://godwear.co.in/",
+          "brand": {
+            "@type": "Brand",
+            "name": "GOD WEAR"
+          },
+          "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "INR",
+            "lowPrice": "499",
+            "highPrice": "1599",
+            "availability": "https://schema.org/InStock"
+          }
         }
       }
     ]

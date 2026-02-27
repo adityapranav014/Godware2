@@ -120,11 +120,18 @@ const App = () => {
       {/* Back to Top */}
       <div className="flex justify-center bg-dark-800 border-t border-white/5 py-4">
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => {
+            const lenis = document.querySelector('[data-lenis]')?.__lenis;
+            if (lenis) {
+              lenis.scrollTo(0, { duration: 1.5 });
+            } else {
+              window.scrollTo({ top: 0, behavior: 'instant' });
+            }
+          }}
           className="group flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider text-dark-300 bg-white/5 border border-white/10 hover:border-gold-500/40 hover:text-gold-400 hover:bg-gold-500/5 transition-all duration-300 hover:shadow-[0_0_20px_rgba(201,139,58,0.1)]"
           aria-label="Back to Top"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-y-0.5 transition-transform"><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-y-0.5 transition-transform" aria-hidden="true"><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg>
           Back to Top
         </button>
       </div>

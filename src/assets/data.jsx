@@ -305,7 +305,8 @@ const footerContentData = {
   ],
   productLine: "We create premium compression wear for athletes",
   brandDescription: "Premium fitness and lifestyle brand for those who train with discipline and live with confidence, built with powerful compression, bold design, and lasting comfort.",
-  crafatedByLabel: "Crafted by"
+  crafatedByLabel: "Crafted by",
+  craftedByLabel: "Crafted by"
 };
 
 // Contact Reach Us Items Data  

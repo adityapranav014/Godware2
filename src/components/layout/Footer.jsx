@@ -51,27 +51,39 @@ const Footer = ({ onNavClick }) => {
     );
 
     // Social link hover effects
-    socialLinksRef.current.forEach((link, index) => {
+    const cleanupFns = [];
+    socialLinksRef.current.forEach((link) => {
       if (!link) return;
 
-      link.addEventListener('mouseenter', () => {
+      const onEnter = () => {
         gsap.to(link, {
           scale: 1.15,
           rotate: 5,
           duration: DURATION.fast,
           ease: EASE.back,
         });
-      });
+      };
 
-      link.addEventListener('mouseleave', () => {
+      const onLeave = () => {
         gsap.to(link, {
           scale: 1,
           rotate: 0,
           duration: DURATION.fast,
           ease: EASE.power,
         });
+      };
+
+      link.addEventListener('mouseenter', onEnter);
+      link.addEventListener('mouseleave', onLeave);
+      cleanupFns.push(() => {
+        link.removeEventListener('mouseenter', onEnter);
+        link.removeEventListener('mouseleave', onLeave);
       });
     });
+
+    return () => {
+      cleanupFns.forEach(fn => fn());
+    };
   }, { scope: footerRef });
 
   return (
@@ -214,7 +226,7 @@ const Footer = ({ onNavClick }) => {
               </div>
               <div className="flex flex-col leading-tight">
                 <span className="text-[10px]  text-dark-400 uppercase tracking-wide">
-                  {footerContentData.crafatedByLabel}
+                  {footerContentData.craftedByLabel}
                 </span>
                 <span className="text-sm font-bold text-white group-hover:text-gold-500 transition-colors">
                   {APP_CONFIG.developer.name}

@@ -14,6 +14,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronDown } from 'lucide-react';
 import Section from '../components/layout/Section';
+import SectionHeader from '../components/layout/SectionHeader';
 import Badge from '../components/ui/Badge';
 import { EASE, getResponsiveDuration, isMobile } from '../utils/animations';
 
@@ -239,13 +240,14 @@ const SEOHomepageCopy = () => {
                     <div ref={badgeRef}>
                         <Badge>FAQ</Badge>
                     </div>
-                    <div ref={headerRef} className="text-center">
-                        <h2 className="font-display text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight uppercase mb-4" style={{ color: '#ffffff' }}>
-                            Frequently Asked
-                        </h2>
-                        <p className="max-w-xl font-sans mx-auto font-light leading-relaxed text-sm sm:text-base" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                            Everything you need to know about GOD WEAR compression t-shirts — from fabric technology to shipping across India.
-                        </p>
+                    <div ref={headerRef}>
+                        <SectionHeader
+                            title="Frequently Asked"
+                            subtitle="Everything you need to know about GOD WEAR compression t-shirts — from fabric technology to shipping across India."
+                            align="center"
+                            titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
+                            subtitleClassName="text-dark-400 md:text-white/60 font-sans text-sm sm:text-base md:text-base"
+                        />
                     </div>
                 </div>
 

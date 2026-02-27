@@ -125,11 +125,10 @@ const HeroSection = ({ onShopClick }) => {
           const blur = progress * (mobile ? 8 : 15);
           const brightness = Math.max(0.5, 1 - progress * 0.35);
 
-          gsap.to(videoContainerRef.current, {
+          gsap.set(videoContainerRef.current, {
             scale: scale,
             opacity: opacity,
             filter: `blur(${blur}px) brightness(${brightness})`,
-            duration: 0,
           });
         }
       });
@@ -148,12 +147,11 @@ const HeroSection = ({ onShopClick }) => {
           const scale = Math.max(0.85, 1 - (progress * 0.15));
           const blur = progress * (mobile ? 8 : 12);
 
-          gsap.to(textRef.current, {
+          gsap.set(textRef.current, {
             opacity: opacity,
             y: -y,
             scale: scale,
             filter: `blur(${blur}px)`,
-            duration: 0,
           });
         }
       });
@@ -173,12 +171,11 @@ const HeroSection = ({ onShopClick }) => {
           const blur = progress * (mobile ? 6 : 8);
 
           // Animate entire button container including glow
-          gsap.to(buttonRef.current, {
+          gsap.set(buttonRef.current, {
             opacity: opacity,
             y: -y,
             scale: scale,
             filter: `blur(${blur}px)`,
-            duration: 0,
           });
         }
       });
@@ -191,10 +188,9 @@ const HeroSection = ({ onShopClick }) => {
           end: '15% top',
           scrub: true,
           onUpdate: (self) => {
-            gsap.to(scrollIndicatorRef.current, {
+            gsap.set(scrollIndicatorRef.current, {
               opacity: Math.max(0, 1 - (self.progress * 2.5)),
               y: self.progress * 20,
-              duration: 0,
             });
           }
         });
@@ -210,9 +206,8 @@ const HeroSection = ({ onShopClick }) => {
           scrub: true,
           onUpdate: (self) => {
             const opacity = 0.6 + (self.progress * 0.3);
-            gsap.to(overlayElement, {
+            gsap.set(overlayElement, {
               opacity: opacity,
-              duration: 0,
             });
           }
         });
@@ -247,9 +242,10 @@ const HeroSection = ({ onShopClick }) => {
           playsInline
           controls={false}
           className="w-full h-full object-cover"
+          aria-hidden="true"
         />
         {/* Dark overlay for better text readability */}
-        <div className="hero-overlay absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 transition-opacity duration-300" />
+        <div className="hero-overlay absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/70 transition-opacity duration-300" />
       </div>
 
       {/* Content Overlay */}
@@ -257,7 +253,7 @@ const HeroSection = ({ onShopClick }) => {
         {/* Hero Text on Video */}
         <h1
           ref={textRef}
-          className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-display text-center leading-tight tracking-tight mb-8 sm:mb-12 md:mb-16 max-w-[90vw] sm:max-w-none text-white"
+          className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-display text-center leading-tight tracking-tight mb-8 sm:mb-12 md:mb-16 max-w-[90vw] sm:max-w-none text-white"
           style={{
             perspective: '1200px',
             transformStyle: 'preserve-3d',
@@ -274,15 +270,16 @@ const HeroSection = ({ onShopClick }) => {
 
           <button
             onClick={onShopClick}
-            className="group relative w-full sm:w-auto min-w-[280px] sm:min-w-[300px] md:min-w-[320px] lg:min-w-[320px] max-w-[90vw] sm:max-w-[360px] 
+            className="group relative w-full sm:w-auto min-w-70 sm:min-w-75 md:min-w-[320px] lg:min-w-[320px] max-w-[90vw] sm:max-w-90 
                        px-8 sm:px-10 md:px-11 lg:px-12 
-                       py-4 sm:py-[1.0rem] md:py-[1.125rem] lg:py-[1.125rem]
+                       py-4 sm:py-4 md:py-4.5 lg:py-4.5
                        depth-btn-gold
-                       text-dark-900 font-bold 
+                       font-bold 
                        text-base sm:text-lg md:text-lg lg:text-lg
                        rounded-xl
                        overflow-hidden active:scale-[0.97]
                        focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:ring-offset-2 focus:ring-offset-black/50"
+            style={{ color: 'var(--color-dark-900)' }}
             aria-label="Shop Now - Browse our premium compression t-shirts"
             onMouseEnter={(e) => {
               if (!isMobile()) {
@@ -306,7 +303,7 @@ const HeroSection = ({ onShopClick }) => {
             }}
           >
             {/* Animated gradient overlay - Shine effect */}
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+            <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
 
             {/* Corner accents for premium feel */}
             <span className="absolute top-0 left-0 w-2 h-2 bg-white/60 rounded-br-full opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
@@ -322,7 +319,7 @@ const HeroSection = ({ onShopClick }) => {
 
               {/* Animated arrow icon */}
               <svg
-                className="w-5 h-5 sm:w-[1.375rem] sm:h-[1.375rem] md:w-6 md:h-6 animate-arrow-right"
+                className="w-5 h-5 sm:w-5.5 sm:h-5.5 md:w-6 md:h-6 animate-arrow-right"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

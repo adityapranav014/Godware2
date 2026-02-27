@@ -6,24 +6,19 @@
 export const NAV_LINKS = [
   {
     id: 'home',
-    name: 'Home',
-    isActive: false
+    name: 'Home'
   },
   {
     id: 'shop',
-    name: 'Shop',
-    isActive: false,
-    hasDropdown: true
+    name: 'Shop'
   },
   {
     id: 'about',
-    name: 'About',
-    isActive: false
+    name: 'About'
   },
   {
     id: 'contact',
-    name: 'Contact',
-    isActive: false
+    name: 'Contact'
   }
 ];
 

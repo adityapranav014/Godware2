@@ -185,7 +185,7 @@ const Navbar = ({ activeSection, onNavClick }) => {
         isMobileMenuOpen && (
           <div
             ref={mobileMenuRef}
-            className="fixed top-14 sm:top-16 md:top-20 bottom-0 left-0 right-0 z-[49] md:hidden bg-black/95 backdrop-blur-xl text-white flex flex-col border-t border-white/10"
+            className="fixed top-14 sm:top-16 md:top-20 bottom-0 left-0 right-0 z-49 md:hidden bg-black/95 backdrop-blur-xl text-white flex flex-col border-t border-white/10"
             style={{ clipPath: "inset(0 0 100% 0)" }} // Initial state for animation
           >
 
@@ -220,10 +220,10 @@ const Navbar = ({ activeSection, onNavClick }) => {
                   Follow Us
                 </span>
                 <div className="flex gap-4 text-white/60">
-                  <a href={SOCIAL_LINKS.instagram} className="hover:text-gold-500 transition-colors">
+                  <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-gold-500 transition-colors" aria-label="Follow us on Instagram">
                     <Instagram size={24} strokeWidth={1.5} />
                   </a>
-                  <a href={`https://wa.me/${CONTACT_INFO.whatsappNumber}`} className="hover:text-gold-500 transition-colors">
+                  <a href={`https://wa.me/${CONTACT_INFO.whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="hover:text-gold-500 transition-colors" aria-label="Chat with us on WhatsApp">
                     <MessageCircle size={24} strokeWidth={1.5} />
                   </a>
                 </div>

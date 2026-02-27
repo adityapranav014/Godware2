@@ -1,7 +1,12 @@
-/* Google Fonts are preloaded in index.html for Manrope, Space Grotesk, Cookie, Playfair Display, and Montserrat */
+/* Google Fonts are preloaded in index.html for Inter and Raleway */
 
 /* Tailwind V4.0 */
 @import "tailwindcss";
+
+/* xs breakpoint for small phones */
+@theme {
+  --breakpoint-xs: 480px;
+}
 
 /* Dark-Mode Toggle manually */
 @variant dark (&:where(.dark, .dark *));
@@ -467,23 +472,6 @@ a.active hr {
     @apply text-muted;
   }
 
-  .text-gold {
-    color: var(--color-gold);
-  }
-
-  .bg-gold {
-    background-color: var(--color-gold);
-  }
-
-
-  .text-accent {
-    color: var(--color-accent);
-  }
-
-  .bg-accent {
-    background-color: var(--color-accent);
-  }
-
   .bg-subtle {
     background-color: var(--color-bg-subtle);
   }
@@ -497,11 +485,11 @@ a.active hr {
   }
 
   .grad-text {
-    @apply text-transparent bg-gradient-to-tr bg-clip-text;
+    @apply text-transparent bg-linear-to-tr bg-clip-text;
   }
 
   .grad1 {
-    @apply text-transparent bg-gradient-to-tr bg-clip-text from-indigo-100 to-indigo-400;
+    @apply text-transparent bg-linear-to-tr bg-clip-text from-indigo-100 to-indigo-400;
   }
 
   .link-hover {
@@ -760,18 +748,6 @@ a.active hr {
   }
 
   /* Custom keyframe animations */
-  @keyframes float {
-
-    0%,
-    100% {
-      transform: translateY(0px);
-    }
-
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
   @keyframes pulse-glow {
 
     0%,

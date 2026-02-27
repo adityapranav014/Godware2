@@ -138,7 +138,7 @@ const CTASection = ({ onShopClick }) => {
                          active:scale-[0.98]
                          overflow-hidden
                          focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:ring-offset-2 focus:ring-offset-black/50"
-              aria-label="Shop Now - Browse our premium gym wear collection"
+              aria-label="Shop Now - Browse our premium compression t-shirts"
               onMouseEnter={(e) => {
                 if (!isMobile()) {
                   gsap.to(e.currentTarget, {

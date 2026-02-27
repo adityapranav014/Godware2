@@ -196,7 +196,7 @@ const AboutUsSection = () => {
                     </div>
                     <SectionHeader
                         title="Built for Warriors"
-                        subtitle="Born from discipline and driven by performance. God Wear delivers premium athletic wear that moves as relentlessly as you do."
+                        subtitle="Born from discipline and driven by performance. God Wear delivers premium compression t-shirts that move as relentlessly as you do."
                         align="center"
                         titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
                         subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"

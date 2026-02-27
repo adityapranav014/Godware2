@@ -235,7 +235,7 @@ const aboutFeaturesData = [
   {
     iconName: "Zap",
     title: "Sustainability",
-    description: "Working alongside international groups of athletes, we create high-performance gym wear from premium materials."
+    description: "Working alongside international groups of athletes, we create high-performance compression t-shirts from premium materials."
   },
   {
     iconName: "Landmark",
@@ -330,7 +330,7 @@ const uiConfigData = {
     cardGap: "gap-4 sm:gap-6"
   },
   hero: {
-    mainHeading: "Your Second Layer of Skin",
+    mainHeading: "Compression T-Shirts for Athletes",
     ctaButton: "Shop Now"
   }
 };

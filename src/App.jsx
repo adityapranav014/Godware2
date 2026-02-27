@@ -111,9 +111,10 @@ const App = () => {
           <Contact />
         </div>
 
-        {/* SEO copy — crawlable text content, below fold */}
+        {/* SEO crawlable text — keyword-rich, 300+ words, below fold */}
         <div className="section-divider-subtle" />
         <SEOHomepageCopy />
+
       </Suspense>
 
       {/* Back to Top */}

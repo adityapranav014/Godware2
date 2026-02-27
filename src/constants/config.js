@@ -5,8 +5,8 @@
 
 export const APP_CONFIG = {
   name: 'GOD WEAR',
-  tagline: 'Premium gym wear designed for champions',
-  description: 'Elevate your performance with our cutting-edge athletic apparel. Built for those who push limits.',
+  tagline: 'Premium compression t-shirts designed for champions',
+  description: 'Elevate your performance with our cutting-edge compression t-shirts. Built for those who push limits.',
   developer: {
     name: 'Aditya Pranav',
     website: 'https://aditya-pranav.com/'

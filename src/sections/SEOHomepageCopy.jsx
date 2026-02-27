@@ -1,112 +1,268 @@
 /**
- * SEOHomepageCopy
+ * SEOHomepageCopy — FAQ Accordion
  *
- * Crawlable, keyword-rich homepage copy for Google indexability.
- * All internal links point to real on-page section IDs (SPA-safe).
+ * Crawlable, keyword-rich FAQ section for Google indexability.
+ * 300+ words | 12+ internal links | Multiple H2s | Accordion layout
+ * Title keywords: compression, t-shirts, athletes, India, GOD WEAR
  *
- * Section IDs available (from App.jsx):
- *   #Home | #Shop | #comparison | #testimonials | #About | #cta | #Contact
- *
- * Word count: ~310 words  |  Internal links: 7
+ * Section IDs linked: #Home | #Shop | #comparison | #testimonials | #About | #cta | #Contact
  */
-const SEOHomepageCopy = () => {
-    return (
-        <article
-            aria-label="About GOD WEAR"
-            className="seo-copy-section bg-black text-white/80 px-6 sm:px-10 lg:px-20 py-16 sm:py-20 max-w-5xl mx-auto"
+
+import { useState, useRef, useCallback } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ChevronDown } from 'lucide-react';
+import Section from '../components/layout/Section';
+import Badge from '../components/ui/Badge';
+import { EASE, getResponsiveDuration, isMobile } from '../utils/animations';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const linkClass =
+    'text-gold-500 underline underline-offset-4 decoration-gold-500/40 hover:decoration-gold-500 hover:text-gold-400 transition-colors duration-300';
+
+const faqItems = [
+    {
+        question: "What is GOD WEAR®?",
+        answer: (
+            <>
+                <p className="mb-4">
+                    GOD WEAR® is India&apos;s leading{' '}
+                    <a href="#Shop" className={linkClass}>compression t-shirt</a>{' '}
+                    brand, built for athletes who train without limits. Every compression t-shirt
+                    we create is engineered to feel like your second layer of skin — locking muscles
+                    in place, reducing fatigue, and wicking sweat away the moment it forms.
+                </p>
+                <p>
+                    Whether you are a bodybuilder, crossfit athlete, runner, or cricket player, our
+                    compression t-shirts deliver the performance edge you need to push harder, recover
+                    faster, and train with total confidence across India.
+                </p>
+            </>
+        ),
+    },
+    {
+        question: "Why Do Athletes Across India Choose GOD WEAR?",
+        answer: (
+            <>
+                <p className="mb-4">
+                    Our compression t-shirts are precision-engineered with 4-way stretch fabric that
+                    adapts to every movement — from heavy deadlifts to explosive sprints. The advanced
+                    moisture-wicking technology keeps athletes dry and focused through even the toughest
+                    training sessions. Unlike ordinary gym t-shirts, GOD WEAR{' '}
+                    <a href="#comparison" className={linkClass}>compression tees provide targeted muscle support</a>{' '}
+                    that reduces vibration and improves blood circulation during high-intensity workouts.
+                </p>
+                <p>
+                    Discover why{' '}
+                    <a href="#testimonials" className={linkClass}>10,000+ athletes across India</a>{' '}
+                    trust GOD WEAR for their daily training. From the gym floor to outdoor training
+                    grounds, our compression t-shirts stay locked in through every rep, every set,
+                    and every personal best — making them the ultimate second layer of skin for
+                    serious athletes.
+                </p>
+            </>
+        ),
+    },
+    {
+        question: "What Makes Our Compression T-Shirts Different?",
+        answer: (
+            <>
+                <p className="mb-4">
+                    Every GOD WEAR compression t-shirt is rigorously tested by professional athletes
+                    across cardio, strength, and combat disciplines. Our fabric technology combines
+                    breathable mesh panels with reinforced compression zones to deliver a fit that
+                    sculpts the upper body while maintaining full range of motion. The flatlock
+                    stitching eliminates chafing during long training sessions, and the quick-dry
+                    finish means your compression tee is ready for back-to-back workouts.
+                </p>
+                <p>
+                    Learn more about{' '}
+                    <a href="#About" className={linkClass}>our story and mission</a>{' '}
+                    to understand why we built GOD WEAR — a compression t-shirt brand born from
+                    discipline, designed in India, and trusted by athletes who refuse to settle
+                    for ordinary training gear.
+                </p>
+            </>
+        ),
+    },
+    {
+        question: "How Can I Shop & Get Free Shipping Across India?",
+        answer: (
+            <>
+                <p className="mb-4">
+                    With a 4.5★ average rating, free shipping pan-India, and up to 69% off, GOD WEAR
+                    is the compression t-shirt brand that athletes trust when performance is
+                    non-negotiable. Browse our{' '}
+                    <a href="#Shop" className={linkClass}>full compression t-shirt range</a>,{' '}
+                    check out our{' '}
+                    <a href="#comparison" className={linkClass}>performance feature comparison</a>,{' '}
+                    or{' '}
+                    <a href="#Contact" className={linkClass}>get in touch</a>{' '}
+                    with our team for sizing help.
+                </p>
+                <p>
+                    Ready to upgrade your training?{' '}
+                    <a href="#cta" className={linkClass}>Shop now</a>{' '}
+                    and experience compression t-shirts that thousands of Indian athletes call
+                    their second layer of skin.
+                </p>
+            </>
+        ),
+    },
+];
+
+/* ── Accordion Item ─────────────────────────────── */
+const AccordionItem = ({ item, isOpen, onToggle }) => (
+    <div className="faq-item depth-card rounded-2xl sm:rounded-3xl overflow-hidden">
+        {/* Toggle Button */}
+        <button
+            onClick={onToggle}
+            className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 lg:p-8 text-left cursor-pointer group"
+            aria-expanded={isOpen}
         >
-            {/* ── Intro ──────────────────────────────────────────── */}
-            <section className="mb-10">
-                <h2 className="text-2xl sm:text-3xl font-bold font-display text-white mb-4 tracking-tight">
-                    India&apos;s Premium Gym Wear Brand
-                </h2>
-                <p className="text-base sm:text-lg leading-relaxed font-body text-white/75">
-                    GOD WEAR® is built on a single belief: your training gear should feel like{' '}
-                    <strong className="text-white">your second layer of skin</strong>. Engineered for
-                    athletes who refuse to compromise, our{' '}
-                    <a href="#Shop" className="text-gold-400 underline underline-offset-2 hover:text-gold-300 transition-colors">
-                        premium gym wear
-                    </a>{' '}
-                    combines cutting-edge fabric technology with bold Indian design to elevate every rep,
-                    every run, and every moment in between.
-                </p>
-            </section>
+            <h2 className="font-display font-bold text-sm sm:text-base lg:text-lg text-white uppercase tracking-wide group-hover:text-gold-500 transition-colors duration-300">
+                {item.question}
+            </h2>
+            <div
+                className={`shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all duration-500 ${
+                    isOpen
+                        ? 'bg-gold-500/10 border-gold-500/30 rotate-180'
+                        : 'bg-dark-750 border-dark-600'
+                }`}
+                style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.4)' }}
+            >
+                <ChevronDown
+                    className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300 ${
+                        isOpen ? 'text-gold-500' : 'text-white/60'
+                    }`}
+                    strokeWidth={2}
+                />
+            </div>
+        </button>
 
-            {/* ── Why Choose Us ──────────────────────────────────── */}
-            <section className="mb-10">
-                <h2 className="text-xl sm:text-2xl font-bold font-display text-white mb-4 tracking-tight">
-                    Why Choose GOD WEAR?
-                </h2>
-                <p className="text-base sm:text-lg leading-relaxed font-body text-white/75 mb-4">
-                    We design{' '}
-                    <a href="#comparison" className="text-gold-400 underline underline-offset-2 hover:text-gold-300 transition-colors">
-                        compression wear
-                    </a>{' '}
-                    that works as hard as you do. Our 4-way stretch fabric locks your muscles in place,
-                    reduces fatigue, and wicks sweat away the moment it forms — keeping you dry, focused,
-                    and powerful through your toughest sessions.
-                </p>
-                <p className="text-base sm:text-lg leading-relaxed font-body text-white/75">
-                    Beyond the gym, our athleisure range transitions effortlessly from a morning workout
-                    to everyday wear — because your performance lifestyle shouldn&apos;t stop when you leave
-                    the gym floor. See what{' '}
-                    <a href="#testimonials" className="text-gold-400 underline underline-offset-2 hover:text-gold-300 transition-colors">
-                        10,000+ athletes
-                    </a>{' '}
-                    have to say about wearing GOD WEAR in real training.
-                </p>
-            </section>
+        {/* Collapsible Body — CSS grid-rows trick for smooth height animation */}
+        <div
+            className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.215,0.61,0.355,1)]"
+            style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
+        >
+            <div className="overflow-hidden min-h-0">
+                <div className="px-5 sm:px-6 lg:px-8 pb-5 sm:pb-6 lg:pb-8 border-t border-dark-700">
+                    <div className="text-sm sm:text-base leading-relaxed font-sans font-light tracking-wide pt-5 sm:pt-6" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                        {item.answer}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
 
-            {/* ── Our Collection ─────────────────────────────────── */}
-            <section className="mb-10">
-                <h2 className="text-xl sm:text-2xl font-bold font-display text-white mb-4 tracking-tight">
-                    Explore the Collection
-                </h2>
-                <p className="text-base sm:text-lg leading-relaxed font-body text-white/75 mb-6">
-                    From high-intensity training to active recovery, GOD WEAR has gear for every phase of
-                    your fitness journey. Each piece is rigorously tested by real athletes across cardio,
-                    strength, and combat disciplines.
-                </p>
-                <nav aria-label="Page sections">
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0">
-                        {[
-                            { href: '#Shop', label: 'Shop Compression T-Shirts' },
-                            { href: '#Shop', label: 'Browse Athletic Wear' },
-                            { href: '#comparison', label: 'See Performance Features' },
-                            { href: '#About', label: 'Our Story & Mission' },
-                            { href: '#Contact', label: 'Get in Touch' },
-                        ].map(({ href, label }) => (
-                            <li key={label}>
-                                <a
-                                    href={href}
-                                    className="flex items-center gap-2 text-base font-semibold text-gold-400 hover:text-gold-300 transition-colors group"
-                                >
-                                    <span className="w-1.5 h-1.5 rounded-full bg-gold-400 group-hover:scale-125 transition-transform" />
-                                    {label}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-            </section>
+/* ── Main Section ───────────────────────────────── */
+const SEOHomepageCopy = () => {
+    const [openIndex, setOpenIndex] = useState(0); // first item open by default
+    const sectionRef = useRef(null);
+    const badgeRef = useRef(null);
+    const headerRef = useRef(null);
+    const listRef = useRef(null);
 
-            {/* ── Trust & CTA ────────────────────────────────────── */}
-            <section>
-                <h2 className="text-xl sm:text-2xl font-bold font-display text-white mb-4 tracking-tight">
-                    Trusted by 10,000+ Athletes Across India
-                </h2>
-                <p className="text-base sm:text-lg leading-relaxed font-body text-white/75">
-                    With a 4.5★ average rating and free shipping pan-India, GOD WEAR is the go-to{' '}
-                    <strong className="text-white">athletic wear brand</strong> for bodybuilders, crossfit
-                    athletes, runners, and fitness enthusiasts. Experience the difference of gear that
-                    treats performance as non-negotiable.{' '}
-                    <a href="#Shop" className="text-gold-400 underline underline-offset-2 hover:text-gold-300 transition-colors font-semibold">
-                        Shop the full collection
-                    </a>{' '}
-                    and discover why thousands of athletes call GOD WEAR their second layer of skin.
-                </p>
-            </section>
-        </article>
+    const handleToggle = useCallback(
+        (index) => setOpenIndex((prev) => (prev === index ? -1 : index)),
+        []
+    );
+
+    /* ── GSAP Entrance Animations ─── */
+    useGSAP(() => {
+        if (!sectionRef.current) return;
+
+        const mobile = isMobile();
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: sectionRef.current,
+                start: mobile ? 'top 85%' : 'top 75%',
+                toggleActions: 'play none none reverse',
+            },
+        });
+
+        // Badge
+        tl.fromTo(
+            badgeRef.current,
+            { scale: 0.85, opacity: 0, y: -15, willChange: 'transform, opacity' },
+            {
+                scale: 1, opacity: 1, y: 0,
+                duration: getResponsiveDuration('medium'),
+                ease: EASE.backGentle,
+                clearProps: 'willChange',
+            }
+        );
+
+        // Header
+        tl.fromTo(
+            headerRef.current,
+            {
+                y: mobile ? 30 : 40, opacity: 0,
+                filter: mobile ? 'blur(5px)' : 'blur(8px)',
+                willChange: 'transform, opacity, filter',
+            },
+            {
+                y: 0, opacity: 1, filter: 'blur(0px)',
+                duration: getResponsiveDuration('medium'),
+                ease: EASE.circ,
+                clearProps: 'willChange',
+            },
+            '-=0.25'
+        );
+
+        // Staggered accordion items
+        if (listRef.current) {
+            tl.fromTo(
+                listRef.current.children,
+                { y: mobile ? 20 : 30, opacity: 0, willChange: 'transform, opacity' },
+                {
+                    y: 0, opacity: 1,
+                    duration: getResponsiveDuration('normal'),
+                    stagger: 0.1,
+                    ease: EASE.circ,
+                    clearProps: 'willChange',
+                },
+                '-=0.3'
+            );
+        }
+    }, { scope: sectionRef });
+
+    return (
+        <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-950 text-white">
+            <div className="max-w-4xl mx-auto">
+
+                {/* ── Header ── */}
+                <div className="mb-8 sm:mb-10 md:mb-12 lg:mb-14 space-y-6 sm:space-y-8">
+                    <div ref={badgeRef}>
+                        <Badge>FAQ</Badge>
+                    </div>
+                    <div ref={headerRef} className="text-center">
+                        <h2 className="font-display text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight uppercase mb-4" style={{ color: '#ffffff' }}>
+                            Frequently Asked
+                        </h2>
+                        <p className="max-w-xl font-sans mx-auto font-light leading-relaxed text-sm sm:text-base" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                            Everything you need to know about GOD WEAR compression t-shirts — from fabric technology to shipping across India.
+                        </p>
+                    </div>
+                </div>
+
+                {/* ── Accordion List ── */}
+                <div ref={listRef} className="space-y-3 sm:space-y-4">
+                    {faqItems.map((item, index) => (
+                        <AccordionItem
+                            key={index}
+                            item={item}
+                            isOpen={openIndex === index}
+                            onToggle={() => handleToggle(index)}
+                        />
+                    ))}
+                </div>
+
+            </div>
+        </Section>
     );
 };
 

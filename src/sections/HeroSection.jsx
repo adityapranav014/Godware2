@@ -326,7 +326,7 @@ const HeroSection = ({ onShopClick, preloaderComplete }) => {
               stagger={0.08}
               duration={1.0}
               delay={1.8}
-              className="text-hero font-display leading-none tracking-tight uppercase perspective-text"
+              className="text-hero font-display leading-none tracking-tight perspective-text"
               style={{
                 color: 'rgba(255,255,255,0.78)',
                 mixBlendMode: 'overlay',

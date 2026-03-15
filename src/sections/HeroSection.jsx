@@ -276,7 +276,7 @@ const HeroSection = ({ onShopClick, preloaderComplete }) => {
   }, [preloaderComplete]);
 
   return (
-    <div ref={heroRef} className="relative bg-black text-white overflow-hidden" style={{ height: 'calc(100dvh - 72px)', minHeight: '600px' }}>
+    <div ref={heroRef} className="relative bg-black text-white min-h-dvh overflow-hidden">
       {/* Full-screen Video Background */}
       <div ref={videoContainerRef} className="absolute inset-0 w-full h-full">
         <Video
@@ -313,7 +313,7 @@ const HeroSection = ({ onShopClick, preloaderComplete }) => {
       </div>
 
       {/* ── Main Content — Bottom Anchored ── */}
-      <div className="relative z-10 flex flex-col justify-end h-full pb-10 sm:pb-12 lg:pb-16">
+      <div className="relative z-10 flex flex-col justify-end min-h-dvh pb-10 sm:pb-12 lg:pb-16">
         <div className="max-w-7xl mx-auto w-full px-6 sm:px-12 xl:px-8">
 
           {/* MASSIVE Editorial Heading */}

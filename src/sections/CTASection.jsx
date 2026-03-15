@@ -1,63 +1,109 @@
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Truck, CreditCard, RotateCcw, Users } from "lucide-react";
 import Section from "../components/layout/Section";
-import { EASE, DURATION, isMobile, getResponsiveDuration } from '../utils/animations';
+import TextReveal from "../components/ui/TextReveal";
+import { EASE, DURATION, isMobile, getResponsiveDuration, ripple, buttonHoverIn, buttonHoverOut, svgIconDraw } from '../utils/animations';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const CTASection = ({ onShopClick }) => {
   const sectionRef = useRef(null);
-  const titleRef = useRef(null);
   const buttonRef = useRef(null);
+  const ctaBtnRef = useRef(null);
+  const badgeWrapRef = useRef(null);
+  const socialProofRef = useRef(null);
+  const trustRef = useRef(null);
+
+  // Click: ripple expansion + call parent handler
+  const handleCtaClick = useCallback((e) => {
+    if (ctaBtnRef.current) ripple(ctaBtnRef.current, e);
+    onShopClick?.();
+  }, [onShopClick]);
+
+  // Hover: full GSAP anticipation timeline (anticipation squeeze → lift)
+  const handleCtaEnter = useCallback(() => {
+    buttonHoverIn(ctaBtnRef.current);
+    if (ctaBtnRef.current) {
+      ctaBtnRef.current.querySelectorAll('svg').forEach(svg => svgIconDraw(svg, 0.5));
+    }
+  }, []);
+  const handleCtaLeave = useCallback(() => buttonHoverOut(ctaBtnRef.current), []);
+  const handleCtaDown = useCallback(() => {
+    if (!isMobile() && ctaBtnRef.current) gsap.to(ctaBtnRef.current, { scale: 0.96, duration: 0.08, ease: 'power3.in', overwrite: true });
+  }, []);
+  const handleCtaUp = useCallback(() => {
+    if (!isMobile() && ctaBtnRef.current) gsap.to(ctaBtnRef.current, { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.45)', overwrite: true });
+  }, []);
 
   useGSAP(() => {
     if (!sectionRef.current) return;
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-      }
-    });
-
-    // Dramatic section entrance
-    tl.fromTo(
+    // Scroll-scrubbed section scale entrance (0.88 → 1.0)
+    gsap.fromTo(
       sectionRef.current,
       {
-        opacity: 0,
-        scale: 0.95,
-        filter: 'blur(15px)',
+        scale: 0.88,
+        borderRadius: '32px',
+        filter: 'blur(10px)',
       },
       {
-        opacity: 1,
         scale: 1,
+        borderRadius: '0px',
         filter: 'blur(0px)',
-        duration: DURATION.slow,
-        ease: EASE.expo,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 90%',
+          end: 'top 40%',
+          scrub: 1.5,
+        }
       }
     );
 
-    // Title entrance with impact
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 65%",
+        once: true,
+      }
+    });
+
+    // Urgency badge entrance
     tl.fromTo(
-      titleRef.current,
+      badgeWrapRef.current,
       {
-        y: 60,
         opacity: 0,
+        y: -20,
         scale: 0.9,
-        rotateX: -20,
+        filter: 'blur(6px)',
       },
       {
-        y: 0,
         opacity: 1,
+        y: 0,
         scale: 1,
-        rotateX: 0,
-        duration: DURATION.slow,
+        filter: 'blur(0px)',
+        duration: DURATION.medium,
         ease: EASE.back,
+      }
+    );
+
+    // Social proof entrance
+    tl.fromTo(
+      socialProofRef.current,
+      {
+        opacity: 0,
+        y: 20,
       },
-      '-=0.5'
+      {
+        opacity: 1,
+        y: 0,
+        duration: DURATION.normal,
+        ease: EASE.circ,
+      },
+      '-=0.2'
     );
 
     // Button entrance with anticipation
@@ -68,19 +114,58 @@ const CTASection = ({ onShopClick }) => {
         y: 40,
         scale: 0.88,
         filter: 'blur(8px)',
-        rotateX: -8,
       },
       {
         opacity: 1,
         y: 0,
         scale: 1,
         filter: 'blur(0px)',
-        rotateX: 0,
         duration: DURATION.slow,
         ease: EASE.backSoft,
       },
-      '-=0.3'
+      '-=0.2'
     );
+
+    // Trust icons stagger
+    if (trustRef.current) {
+      const trustItems = trustRef.current.children;
+
+      // Pre-hide all icon strokes so they draw INTO the timeline as items fade in
+      const allTrustPaths = Array.from(trustItems).flatMap(item => {
+        const svg = item.querySelector('svg');
+        if (!svg) return [];
+        const paths = [...svg.querySelectorAll('path, line, circle, polyline, polygon, rect')];
+        paths.forEach(path => {
+          const len = path.getTotalLength ? path.getTotalLength() : 60;
+          gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+        });
+        return paths;
+      });
+
+      tl.fromTo(
+        trustItems,
+        { opacity: 0, y: 15 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: DURATION.normal,
+          stagger: 0.08,
+          ease: EASE.circ,
+        },
+        '-=0.3'
+      );
+
+      // Draw icons inside the timeline — fires 0.15s after items start fading in, guaranteed visible
+      if (allTrustPaths.length) {
+        tl.to(allTrustPaths, {
+          strokeDashoffset: 0,
+          duration: 1.0,
+          stagger: 0.06,
+          ease: 'power2.inOut',
+        }, '<0.15');
+      }
+    }
+
   }, { scope: sectionRef });
 
   return (
@@ -90,109 +175,77 @@ const CTASection = ({ onShopClick }) => {
       padding="large"
       className="relative overflow-hidden bg-dark-950 noise-overlay"
     >
-      {/* Background Image - Subtle */}
-      <div className="absolute inset-0 cta-bg" />
-      <div className="absolute inset-0 bg-linear-to-b from-dark-900/50 via-dark-900/60 to-dark-900/70" />
+      {/* Background Image */}
+      <div data-speed="0.82" className="absolute inset-0 cta-bg" />
+      <div className="absolute inset-0 cta-overlay-gradient" />
 
-      {/* Content - Mobile First */}
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6 sm:space-y-8">
-        {/* Urgency Badge */}
-        <div className="mb-4 sm:mb-6">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold uppercase tracking-wider bg-red-500/15 border border-red-500/30 text-red-400 glow-gold-pulse"
-            style={{ boxShadow: '0 0 20px rgba(239,68,68,0.15), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
-            <span className="relative flex h-2 w-2">
+      {/* Content */}
+      <div className="relative max-w-5xl mx-auto px-6 sm:px-12 text-center">
+
+        {/* Section tag + urgency pill */}
+        <div ref={badgeWrapRef} className="mb-8 sm:mb-10 flex flex-col items-center gap-4">
+          <span className="section-tag">Limited Offer</span>
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider bg-red-500/12 border border-red-500/25 text-red-400"
+            style={{ backdropFilter: 'blur(8px)' }}>
+            <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500" />
             </span>
-            Limited Time — 69% Off Sale
+            69% Off Sale — Limited Time
           </span>
         </div>
 
-        <h2 ref={titleRef} className="text-3xl sm:text-4xl md:text-3xl lg:text-4xl xl:text-5xl font-display uppercase leading-tight font-bold animated-gradient-text" style={{ perspective: '1000px' }}>
-          Ignite Your Potential.
-          <br className="hidden sm:block" />
-          <span className="block sm:inline"> Revolutionize Every Workout</span>
-        </h2>
+        {/* Headline — MASSIVE editorial scale */}
+        <TextReveal
+          as="h2"
+          variant="stagger3D"
+          splitBy="words"
+          trigger="top 75%"
+          stagger={0.07}
+          duration={1.0}
+          className="text-section-xl font-display uppercase leading-none font-bold animated-gradient-text perspective-text mb-6 sm:mb-8"
+        >
+          Ignite Your Potential
+        </TextReveal>
 
-        {/* Social Proof Counter */}
-        <div className="flex items-center justify-center gap-2 text-sm text-white/60 font-sans">
-          <Users size={16} className="text-gold-500" />
-          <span>Join <strong className="text-white">10,000+</strong> athletes who chose GOD WEAR</span>
+        {/* Social Proof */}
+        <div ref={socialProofRef} className="flex items-center justify-center gap-2 text-sm text-white/70 font-sans mb-8 sm:mb-10" style={{ opacity: 0 }}>
+          <Users size={14} className="text-gold-500" />
+          <span>Join <strong className="text-white/90">10,000+</strong> athletes who chose GOD WEAR</span>
         </div>
 
-        {/* CTA Button - Same as Hero Section */}
-        <div className="pt-4">
-          <div ref={buttonRef} className="relative">
-            {/* Button glow effect container */}
-            <div className="absolute inset-0 blur-xl opacity-70 bg-gold-500/35 rounded-2xl scale-105 transition-opacity duration-300 pointer-events-none" />
-
-            <button
-              onClick={onShopClick}
-              className="group relative w-full sm:w-auto min-w-70 sm:min-w-75 md:min-w-[320px] lg:min-w-[320px] max-w-[90vw] sm:max-w-90 
-                         px-8 sm:px-10 md:px-11 lg:px-12 
-                         py-4 sm:py-4 md:py-4.5 lg:py-4.5
-                         depth-btn-gold
-                         font-bold 
-                         text-base sm:text-lg md:text-lg lg:text-lg
-                         rounded-xl sm:rounded-xl md:rounded-xl lg:rounded-xl
-                         active:scale-[0.98]
-                         overflow-hidden
-                         focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:ring-offset-2 focus:ring-offset-black/50"
-              style={{ color: 'var(--color-dark-900)' }}
-              aria-label="Shop Now - Browse our premium compression t-shirts"
-              onMouseEnter={(e) => {
-                if (!isMobile()) {
-                  gsap.to(e.currentTarget, {
-                    y: -4,
-                    scale: 1.02,
-                    duration: getResponsiveDuration('fast'),
-                    ease: EASE.backGentle,
-                  });
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!isMobile()) {
-                  gsap.to(e.currentTarget, {
-                    y: 0,
-                    scale: 1,
-                    duration: getResponsiveDuration('fast'),
-                    ease: EASE.circ,
-                  });
-                }
-              }}
-            >
-              {/* Animated gradient overlay - Shine effect */}
-              <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-
-              {/* Corner accents for premium feel */}
-              <span className="absolute top-0 left-0 w-2 h-2 bg-white/40 rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span className="absolute bottom-0 right-0 w-2 h-2 bg-white/40 rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-              {/* Button content */}
-              <span className="relative flex items-center justify-center gap-2.5 sm:gap-3 font-sans tracking-wide">
-                <span className="relative">
-                  Shop Now
-                  {/* Text underline animation on hover */}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black/40 group-hover:w-full transition-all duration-300" />
-                </span>
-
-                {/* Animated arrow icon */}
-                <svg
-                  className="w-5 h-5 sm:w-5.5 sm:h-5.5 md:w-6 md:h-6 transition-transform duration-300 group-hover:translate-x-1.5 group-active:translate-x-0.5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2.5"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </span>
-            </button>
-          </div>
+        {/* CTA Button */}
+        <div ref={buttonRef} className="relative flex justify-center" style={{ opacity: 0 }}>
+          <div className="absolute inset-0 blur-xl opacity-60 bg-gold-500/30 rounded-2xl scale-105 pointer-events-none" />
+          <button
+            ref={ctaBtnRef}
+            onClick={handleCtaClick}
+            onMouseEnter={handleCtaEnter}
+            onMouseLeave={handleCtaLeave}
+            onMouseDown={handleCtaDown}
+            onMouseUp={handleCtaUp}
+            data-magnetic
+            className="group relative w-full sm:w-auto sm:min-w-72 max-w-[90vw]
+                       px-10 sm:px-12 py-4 sm:py-4.5
+                       depth-btn-gold font-bold
+                       text-base sm:text-lg
+                       active:scale-[0.98] overflow-hidden
+                       focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:ring-offset-2 focus:ring-offset-black/50"
+            style={{ color: 'var(--color-dark-900)' }}
+            aria-label="Shop Now - Browse our premium compression t-shirts"
+          >
+            <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+            <span className="relative flex items-center justify-center gap-3 font-sans tracking-wide">
+              Shop Now
+              <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
+          </button>
         </div>
 
-        {/* Trust Icons Row */}
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-2">
+        {/* Trust row */}
+        <div ref={trustRef} className="flex flex-wrap justify-center gap-5 sm:gap-8 mt-8 sm:mt-10">
           {[
             { icon: Truck, text: "Free Shipping" },
             { icon: CreditCard, text: "COD Available" },
@@ -200,8 +253,8 @@ const CTASection = ({ onShopClick }) => {
           ].map((item) => {
             const Icon = item.icon;
             return (
-              <div key={item.text} className="flex items-center gap-1.5 text-xs text-dark-400 font-sans">
-                <Icon size={14} className="text-gold-500/60" strokeWidth={2} />
+              <div key={item.text} className="flex items-center gap-1.5 text-xs text-white/30 font-sans uppercase tracking-wider">
+                <Icon size={13} className="text-gold-500/50" strokeWidth={2} />
                 <span>{item.text}</span>
               </div>
             );

@@ -12,49 +12,60 @@ export const isMobile = () => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
 };
 
-export const isTouchDevice = () => {
-  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-};
+import { gsap } from 'gsap';
+import { CustomEase } from 'gsap/CustomEase';
 
-// ========================================
-// PREMIUM EASING FUNCTIONS
-// ========================================
+// Register CustomEase
+gsap.registerPlugin(CustomEase);
+
+// Define Signature Agency Eases
+// "Secret Sauce" - Fluid, non-robotic, elastic-like but smooth
+CustomEase.create("premium", "M0,0 C0.19,1 0.22,1 1,1");
+// Dramatic "Apple-like" snap
+CustomEase.create("snap", "M0,0 C0.05,0.85 0.1,1 1,1");
+// Squeeze anticipation (starts slow, pulls back slightly, then snaps)
+CustomEase.create("anticipation", "0.2,-0.1,0.2,1.2");
 
 export const EASE = {
+  // Agency-grade custom eases
+  premium: "premium",
+  snap: "snap",
+  anticipation: "anticipation",
+
   // Smooth & Natural - Best for mobile
   smooth: 'power2.out',
   smoothIn: 'power2.in',
   smoothInOut: 'power2.inOut',
-  
+
   // Dynamic & Punchy - Premium feel
   power: 'power3.out',
   powerIn: 'power3.in',
   powerInOut: 'power3.inOut',
-  
+
   // Dramatic & Cinematic - Desktop emphasis
   expo: 'expo.out',
   expoIn: 'expo.in',
   expoInOut: 'expo.inOut',
-  
+
   // Elastic & Playful - Use sparingly on mobile
   elastic: 'elastic.out(1, 0.6)',
   elasticSoft: 'elastic.out(1, 0.8)',
   elasticGentle: 'elastic.out(1, 0.9)',
-  
+
   // Back & Anticipation - Great for buttons
   back: 'back.out(1.4)',
   backSoft: 'back.out(1.2)',
   backGentle: 'back.out(1.1)',
   backInOut: 'back.inOut(1.7)',
-  
+
   // Bounce - Limited use
   bounce: 'bounce.out',
-  
+
   // Sine (Gentle) - Excellent for mobile
   sine: 'sine.out',
   sineIn: 'sine.in',
   sineInOut: 'sine.inOut',
-  
+
   // Circ (Smooth Acceleration) - Premium feel
   circ: 'circ.out',
   circIn: 'circ.in',
@@ -109,27 +120,27 @@ export const STAGGER = {
   medium: 0.12,
   slow: 0.15,
   dramatic: 0.2,
-  
+
   // Advanced stagger with from position
-  fromCenter: { 
-    amount: 0.25, 
-    from: 'center', 
-    ease: EASE.power 
+  fromCenter: {
+    amount: 0.25,
+    from: 'center',
+    ease: EASE.power
   },
-  fromEdges: { 
-    amount: 0.25, 
-    from: 'edges', 
-    ease: EASE.power 
+  fromEdges: {
+    amount: 0.25,
+    from: 'edges',
+    ease: EASE.power
   },
-  fromStart: { 
-    amount: 0.25, 
-    from: 'start', 
-    ease: EASE.power 
+  fromStart: {
+    amount: 0.25,
+    from: 'start',
+    ease: EASE.power
   },
-  fromEnd: { 
-    amount: 0.25, 
-    from: 'end', 
-    ease: EASE.power 
+  fromEnd: {
+    amount: 0.25,
+    from: 'end',
+    ease: EASE.power
   },
 };
 
@@ -150,391 +161,128 @@ export const getResponsiveStagger = (staggerType = 'normal') => {
 };
 
 // ========================================
-// SCROLL TRIGGER PRESETS (Mobile-Optimized)
-// ========================================
-
-export const SCROLL_TRIGGER = {
-  // Standard entrance - mobile optimized
-  default: {
-    start: 'top 85%',
-    end: 'bottom 20%',
-    toggleActions: 'play none none reverse',
-  },
-  
-  // Delayed entrance
-  delayed: {
-    start: 'top 75%',
-    end: 'bottom 20%',
-    toggleActions: 'play none none reverse',
-  },
-  
-  // Early entrance - better for mobile
-  early: {
-    start: 'top 90%',
-    end: 'bottom 20%',
-    toggleActions: 'play none none none',
-  },
-  
-  // Immediate - as soon as in viewport
-  immediate: {
-    start: 'top 98%',
-    end: 'bottom 10%',
-    toggleActions: 'play none none none',
-  },
-  
-  // Pinned section
-  pin: {
-    start: 'top top',
-    end: 'bottom top',
-    pin: true,
-    scrub: 1,
-  },
-  
-  // Parallax - smooth on mobile
-  parallax: {
-    start: 'top bottom',
-    end: 'bottom top',
-    scrub: isMobile() ? 1.5 : 1,
-  },
-  
-  // Scrub smooth - better mobile performance
-  scrubSmooth: {
-    start: 'top 80%',
-    end: 'bottom 20%',
-    scrub: isMobile() ? 2 : 1.5,
-  },
-  
-  // Once - plays once, never reverses (best for performance)
-  once: {
-    start: 'top 85%',
-    end: 'bottom 20%',
-    once: true,
-  },
-};
-
-// ========================================
-// ANIMATION PRESETS (Mobile-First Design)
-// ========================================
-
-export const ANIMATIONS = {
-  // Fade animations - silky smooth
-  fadeIn: {
-    from: { opacity: 0 },
-    to: { 
-      opacity: 1, 
-      duration: getResponsiveDuration('normal'), 
-      ease: EASE.sine 
-    },
-  },
-  
-  fadeInUp: {
-    from: { opacity: 0, y: isMobile() ? 30 : 40 },
-    to: { 
-      opacity: 1, 
-      y: 0, 
-      duration: getResponsiveDuration('medium'), 
-      ease: EASE.circ 
-    },
-  },
-  
-  fadeInDown: {
-    from: { opacity: 0, y: isMobile() ? -30 : -40 },
-    to: { 
-      opacity: 1, 
-      y: 0, 
-      duration: getResponsiveDuration('medium'), 
-      ease: EASE.circ 
-    },
-  },
-  
-  fadeInLeft: {
-    from: { opacity: 0, x: isMobile() ? -40 : -60 },
-    to: { 
-      opacity: 1, 
-      x: 0, 
-      duration: getResponsiveDuration('medium'), 
-      ease: EASE.circ 
-    },
-  },
-  
-  fadeInRight: {
-    from: { opacity: 0, x: isMobile() ? 40 : 60 },
-    to: { 
-      opacity: 1, 
-      x: 0, 
-      duration: getResponsiveDuration('medium'), 
-      ease: EASE.circ 
-    },
-  },
-  
-  // Scale animations - premium feel
-  scaleIn: {
-    from: { opacity: 0, scale: 0.85 },
-    to: { 
-      opacity: 1, 
-      scale: 1, 
-      duration: getResponsiveDuration('medium'), 
-      ease: EASE.backGentle 
-    },
-  },
-  
-  scaleInSubtle: {
-    from: { opacity: 0, scale: 0.96 },
-    to: { 
-      opacity: 1, 
-      scale: 1, 
-      duration: getResponsiveDuration('normal'), 
-      ease: EASE.circ 
-    },
-  },
-  
-  scaleInBold: {
-    from: { opacity: 0, scale: 0.7 },
-    to: { 
-      opacity: 1, 
-      scale: 1, 
-      duration: getResponsiveDuration('slow'), 
-      ease: EASE.backSoft 
-    },
-  },
-  
-  // Blur animations (premium effect) - optimized for mobile
-  blurIn: {
-    from: { 
-      opacity: 0, 
-      filter: isMobile() ? 'blur(10px)' : 'blur(20px)', 
-      scale: 1.03 
-    },
-    to: { 
-      opacity: 1, 
-      filter: 'blur(0px)', 
-      scale: 1, 
-      duration: getResponsiveDuration('slow'), 
-      ease: EASE.circ 
-    },
-  },
-  
-  // Rotate animations - subtle on mobile
-  rotateIn: {
-    from: { 
-      opacity: 0, 
-      rotateY: isMobile() ? -25 : -45, 
-      scale: 0.92 
-    },
-    to: { 
-      opacity: 1, 
-      rotateY: 0, 
-      scale: 1, 
-      duration: getResponsiveDuration('slow'), 
-      ease: EASE.backGentle 
-    },
-  },
-  
-  // Clip path animations (modern reveal) - desktop only for performance
-  clipReveal: {
-    from: { 
-      clipPath: 'inset(0% 100% 0% 0%)', 
-      opacity: 0 
-    },
-    to: { 
-      clipPath: 'inset(0% 0% 0% 0%)', 
-      opacity: 1, 
-      duration: getResponsiveDuration('slow'), 
-      ease: EASE.expo 
-    },
-  },
-  
-  // Slide reveal - smooth
-  slideRevealRight: {
-    from: { 
-      x: isMobile() ? -60 : -100, 
-      opacity: 0 
-    },
-    to: { 
-      x: 0, 
-      opacity: 1, 
-      duration: getResponsiveDuration('medium'), 
-      ease: EASE.expo 
-    },
-  },
-  
-  // Premium text reveal (letter by letter) - desktop optimized
-  textReveal: {
-    from: { 
-      y: isMobile() ? 60 : 100, 
-      opacity: 0, 
-      rotateX: -90 
-    },
-    to: { 
-      y: 0, 
-      opacity: 1, 
-      rotateX: 0, 
-      duration: getResponsiveDuration('medium'), 
-      ease: EASE.power,
-      stagger: getResponsiveStagger('tiny')
-    },
-  },
-  
-  // Combined premium entrance - hero elements
-  heroEntrance: {
-    from: { 
-      opacity: 0, 
-      y: isMobile() ? 40 : 60,
-      scale: 0.95,
-      filter: isMobile() ? 'blur(5px)' : 'blur(10px)'
-    },
-    to: { 
-      opacity: 1, 
-      y: 0,
-      scale: 1,
-      filter: 'blur(0px)',
-      duration: getResponsiveDuration('slow'), 
-      ease: EASE.expo 
-    },
-  },
-};
-
-// ========================================
-// HOVER ANIMATIONS (Touch-Optimized)
-// ========================================
-
-export const HOVER = {
-  // Lift effect - reduced for mobile
-  lift: {
-    y: isMobile() ? -4 : -8,
-    scale: isMobile() ? 1.01 : 1.02,
-    duration: getResponsiveDuration('fast'),
-    ease: EASE.circ,
-  },
-  
-  // Scale effect - subtle on mobile
-  scale: {
-    scale: isMobile() ? 1.03 : 1.05,
-    duration: getResponsiveDuration('fast'),
-    ease: EASE.backGentle,
-  },
-  
-  // Bold scale - for CTA buttons
-  scaleBold: {
-    scale: isMobile() ? 1.05 : 1.08,
-    duration: getResponsiveDuration('fast'),
-    ease: EASE.backSoft,
-  },
-  
-  // Glow effect - premium
-  glow: {
-    boxShadow: isMobile() 
-      ? '0 12px 40px rgba(201, 139, 58, 0.35)' 
-      : '0 20px 60px rgba(201, 139, 58, 0.4)',
-    duration: getResponsiveDuration('fast'),
-    ease: EASE.power,
-  },
-  
-  // Rotate slight
-  tilt: {
-    rotateZ: isMobile() ? 1 : 2,
-    duration: getResponsiveDuration('fast'),
-    ease: EASE.power,
-  },
-  
-  // Magnetic pull - desktop only
-  magnetic: {
-    duration: 0.3,
-    ease: 'power2.out',
-  },
-};
-
-// ========================================
-// UTILITY FUNCTIONS
+// MICRO-INTERACTIONS (Agency UX Toolkit)
+// These are the "invisible" techniques that
+// justify $50k–$200k project fees.
 // ========================================
 
 /**
- * Create responsive animation values based on viewport width
+ * shake() — Failed validation feedback.
+ * Disney Principle: Action & Reaction.
+ * Signals failure without disrupting layout.
+ *
+ * @param {Element} element - DOM element to shake
+ * @param {number} intensity - Pixel intensity (default 7)
  */
-export const responsiveValue = (mobile, tablet, desktop) => {
-  const width = window.innerWidth;
-  if (width < 768) return mobile;
-  if (width < 1024) return tablet;
-  return desktop;
+export const shake = (element, intensity = 7) => {
+  if (!element) return;
+  gsap.killTweensOf(element);
+  return gsap.to(element, {
+    keyframes: {
+      x: [0, -intensity, intensity, -(intensity * 0.65), (intensity * 0.65), -(intensity * 0.3), (intensity * 0.3), 0],
+    },
+    duration: 0.55,
+    ease: 'power2.inOut',
+    clearProps: 'x',
+  });
 };
 
 /**
- * Check if user prefers reduced motion
+ * ripple() — Click satisfaction signal.
+ * Confirms that the user's action was received.
+ * Agency tier: Always acknowledge user intent.
+ *
+ * @param {Element} button - The button element (must be position:relative, overflow:hidden)
+ * @param {MouseEvent} event - The click event for position accuracy
+ * @param {string} color - Ripple color (default: semi-white)
  */
-export const prefersReducedMotion = () => {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-};
+export const ripple = (button, event, color = 'rgba(255,255,255,0.28)') => {
+  if (!button) return;
+  const rect = button.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height) * 2.2;
+  const x = (event?.clientX ?? rect.left + rect.width / 2) - rect.left - size / 2;
+  const y = (event?.clientY ?? rect.top + rect.height / 2) - rect.top - size / 2;
 
-/**
- * Get animation with reduced motion and mobile fallback
- */
-export const getAnimation = (animation) => {
-  // Respect user's reduced motion preference
-  if (prefersReducedMotion()) {
-    return {
-      from: { opacity: 0 },
-      to: { opacity: 1, duration: 0.2, ease: 'none' },
-    };
-  }
-  
-  // Mobile optimization - simpler animations
-  if (isMobile()) {
-    // Remove complex transforms and filters on mobile for better performance
-    const mobileFrom = { ...animation.from };
-    const mobileTo = { ...animation.to };
-    
-    // Reduce blur effects on mobile
-    if (mobileFrom.filter && mobileFrom.filter.includes('blur')) {
-      const blurMatch = mobileFrom.filter.match(/blur\((\d+)px\)/);
-      if (blurMatch) {
-        const blurValue = Math.min(parseInt(blurMatch[1]) / 2, 10);
-        mobileFrom.filter = `blur(${blurValue}px)`;
-      }
+  const rippleEl = document.createElement('span');
+  rippleEl.style.cssText = `
+    position:absolute; border-radius:50%; pointer-events:none;
+    width:${size}px; height:${size}px;
+    left:${x}px; top:${y}px;
+    background:${color}; transform-origin:center; z-index:50;
+  `;
+  button.appendChild(rippleEl);
+
+  return gsap.fromTo(rippleEl,
+    { scale: 0, opacity: 0.7 },
+    {
+      scale: 1, opacity: 0, duration: 0.75, ease: 'power2.out',
+      onComplete: () => rippleEl.remove(),
     }
-    
-    // Reduce movement distances on mobile
-    if (mobileFrom.y) mobileFrom.y = mobileFrom.y * 0.7;
-    if (mobileFrom.x) mobileFrom.x = mobileFrom.x * 0.7;
-    
-    return {
-      from: mobileFrom,
-      to: mobileTo,
-    };
-  }
-  
-  return animation;
+  );
 };
 
 /**
- * Batch scroll trigger cleanup
+ * errorFlash() — Red glow burst on invalid field.
+ * Communicates error state through light, not just text.
+ * Reduces user frustration by being unmissable.
+ *
+ * @param {Element} element - The field wrapper element
  */
-export const cleanupScrollTriggers = (triggers) => {
-  triggers.forEach(trigger => trigger?.kill());
+export const errorFlash = (element) => {
+  if (!element) return;
+  return gsap.fromTo(element,
+    { boxShadow: '0 0 0 2px rgba(239,68,68,0.9), 0 0 24px rgba(239,68,68,0.45)' },
+    { boxShadow: '0 0 0 2px rgba(239,68,68,0)', duration: 1.6, ease: 'power2.out', clearProps: 'boxShadow' }
+  );
 };
 
 /**
- * Set will-change property for better performance
+ * buttonHoverIn() — Full GSAP hover with anticipation.
+ * Agency principle: Buttons must feel alive, not static.
+ * Uses a 2-phase micro-timeline: anticipation squeeze → lift.
+ *
+ * @param {Element} element - The button element
  */
-export const optimizeForAnimation = (element, properties = 'transform, opacity') => {
-  if (element) {
-    element.style.willChange = properties;
-    return () => {
-      element.style.willChange = 'auto';
-    };
-  }
+export const buttonHoverIn = (element) => {
+  if (!element || isMobile()) return;
+  gsap.killTweensOf(element);
+  return gsap.timeline()
+    .to(element, { scale: 0.97, duration: 0.08, ease: 'power2.in' })
+    .to(element, { scale: 1.04, y: -4, duration: 0.28, ease: EASE.backGentle });
 };
 
 /**
- * Debounced window resize handler
+ * buttonHoverOut() — Follow-through spring-back.
+ * The button "settles" with elastic physics, not a dead stop.
+ * This tiny detail signals craftsmanship to discerning users.
+ *
+ * @param {Element} element - The button element
  */
-export const debounce = (func, wait = 150) => {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
+export const buttonHoverOut = (element) => {
+  if (!element || isMobile()) return;
+  gsap.killTweensOf(element);
+  return gsap.to(element, { scale: 1, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)', overwrite: true });
+};
+
+/**
+ * svgIconDraw() — Stroke line-draw re-animation on hover.
+ * Agency principle: Icons should feel drawn-in, not static.
+ * Animates all stroked paths in an SVG from invisible → fully drawn.
+ * Matches the behaviour already on AboutUsSection feature items.
+ *
+ * @param {Element | null} svgEl - The <svg> element (or its parent)
+ * @param {number} duration - Animation duration in seconds (default 0.5)
+ */
+export const svgIconDraw = (svgEl, duration = 0.5) => {
+  if (!svgEl) return;
+  const root = svgEl.tagName === 'svg' ? svgEl : svgEl.querySelector('svg');
+  if (!root) return;
+  const paths = root.querySelectorAll('path, line, circle, polyline, polygon, rect');
+  paths.forEach(path => {
+    const length = path.getTotalLength ? path.getTotalLength() : 60;
+    gsap.fromTo(path,
+      { strokeDasharray: length, strokeDashoffset: length },
+      { strokeDashoffset: 0, duration, ease: 'power2.inOut', overwrite: 'auto' }
+    );
+  });
 };

@@ -1,5 +1,3 @@
-/* Google Fonts are preloaded in index.html for Inter and Raleway */
-
 /* Tailwind V4.0 */
 @import "tailwindcss";
 
@@ -12,81 +10,301 @@
 @variant dark (&:where(.dark, .dark *));
 
 :root {
-  --color-glass-bg: 10 10 10;
-  --color-base: #000000;
-  --color-surface: #ffffff;
-  --color-ink: #12100d;
-  --color-muted: #5a534a;
-  --color-stroke: #e6dfd3;
-  --color-text: #f1f1f1;
-  --color-scrollbar-thumb: #4b4b4b;
-  --color-scrollbar-thumb-hover: #6a6a6a;
+  /*
+   * ================================================================
+   *  GOD WEAR — DESIGN TOKEN SYSTEM v2
+   *  Inspired by high-end agency methodology (Cuberto / Active Theory)
+   * ================================================================
+   *
+   *  PHILOSOPHY:
+   *  1. OKLCH colors — perceptually uniform; two colors at the same
+   *     OKLCH lightness will appear equally bright to the human eye,
+   *     unlike RGB where blue-700 looks much darker than yellow-700.
+   *  2. "No pure black" — every dark surface uses the brand hue (65°)
+   *     baked into the neutral at near-zero chroma. Subconscious
+   *     harmony: everything belongs to the same universe.
+   *  3. 8pt grid + fluid clamp() — spacing never looks "random".
+   */
 
-  /* Brand colors */
-  --color-gold: #c98b3a;
-  --color-accent: #e8602e;
+  /* ------------------------------------------------------------------
+   * BRAND — OKLCH Gold Spectrum
+   * oklch(L C H)  L=0→1  C=0→0.4  H=0→360
+   * Gold hue axis: 65°  (yellow-amber-orange zone)
+   * Accent hue axis: 42° (red-orange zone)
+   * ------------------------------------------------------------------ */
+  --gold-50: oklch(0.97 0.018 65);
+  /* near-white warm   */
+  --gold-100: oklch(0.92 0.035 65);
+  /* cream             */
+  --gold-200: oklch(0.84 0.055 65);
+  /* pale gold         */
+  --gold-300: oklch(0.78 0.082 65);
+  /* light gold        */
+  --gold-400: oklch(0.72 0.105 65);
+  /* soft gold         */
+  --gold-500: oklch(0.66 0.122 65);
+  /* main brand gold   ≈ #c98b3a */
+  --gold-600: oklch(0.60 0.112 65);
+  /* mid gold          ≈ #b37a2f */
+  --gold-700: oklch(0.52 0.098 65);
+  /* deep gold         ≈ #9d6a26 */
+  --gold-800: oklch(0.42 0.078 65);
+  /* dark gold         */
+  --gold-900: oklch(0.30 0.055 65);
+  /* very dark gold    */
+
+  --accent-400: oklch(0.68 0.155 42);
+  /* light accent      */
+  --accent-500: oklch(0.60 0.175 42);
+  /* main accent       ≈ #e8602e */
+  --accent-600: oklch(0.52 0.155 42);
+  /* deep accent       */
+
+  /* ------------------------------------------------------------------
+   * NEUTRALS — Warmly tinted (brand hue 65° at near-zero chroma)
+   * "No pure black" — pure #000 is replaced with warm near-blacks.
+   * The tint is imperceptible at a glance but creates subconscious
+   * brand harmony across every dark surface.
+   * ------------------------------------------------------------------ */
+  --neutral-50: oklch(0.97 0.004 65);
+  /* near-white        */
+  --neutral-100: oklch(0.92 0.006 65);
+  /* off-white         */
+  --neutral-200: oklch(0.82 0.008 65);
+  /* light gray        */
+  --neutral-300: oklch(0.68 0.008 65);
+  /* mid gray          */
+  --neutral-400: oklch(0.58 0.008 65);
+  /* body gray         ≈ #9ca3af equiv */
+  --neutral-500: oklch(0.46 0.008 65);
+  /* dark gray         */
+  --neutral-600: oklch(0.36 0.009 65);
+  /* darker gray       */
+  --neutral-700: oklch(0.26 0.010 65);
+  /* near-surface dark */
+  --neutral-750: oklch(0.21 0.010 65);
+  /* card surface      */
+  --neutral-800: oklch(0.17 0.011 65);
+  /* raised surface    */
+  --neutral-850: oklch(0.14 0.012 65);
+  /* section bg        */
+  --neutral-900: oklch(0.10 0.013 65);
+  /* deep bg           */
+  --neutral-950: oklch(0.07 0.014 65);
+  /* deepest bg        ≈ replaces #050505 */
+
+  /* ------------------------------------------------------------------
+   * SEMANTIC SURFACE TOKENS
+   * Named by purpose, not value — change once, propagates everywhere.
+   * ------------------------------------------------------------------ */
+  --surface-page: var(--neutral-950);
+  /* page background   */
+  --surface-raised: var(--neutral-850);
+  /* cards, panels     */
+  --surface-overlay: var(--neutral-800);
+  /* dropdowns, modals */
+  --surface-interactive: var(--neutral-750);
+  /* hover states      */
+  --surface-border: var(--neutral-700);
+  /* card borders      */
+  --surface-border-subtle: oklch(0.20 0.010 65 / 0.5);
+  /* subtle dividers  */
+
+  --foreground-primary: oklch(0.97 0.004 65);
+  /* main text         */
+  --foreground-secondary: oklch(0.72 0.006 65);
+  /* body text         */
+  --foreground-muted: oklch(0.56 0.007 65);
+  /* muted text        */
+  --foreground-disabled: oklch(0.40 0.007 65);
+  /* disabled text     */
+
+  --brand-primary: var(--gold-500);
+  --brand-hover: var(--gold-400);
+  --brand-active: var(--gold-600);
+  --brand-subtle: oklch(0.66 0.122 65 / 0.12);
+
+  /* ------------------------------------------------------------------
+   * LEGACY ALIASES — kept for zero-breakage compatibility with
+   * all existing components that reference these variables.
+   * ------------------------------------------------------------------ */
+  --color-glass-bg: 10 10 10;
+  --color-base: var(--neutral-950);
+  --color-surface: var(--neutral-50);
+  --color-ink: #12100d;
+  --color-muted: var(--neutral-500);
+  --color-stroke: #e6dfd3;
+  --color-text: var(--foreground-primary);
+  --color-scrollbar-thumb: oklch(0.32 0.009 65);
+  --color-scrollbar-thumb-hover: oklch(0.42 0.009 65);
+
+  /* Brand */
+  --color-gold: var(--gold-500);
+  --color-accent: var(--accent-500);
   --color-accent-dark: #3a1a0e;
-  --color-accent-alpha: #e8602e21;
+  --color-accent-alpha: oklch(0.60 0.175 42 / 0.13);
   --color-bg-subtle: #FFF3EF;
 
-  /* Grayscale palette */
-  --color-black: #000000;
-  --color-black-lighter: #050505;
-  --color-black-light: #0a0a0a;
-  --color-gray-light: #9B9999;
-
-  /* Semantic colors */
+  /* Grayscale — legacy names pointing to warm neutrals */
+  --color-black: var(--neutral-950);
+  --color-black-lighter: var(--neutral-950);
+  --color-black-light: var(--neutral-900);
+  --color-gray-light: var(--neutral-400);
   --color-success: #38d16a;
 
   /* White variations */
   --color-white: #ffffff;
-  --color-white-90: rgba(255, 255, 255, 0.9);
-  --color-white-85: rgba(255, 255, 255, 0.85);
-  --color-white-80: rgba(255, 255, 255, 0.8);
-  --color-white-70: rgba(255, 255, 255, 0.7);
-  --color-white-60: rgba(255, 255, 255, 0.6);
-  --color-white-50: rgba(255, 255, 255, 0.5);
-  --color-white-40: rgba(255, 255, 255, 0.4);
-  --color-white-20: rgba(255, 255, 255, 0.2);
-  --color-white-15: rgba(255, 255, 255, 0.15);
-  --color-white-10: rgba(255, 255, 255, 0.1);
-  --color-white-5: rgba(255, 255, 255, 0.05);
+  --color-white-90: oklch(1 0 0 / 0.9);
+  --color-white-85: oklch(1 0 0 / 0.85);
+  --color-white-80: oklch(1 0 0 / 0.8);
+  --color-white-70: oklch(1 0 0 / 0.7);
+  --color-white-60: oklch(1 0 0 / 0.6);
+  --color-white-50: oklch(1 0 0 / 0.5);
+  --color-white-40: oklch(1 0 0 / 0.4);
+  --color-white-20: oklch(1 0 0 / 0.2);
+  --color-white-15: oklch(1 0 0 / 0.15);
+  --color-white-10: oklch(1 0 0 / 0.1);
+  --color-white-5: oklch(1 0 0 / 0.05);
 
-  /* Black variations */
-  --color-black-80: rgba(0, 0, 0, 0.8);
-  --color-black-60: rgba(0, 0, 0, 0.6);
-  --color-black-40: rgba(0, 0, 0, 0.4);
+  /* Black alpha */
+  --color-black-80: oklch(0.07 0.014 65 / 0.8);
+  --color-black-60: oklch(0.07 0.014 65 / 0.6);
+  --color-black-40: oklch(0.07 0.014 65 / 0.4);
 
-  /* Gradients */
-  --gradient-bg-dark: linear-gradient(to bottom right, rgba(5, 5, 5, 0.8), rgba(10, 10, 10, 0.8));
-  --gradient-bg-category: linear-gradient(to bottom, rgba(2, 6, 23, 0.8), rgba(0, 0, 0, 1));
+  /* Gradients — use warm neutrals */
+  --gradient-bg-dark: linear-gradient(to bottom right, var(--neutral-950) 0%, var(--neutral-900) 100%);
+  --gradient-bg-category: linear-gradient(to bottom, oklch(0.07 0.014 65 / 0.8), var(--neutral-950));
 
   /* Shadows */
-  --shadow-video-shell: 0 12px 28px rgba(0, 0, 0, 0.12),
-    0 10px 36px rgba(216, 143, 63, 0.18),
-    0 0 0 1px rgba(216, 143, 63, 0.25),
-    inset 0 40px 70px rgba(255, 244, 233, 0.45);
-  --shadow-dark-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
-  --shadow-dark-lg: 0 20px 50px rgba(0, 0, 0, 0.4);
-  --shadow-category-card: 0 25px 60px rgba(0, 0, 0, 0.6);
-  --shadow-category-card-hover: 0 35px 80px rgba(0, 0, 0, 0.7);
-  --shadow-about: 0 30px 70px rgba(0, 0, 0, 0.5);
-  --shadow-cta: 0 15px 40px rgba(255, 202, 6, 0.35);
-  --shadow-glow: 0 12px 40px rgba(232, 96, 46, 0.25);
-  --shadow-inner-card: inset 0 24px 48px rgba(255, 255, 255, 0.08);
+  --shadow-video-shell: 0 12px 28px oklch(0.07 0.014 65 / 0.12),
+    0 10px 36px oklch(0.66 0.122 65 / 0.18),
+    0 0 0 1px oklch(0.66 0.122 65 / 0.25),
+    inset 0 40px 70px oklch(0.97 0.018 65 / 0.45);
+  --shadow-dark-xl: 0 20px 60px oklch(0.07 0.014 65 / 0.6);
+  --shadow-dark-lg: 0 20px 50px oklch(0.07 0.014 65 / 0.4);
+  --shadow-category-card: 0 25px 60px oklch(0.07 0.014 65 / 0.6);
+  --shadow-category-card-hover: 0 35px 80px oklch(0.07 0.014 65 / 0.7);
+  --shadow-about: 0 30px 70px oklch(0.07 0.014 65 / 0.5);
+  --shadow-cta: 0 15px 40px oklch(0.66 0.122 65 / 0.35);
+  --shadow-glow: 0 12px 40px var(--accent-500);
+  --shadow-inner-card: inset 0 24px 48px oklch(1 0 0 / 0.08);
 
   /* Fonts */
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: "Raleway", sans-serif;
   --font-serif: "Raleway", sans-serif;
+
+  /* ------------------------------------------------------------------
+   * FLUID SPACING — 8pt grid with geometric progression via clamp()
+   * Formula: clamp(min, preferred-vw, max)
+   * All steps are anchored to multiples of 8px.
+   * "Luxury whitespace" at xl/2xl pushes sections far apart,
+   * forcing the user to focus on one message at a time.
+   * ------------------------------------------------------------------ */
+  --space-2: clamp(0.125rem, 0.25vw, 0.25rem);
+  /*  2px →  4px  */
+  --space-4: clamp(0.25rem, 0.5vw, 0.5rem);
+  /*  4px →  8px  */
+  --space-8: clamp(0.5rem, 1vw, 1rem);
+  /*  8px → 16px  */
+  --space-12: clamp(0.625rem, 1.25vw, 1.25rem);
+  /* 10px → 20px  */
+  --space-16: clamp(1rem, 2vw, 1.5rem);
+  /* 16px → 24px  */
+  --space-24: clamp(1.25rem, 2.5vw, 2rem);
+  /* 20px → 32px  */
+  --space-32: clamp(1.5rem, 3.5vw, 3rem);
+  /* 24px → 48px  */
+  --space-48: clamp(2rem, 5vw, 4rem);
+  /* 32px → 64px  */
+  --space-64: clamp(2.5rem, 6vw, 5rem);
+  /* 40px → 80px  */
+  --space-80: clamp(3rem, 7vw, 6rem);
+  /* 48px → 96px  */
+  --space-96: clamp(3.5rem, 8.5vw, 7.5rem);
+  /* 56px → 120px */
+  --space-128: clamp(4.5rem, 10vw, 9rem);
+  /* 72px → 144px */
+  --space-160: clamp(5rem, 12vw, 11rem);
+  /* 80px → 176px */
+  --space-192: clamp(6rem, 14vw, 13rem);
+  /* 96px → 208px — luxury section gap */
+
+  /* ------------------------------------------------------------------
+   * FLUID TYPOGRAPHY — "Perfect Fourth" type scale with clamp()
+   * Shrinks and grows linearly between 375px and 1440px viewports.
+   * No "awkward" mid-sized screen breakpoints — it's always perfect.
+   * ------------------------------------------------------------------ */
+  --text-xs: clamp(0.694rem, 0.7rem + 0.1vw, 0.75rem);
+  /* 11px → 12px  */
+  --text-sm: clamp(0.8rem, 0.82rem + 0.15vw, 0.875rem);
+  /* 13px → 14px  */
+  --text-base: clamp(0.9rem, 0.9rem + 0.2vw, 1rem);
+  /* 14px → 16px  */
+  --text-lg: clamp(1rem, 1rem + 0.2vw, 1.125rem);
+  /* 16px → 18px  */
+  --text-xl: clamp(1.1rem, 1.1rem + 0.3vw, 1.25rem);
+  /* 18px → 20px  */
+  --text-2xl: clamp(1.25rem, 1.2rem + 0.5vw, 1.5rem);
+  /* 20px → 24px  */
+  --text-3xl: clamp(1.5rem, 1.4rem + 0.8vw, 1.875rem);
+  /* 24px → 30px  */
+  --text-4xl: clamp(1.75rem, 1.5rem + 1.2vw, 2.25rem);
+  /* 28px → 36px  */
+  --text-5xl: clamp(2rem, 1.6rem + 1.8vw, 3rem);
+  /* 32px → 48px  */
+  --text-6xl: clamp(2.25rem, 1.6rem + 2.3vw, 3.75rem);
+  /* 36px → 60px  */
+  --text-7xl: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+  /* 40px → 72px  */
+  --text-8xl: clamp(3rem, 1.5rem + 4vw, 6rem);
+  /* 48px → 96px  */
+  --text-display: clamp(3.5rem, 1rem + 6vw, 8rem);
+  /* 56px → 128px — hero scale */
 }
 
+
+/* ============================================================
+ *  BASE LAYER — Element defaults
+ *  Centralised here so no component ever fights specificity.
+ *  Rule: every element inherits its colour; explicit overrides
+ *  live in @layer components, not scattered Tailwind utilities.
+ * ============================================================ */
+@layer base {
+
+  /* Ensure every text element properly inherits colour from its
+   * nearest ancestor that declares one. Without this, Tailwind v4's
+   * Preflight can leave opacity-modified colours unresolved. */
+  p,
+  span,
+  li,
+  td,
+  th,
+  label,
+  blockquote,
+  figcaption {
+    color: inherit;
+  }
+
+  /* Dark-surface sections own their text colour at the section
+   * level so children never need a colour class unless overriding. */
+  .bg-black,
+  .bg-dark-950,
+  .bg-dark-900,
+  [data-theme="dark"] {
+    color: var(--foreground-primary);
+  }
+}
+
+html {
+  overflow-x: hidden;
+}
 
 body {
   scroll-behavior: smooth;
   overflow-x: hidden;
-  background-color: var(--color-base);
-  color: var(--color-text);
+  background-color: var(--surface-page);
+  color: var(--foreground-primary);
   font-family: var(--font-sans);
   font-feature-settings: "cv01" 1;
   font-synthesis: none;
@@ -179,25 +397,7 @@ a.active hr {
   will-change: transform;
 }
 
-.marquee-left {
-  display: flex;
-  animation: marquee 8s linear infinite;
-  will-change: transform;
-}
-
-.marquee-right {
-  display: flex;
-  animation: marquee-reverse 8s linear infinite;
-  will-change: transform;
-}
-
 /* --drop-shadow-3xl: 0 35px 35px rgba(0, 0, 0, 0.25);  */
-
-.color {
-  background-color: #ffebf5;
-  border-color: #c586a5;
-  color: #cc1379;
-}
 
 /* Git-Hub Black:  #0d1117 */
 
@@ -210,108 +410,47 @@ a.active hr {
   --color-stroke: #e6dfd3;
 
   /* New Brand Color System - Luxury Performance Wear */
-  --color-gold-500: #c98b3a;
-  --color-gold-600: #b37a2f;
-  --color-gold-700: #9d6a26;
-  --color-dark-950: #050505;
-  --color-dark-900: #0a0a0a;
-  --color-dark-850: #121212;
-  --color-dark-800: #1a1a1a;
-  --color-dark-750: #222222;
-  --color-dark-700: #2a2a2a;
-  --color-dark-600: #3a3a3a;
-  --color-dark-400: #9ca3af;
-  --color-energy-500: #e8602e;
+  /* -------------------------------------------------------
+   * Tailwind tokens now point to our OKLCH custom properties.
+   * The darks are warmly tinted (gold hue 65°) so no surface
+   * is ever a "dead" neutral — subconscious brand harmony.
+   * ------------------------------------------------------- */
+  --color-gold-500: var(--gold-500);
+  --color-gold-600: var(--gold-600);
+  --color-gold-700: var(--gold-700);
+  --color-gold-400: var(--gold-400);
+  --color-gold-300: var(--gold-300);
 
-  /* Legacy colors (mapped to new system) */
-  --color-gold: #c98b3a;
-  --color-accent: #e8602e;
+  /* Warm-tinted darks — "no pure black" technique */
+  --color-dark-950: var(--neutral-950);
+  /* oklch(0.07 0.014 65) ≈ #0e0c09 */
+  --color-dark-900: var(--neutral-900);
+  /* oklch(0.10 0.013 65) ≈ #140f09 */
+  --color-dark-850: var(--neutral-850);
+  /* oklch(0.14 0.012 65) ≈ #1c1510 */
+  --color-dark-800: var(--neutral-800);
+  /* oklch(0.17 0.011 65) ≈ #221a12 */
+  --color-dark-750: var(--neutral-750);
+  /* oklch(0.21 0.010 65) ≈ #281f16 */
+  --color-dark-700: var(--neutral-700);
+  /* oklch(0.26 0.010 65) ≈ #302519 */
+  --color-dark-600: var(--neutral-600);
+  /* oklch(0.36 0.009 65) ≈ #42321e */
+  --color-dark-400: var(--neutral-400);
+  /* oklch(0.58 0.008 65) ≈ #6d6158 */
+  --color-energy-500: var(--accent-500);
+
+  /* Legacy colors (mapped to new OKLCH system) */
+  --color-gold: var(--gold-500);
+  --color-accent: var(--accent-500);
   --color-accent-dark: #3a1a0e;
-  --color-accent-light: #e8602e21;
+  --color-accent-light: oklch(0.60 0.175 42 / 0.13);
   --color-bg-subtle: #FFF3EF;
   --color-success: #38d16a;
-  --color-black-lighter: #050505;
-  --color-gray-light: #9B9999;
+  --color-black-lighter: var(--neutral-950);
+  --color-gray-light: var(--neutral-400);
 
   --drop-shadow-3xl: 0 35px 35px rgba(0, 0, 0, 0.25);
-
-  /* Animations Extension */
-  --animate-wiggle: wiggle 2s ease-out infinite;
-
-  @keyframes wiggle {
-
-    0%,
-    100% {
-      transform: rotate(-3deg);
-    }
-
-    50% {
-      transform: rotate(3deg);
-    }
-  }
-
-  --animate-float: float 3s ease-in-out infinite;
-
-  @keyframes float {
-    0% {
-      transform: translateY(0px);
-    }
-
-    50% {
-      transform: translateY(-20px);
-    }
-
-    100% {
-      transform: translateY(0px);
-    }
-  }
-
-  --animate-border: border 5s linear infinite;
-
-  @keyframes border {
-    0% {
-      border-color: rgb(56, 189, 248);
-      /* Tailwind CSS sky-400 */
-    }
-
-    50% {
-      border-color: rgb(236, 72, 153);
-    }
-
-    75% {
-      border-color: #adfe02;
-    }
-
-    100% {
-      border-color: rgb(56, 189, 248);
-    }
-  }
-
-  --animate-scroll: scroll 40s linear infinite;
-
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(-100%);
-    }
-  }
-
-  --animate-arrow-right: arrow-right 1.5s ease-in-out infinite;
-
-  @keyframes arrow-right {
-
-    0%,
-    100% {
-      transform: translateX(0);
-    }
-
-    50% {
-      transform: translateX(4px);
-    }
-  }
 }
 
 /* CUSTOM_UTIITIES */
@@ -333,85 +472,11 @@ a.active hr {
 }
 
 @layer components {
-  .accent-pill {
-    @apply relative inline-flex items-center gap-2 rounded-full border border-accent-dark bg-accent-light px-3 py-1 text-xs uppercase tracking-wide text-gray-light font-light;
-    font-family: "Space Grotesk", "impact01", "montreal", sans-serif;
-    letter-spacing: -0.02em;
-  }
-
-  .corner-dot {
-    @apply absolute h-1.5 w-1.5 rounded-full bg-white;
-  }
-
-  .corner-dot-tl {
-    @apply -left-1 -top-1;
-  }
-
-  .corner-dot-tr {
-    @apply -right-1 -top-1;
-  }
-
-  .corner-dot-bl {
-    @apply -bottom-1 -left-1;
-  }
-
-  .corner-dot-br {
-    @apply -bottom-1 -right-1;
-  }
-
-  .cta-gradient {
-    border: 0.32px solid transparent;
-    background-image: linear-gradient(96.76deg, #e8602e 5.3%, #340e00 234.66%),
-      linear-gradient(#ececec, #404040);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    background-position: left center;
-    background-size: 150% 100%;
-    transition: background-position 300ms ease, box-shadow 300ms ease;
-  }
-
-  .cta-gradient:hover {
-    background-position: right center;
-    box-shadow: 0 12px 40px rgba(232, 96, 46, 0.25);
-  }
-
-  .hover-swap {
-    @apply relative overflow-hidden w-max;
-  }
-
-  .hover-swap>span:first-child {
-    @apply transition-transform duration-300 ease-out;
-  }
-
-  .hover-swap>span:last-child {
-    @apply absolute inset-0 translate-y-full transition-transform duration-300 ease-out;
-  }
-
-  .hover-swap:hover>span:first-child {
-    @apply -translate-y-full;
-  }
-
-  .hover-swap:hover>span:last-child {
-    @apply translate-y-0;
-  }
-
-  .glass-card {
-    @apply border border-white/15 bg-white/5 backdrop-blur-xl;
-  }
-
-  .glass-pill {
-    @apply border border-white/10 bg-white/5 backdrop-blur-md shadow-sm;
-  }
-
-  .glow-border {
-    box-shadow: 0 0 0 1px rgba(232, 96, 46, 0.35),
-      0 24px 60px rgba(232, 96, 46, 0.18),
-      inset 0 40px 80px rgba(255, 255, 255, 0.08);
-  }
-
   .testimonial-card {
-    @apply rounded-2xl border border-white/20 bg-black/80 text-white/85;
-    box-shadow: inset 0 24px 48px rgba(255, 255, 255, 0.08);
+    @apply rounded-2xl border text-white/85;
+    background-color: var(--surface-raised);
+    border-color: oklch(1 0 0 / 0.18);
+    box-shadow: inset 0 24px 48px oklch(1 0 0 / 0.08);
   }
 
   .testimonial-mask {
@@ -428,72 +493,6 @@ a.active hr {
     background-image: url('/images/hero-3.webp');
     background-size: cover;
     background-position: center;
-  }
-
-  .radial-divider {
-    height: 1px;
-    background: radial-gradient(circle, rgba(90, 83, 74, 0.8) 0%, rgba(18, 16, 13, 0) 70%);
-  }
-
-  .compare-shell {
-    @apply rounded-3xl border border-ink/20 bg-white/70 backdrop-blur-md;
-  }
-
-  .btn-hover {
-    @apply hover:bg-transparent hover:border hover:border-zinc-600 hover:transition-all;
-  }
-
-  .heading-2 {
-    @apply text-6xl lg:text-9xl uppercase leading-tight mb-12;
-  }
-
-  .col {
-    @apply flex flex-col;
-  }
-
-  .transition2 {
-    @apply transition-all duration-300 cursor-pointer ease-out;
-  }
-
-  .glass {
-    background-color: rgb(var(--color-glass-bg) / 0.8);
-    @apply border border-white/10;
-  }
-
-  .card-hover {
-    @apply hover:-translate-y-2 transition-all duration-300 cursor-pointer ease-in;
-  }
-
-  .video-shell {
-    box-shadow: var(--shadow-video-shell);
-  }
-
-  .black-text {
-    @apply text-muted;
-  }
-
-  .bg-subtle {
-    background-color: var(--color-bg-subtle);
-  }
-
-  .line-bottom {
-    @apply border-b border-stroke;
-  }
-
-  .center-item {
-    @apply centered-row justify-center;
-  }
-
-  .grad-text {
-    @apply text-transparent bg-linear-to-tr bg-clip-text;
-  }
-
-  .grad1 {
-    @apply text-transparent bg-linear-to-tr bg-clip-text from-indigo-100 to-indigo-400;
-  }
-
-  .link-hover {
-    @apply hover:font-bold hover:text-zinc-800 transition-all duration-300 ease-in-out hover:-translate-y-1;
   }
 
   /* ========================================
@@ -522,26 +521,28 @@ a.active hr {
       0 16px 48px rgba(0, 0, 0, 0.5);
   }
 
-  /* --- Depth Card: Top light + bottom shadow (mimics overhead lighting) --- */
+  /* --- Depth Card: Top light + bottom shadow (mimics overhead lighting) ---
+   * Uses warmly-tinted OKLCH neutrals: no dead grey surfaces.
+   */
   .depth-card {
-    background-color: var(--color-dark-800);
-    border: 1px solid var(--color-dark-700);
-    border-top-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--surface-overlay);
+    border: 1px solid var(--surface-border);
+    border-top-color: oklch(1 0 0 / 0.08);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 1px 2px rgba(0, 0, 0, 0.5),
-      0 2px 8px rgba(0, 0, 0, 0.3);
+      inset 0 1px 0 oklch(1 0 0 / 0.06),
+      0 1px 2px oklch(0.07 0.014 65 / 0.5),
+      0 2px 8px oklch(0.07 0.014 65 / 0.3);
     transition: all 0.35s cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
   .depth-card:hover,
   .depth-card-hover:hover {
-    background-color: var(--color-dark-750);
-    border-top-color: rgba(255, 255, 255, 0.12);
+    background-color: var(--surface-interactive);
+    border-top-color: oklch(1 0 0 / 0.12);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      0 2px 4px rgba(0, 0, 0, 0.5),
-      0 8px 24px rgba(0, 0, 0, 0.4);
+      inset 0 1px 0 oklch(1 0 0 / 0.1),
+      0 2px 4px oklch(0.07 0.014 65 / 0.5),
+      0 8px 24px oklch(0.07 0.014 65 / 0.4);
   }
 
   /* --- Depth Button: Gradient + top shine + bottom shadow --- */
@@ -567,32 +568,23 @@ a.active hr {
 
   /* Depth button variant for gold/colored buttons */
   .depth-btn-gold {
-    background: linear-gradient(to bottom, #d4993f, #b37a2f);
-    border: 1px solid rgba(201, 139, 58, 0.4);
-    border-top-color: rgba(255, 220, 150, 0.5);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.25),
-      0 2px 4px rgba(0, 0, 0, 0.5),
-      0 8px 24px rgba(0, 0, 0, 0.4),
-      0 4px 16px rgba(201, 139, 58, 0.2);
+    background: var(--gold-500);
+    border: 1px solid oklch(1 0 0 / 0.1);
+    box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.2);
     transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
   .depth-btn-gold:hover {
-    background: linear-gradient(to bottom, #dba348, #c98b3a);
-    border-top-color: rgba(255, 230, 170, 0.6);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.35),
-      0 4px 8px rgba(0, 0, 0, 0.5),
-      0 16px 40px rgba(0, 0, 0, 0.5),
-      0 8px 24px rgba(201, 139, 58, 0.35);
+    background: var(--neutral-50);
+    color: var(--neutral-950) !important;
+    border-color: transparent;
+    box-shadow: 0 4px 12px oklch(0.07 0.014 65 / 0.2);
   }
 
   .depth-btn-gold:active {
-    background: linear-gradient(to bottom, #b37a2f, #9d6a26);
-    box-shadow:
-      inset 0 2px 4px rgba(0, 0, 0, 0.3),
-      0 1px 2px rgba(0, 0, 0, 0.5);
+    background: oklch(0.97 0.004 65 / 0.9);
+    box-shadow: none;
+    transform: translateY(1px);
   }
 
   /* --- Depth Inset: Recessed/pressed-in look --- */
@@ -607,38 +599,109 @@ a.active hr {
   /* --- Depth Glow: Top light rim glow for premium elements --- */
   .depth-glow {
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      0 0 20px rgba(201, 139, 58, 0.08),
-      0 1px 2px rgba(0, 0, 0, 0.5),
-      0 2px 8px rgba(0, 0, 0, 0.3);
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 4px 12px rgba(0, 0, 0, 0.2);
   }
 
   .depth-glow:hover {
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      0 0 30px rgba(201, 139, 58, 0.15),
-      0 2px 4px rgba(0, 0, 0, 0.5),
-      0 8px 24px rgba(0, 0, 0, 0.4);
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      0 8px 24px rgba(0, 0, 0, 0.3);
   }
 
   /* --- Depth Surface Variants --- */
   .depth-surface-raised {
-    background-color: var(--color-dark-800);
-    border: 1px solid var(--color-dark-700);
-    border-top-color: rgba(255, 255, 255, 0.06);
+    background-color: var(--surface-overlay);
+    border: 1px solid var(--surface-border);
+    border-top-color: oklch(1 0 0 / 0.06);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.04),
-      0 1px 2px rgba(0, 0, 0, 0.5),
-      0 2px 8px rgba(0, 0, 0, 0.3);
+      inset 0 1px 0 oklch(1 0 0 / 0.04),
+      0 1px 2px oklch(0.07 0.014 65 / 0.5),
+      0 2px 8px oklch(0.07 0.014 65 / 0.3);
   }
 
   .depth-surface-recessed {
-    background-color: var(--color-dark-950);
-    border: 1px solid rgba(0, 0, 0, 0.4);
-    border-bottom-color: rgba(255, 255, 255, 0.03);
+    background-color: var(--surface-page);
+    border: 1px solid oklch(0.07 0.014 65 / 0.4);
+    border-bottom-color: oklch(1 0 0 / 0.03);
     box-shadow:
-      inset 0 2px 6px rgba(0, 0, 0, 0.5),
-      inset 0 1px 2px rgba(0, 0, 0, 0.4);
+      inset 0 2px 6px oklch(0.07 0.014 65 / 0.5),
+      inset 0 1px 2px oklch(0.07 0.014 65 / 0.4);
+  }
+
+  /* ============================================================
+   *  TEXT-ON-VIDEO / TEXT-ON-DARK  —  Centralised text contracts
+   *  All hero and dark-section text roles live here.
+   *  Components reference these classes; no scattered utilities.
+   * ============================================================ */
+
+  /*
+   * ── HERO TEXT HIERARCHY ─────────────────────────────────────────
+   *  Level 1 — H1 heading   : text-white (pure, 100%) — dominant
+   *  Level 2 — Subtitle      : warm cream  (gold-200 ≈ 84% L) — secondary
+   *  Level 3 — Stat values   : near-white  (92% opacity) — datapoints
+   *  Level 4 — Stat labels   : muted white (38% opacity) — tertiary
+   *  Level 5 — Eyebrow       : muted warm  (55% opacity) — contextual
+   *  Level 6 — Scroll hint   : very muted  (20% opacity) — peripheral
+   *
+   *  The subtitle uses var(--gold-200) — a warm cream tone — so it reads
+   *  as clearly secondary to the crisp H1 white AND subconsciously echoes
+   *  the brand gold palette without being overtly coloured.
+   * ─────────────────────────────────────────────────────────────── */
+
+  /* Level 2 — Subtitle: warm cream, brand-tinted secondary copy */
+  .hero-subtitle {
+    color: var(--gold-200);
+    /* oklch(0.84 0.055 65) — warm near-white */
+    text-shadow: 0 1px 20px oklch(0.07 0.014 65 / 0.6);
+    font-family: var(--font-sans);
+    font-size: clamp(0.8125rem, 1.5vw, 1rem);
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Level 5 — Eyebrow: muted warm label above headings */
+  .hero-eyebrow {
+    color: oklch(1 0 0 / 0.55);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-family: var(--font-sans);
+  }
+
+  /* Level 3 — Stat value: bright near-white number */
+  .hero-stat-value {
+    color: oklch(1 0 0 / 0.92);
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  /* Level 4 — Stat label: muted uppercase descriptor */
+  .hero-stat-label {
+    color: oklch(1 0 0 / 0.38);
+    font-size: 0.5625rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: var(--font-sans);
+    margin-top: 0.25rem;
+  }
+
+  /* General section body copy on dark backgrounds */
+  .section-body {
+    color: oklch(1 0 0 / 0.65);
+    font-family: var(--font-sans);
+    font-size: clamp(0.8125rem, 1.5vw, 0.9375rem);
+    line-height: 1.65;
+  }
+
+  /* Muted / secondary copy on dark backgrounds */
+  .section-muted {
+    color: oklch(1 0 0 / 0.45);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    line-height: 1.5;
   }
 }
 
@@ -654,15 +717,13 @@ a.active hr {
 
   /* Professional Video Overlay Button Utilities */
   .video-cta-shadow {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
-      0 2px 8px rgba(201, 139, 58, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .video-cta-shadow-hover {
-    box-shadow: 0 20px 60px rgba(201, 139, 58, 0.6),
-      0 8px 16px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
   /* Enhanced text legibility over video */
@@ -753,12 +814,12 @@ a.active hr {
     0%,
     100% {
       opacity: 1;
-      box-shadow: 0 0 20px rgba(201, 139, 58, 0.4);
+      box-shadow: 0 0 20px oklch(0.66 0.122 65 / 0.4);
     }
 
     50% {
       opacity: 0.8;
-      box-shadow: 0 0 40px rgba(201, 139, 58, 0.6);
+      box-shadow: 0 0 40px oklch(0.66 0.122 65 / 0.6);
     }
   }
 
@@ -836,19 +897,53 @@ a.active hr {
      PREMIUM UI OVERHAUL UTILITIES
      ======================================== */
 
-  /* Animated Gradient Text — for hero-level headings */
+  /* Animated Gradient Text — for hero-level headings
+   * OKLCH gradient: white → gold → white, perceptually uniform brightness.
+   * Both white and gold appear equally bright, so no color "dominates" —
+   * the animation is smooth, not jarring.
+   */
   .animated-gradient-text {
     background: linear-gradient(135deg,
-        #ffffff 0%,
-        #c98b3a 25%,
-        #ffffff 50%,
-        #c98b3a 75%,
-        #ffffff 100%);
+        oklch(0.97 0.004 65) 0%,
+        oklch(0.66 0.122 65) 25%,
+        oklch(0.97 0.004 65) 50%,
+        oklch(0.72 0.105 65) 75%,
+        oklch(0.97 0.004 65) 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: white;
+    /* fallback if background-clip unsupported */
+    animation: gradient-shift 6s ease-in-out infinite;
+  }
+
+  /* Fix: SplitType wraps words in <span class="word">.
+     background-clip:text on parent h2 has no direct text nodes after splitting,
+     so each span must carry the gradient itself to stay visible.
+
+     padding-bottom: 0.25em — CRITICAL for descender letters (g, y, p, q, j).
+     background-clip:text only paints within the padding box. With line-height:1
+     the box bottom sits exactly at the baseline. Descenders extend ~0.22em below
+     the baseline and fall outside the box → they become invisible (transparent
+     fill, no background paint). The padding-bottom extends the box far enough to
+     cover every descender in Raleway Bold at any size. */
+  .animated-gradient-text .word,
+  .animated-gradient-text .char,
+  .animated-gradient-text>span {
+    background: linear-gradient(135deg,
+        oklch(0.97 0.004 65) 0%,
+        oklch(0.66 0.122 65) 25%,
+        oklch(0.97 0.004 65) 50%,
+        oklch(0.72 0.105 65) 75%,
+        oklch(0.97 0.004 65) 100%);
     background-size: 300% 300%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: gradient-shift 6s ease-in-out infinite;
+    display: inline-block;
+    padding-bottom: 0.25em;
   }
 
   @keyframes gradient-shift {
@@ -868,8 +963,8 @@ a.active hr {
     width: 100%;
     height: 1px;
     background: radial-gradient(ellipse at center,
-        rgba(201, 139, 58, 0.5) 0%,
-        rgba(201, 139, 58, 0.15) 40%,
+        oklch(0.66 0.122 65 / 0.5) 0%,
+        oklch(0.66 0.122 65 / 0.15) 40%,
         transparent 70%);
   }
 
@@ -877,8 +972,8 @@ a.active hr {
     width: 100%;
     height: 1px;
     background: radial-gradient(ellipse at center,
-        rgba(255, 255, 255, 0.08) 0%,
-        rgba(255, 255, 255, 0.02) 50%,
+        oklch(1 0 0 / 0.08) 0%,
+        oklch(1 0 0 / 0.02) 50%,
         transparent 70%);
   }
 
@@ -898,16 +993,16 @@ a.active hr {
   /* Alternating Section Gradient — subtle visual rhythm */
   .section-gradient-alt {
     background: linear-gradient(180deg,
-        rgba(10, 10, 10, 1) 0%,
-        rgba(15, 15, 15, 1) 50%,
-        rgba(10, 10, 10, 1) 100%);
+        var(--neutral-950) 0%,
+        var(--neutral-900) 50%,
+        var(--neutral-950) 100%);
   }
 
   .section-gradient-warm {
     background: linear-gradient(180deg,
-        rgba(5, 5, 5, 1) 0%,
-        rgba(18, 14, 8, 1) 50%,
-        rgba(5, 5, 5, 1) 100%);
+        var(--neutral-950) 0%,
+        oklch(0.10 0.018 62) 50%,
+        var(--neutral-950) 100%);
   }
 
   /* Gold glow pulse — for emphasis elements */
@@ -915,11 +1010,11 @@ a.active hr {
 
     0%,
     100% {
-      box-shadow: 0 0 20px rgba(201, 139, 58, 0.2), 0 0 60px rgba(201, 139, 58, 0.05);
+      box-shadow: 0 0 20px oklch(0.66 0.122 65 / 0.2), 0 0 60px oklch(0.66 0.122 65 / 0.05);
     }
 
     50% {
-      box-shadow: 0 0 30px rgba(201, 139, 58, 0.35), 0 0 80px rgba(201, 139, 58, 0.1);
+      box-shadow: 0 0 30px oklch(0.66 0.122 65 / 0.35), 0 0 80px oklch(0.66 0.122 65 / 0.1);
     }
   }
 
@@ -929,8 +1024,8 @@ a.active hr {
 
   /* Star rating color */
   .star-gold {
-    color: #f5a623;
-    filter: drop-shadow(0 0 2px rgba(245, 166, 35, 0.3));
+    color: oklch(0.80 0.155 88);
+    filter: drop-shadow(0 0 2px oklch(0.80 0.155 88 / 0.3));
   }
 
   /* Trust badge */
@@ -977,11 +1072,506 @@ a.active hr {
       transform: scale(1);
     }
   }
+
+  /* ========================================
+     PREMIUM AGENCY-LEVEL UTILITIES
+     ======================================== */
+
+  /* SVG Line Draw Animation */
+  @keyframes svg-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .svg-draw-animate path,
+  .svg-draw-animate line,
+  .svg-draw-animate circle,
+  .svg-draw-animate polyline {
+    animation: svg-draw 1.5s ease-in-out forwards;
+  }
+
+  /* Split text overflow clip */
+  .text-reveal-clip .word {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .text-reveal-clip .word .char {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+
+  /* 3D perspective container */
+  .perspective-text {
+    perspective: 1200px;
+    perspective-origin: 50% 50%;
+  }
+
+  /* Scroll indicator SVG draw */
+  @keyframes scroll-draw {
+    0% {
+      stroke-dashoffset: 100;
+      opacity: 0.4;
+    }
+
+    50% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+
+    100% {
+      stroke-dashoffset: -100;
+      opacity: 0.4;
+    }
+  }
+
+  .scroll-indicator-draw {
+    animation: scroll-draw 2.5s ease-in-out infinite;
+  }
+
+  /* Card 3D tilt effect */
+  .tilt-card {
+    transform-style: preserve-3d;
+    transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  .tilt-card:hover {
+    transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  }
+
+  /* Aurora gradient background */
+  @keyframes aurora-shift {
+
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+
+    25% {
+      background-position: 100% 50%;
+    }
+
+    50% {
+      background-position: 100% 100%;
+    }
+
+    75% {
+      background-position: 0% 100%;
+    }
+  }
+
+  .aurora-bg {
+    background: linear-gradient(-45deg,
+        rgba(201, 139, 58, 0.08),
+        rgba(232, 96, 46, 0.05),
+        rgba(201, 139, 58, 0.06),
+        rgba(56, 209, 106, 0.03));
+    background-size: 400% 400%;
+    animation: aurora-shift 15s ease infinite;
+  }
 }
 
-/* Full HD Layout Tweaks */
-@media (min-width: 1920px) {
-  .hero-img {
-    width: 1024px;
+/* Gold text selection */
+::selection {
+  background: oklch(0.66 0.122 65 / 0.35);
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background: oklch(0.66 0.122 65 / 0.35);
+  color: #ffffff;
+}
+
+/* ================================================================
+ * FLUID TYPE UTILITIES
+ * Apply fluid font sizes from the --text-* token scale.
+ * These complement Tailwind's type classes with true fluid scaling.
+ * ================================================================ */
+.fluid-xs {
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+.fluid-sm {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.fluid-base {
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+
+.fluid-lg {
+  font-size: var(--text-lg);
+  line-height: 1.6;
+}
+
+.fluid-xl {
+  font-size: var(--text-xl);
+  line-height: 1.5;
+}
+
+.fluid-2xl {
+  font-size: var(--text-2xl);
+  line-height: 1.4;
+}
+
+.fluid-3xl {
+  font-size: var(--text-3xl);
+  line-height: 1.3;
+}
+
+.fluid-4xl {
+  font-size: var(--text-4xl);
+  line-height: 1.2;
+}
+
+.fluid-5xl {
+  font-size: var(--text-5xl);
+  line-height: 1.15;
+}
+
+.fluid-6xl {
+  font-size: var(--text-6xl);
+  line-height: 1.1;
+}
+
+.fluid-7xl {
+  font-size: var(--text-7xl);
+  line-height: 1.05;
+}
+
+.fluid-8xl {
+  font-size: var(--text-8xl);
+  line-height: 1.0;
+}
+
+.fluid-display {
+  font-size: var(--text-display);
+  line-height: 0.95;
+}
+
+/* ================================================================
+ * OPTICAL CENTERING UTILITIES
+ * Computers center mathematically (50/50). The human eye perceives
+ * heavy objects differently. These utilities apply the optical
+ * corrections that high-end agencies use for "pixel-perfect" feel.
+ * ================================================================ */
+
+/* Optically center a play/arrow icon inside a circle.
+ * Triangle/arrow shapes have more visual weight on the left,
+ * so shift slightly right (+1px to +3px) to feel truly centered. */
+.optical-center-right {
+  transform: translateX(0.08em);
+}
+
+/* Optically center text with descenders (g, p, y, q) in a badge/pill.
+ * Add a tiny top push to compensate for optical heaviness at baseline. */
+.optical-center-text {
+  padding-top: 0.08em;
+}
+
+/* Optically balanced column — when content has visual weight at top
+ * (hero heading + eyebrow), push down slightly so it reads as centered */
+.optical-vertical-center {
+  padding-bottom: 10%;
+}
+
+/* ================================================================
+ * LUXURY SPACING UTILITIES  
+ * Apply fluid --space-* tokens as margin/padding classes.
+ * Much larger than standard Tailwind spacing — this is intentional.
+ * Large gaps = luxury breathing room = expensive feel.
+ * ================================================================ */
+.section-gap-sm {
+  padding-top: var(--space-64);
+  padding-bottom: var(--space-64);
+}
+
+.section-gap {
+  padding-top: var(--space-96);
+  padding-bottom: var(--space-96);
+}
+
+.section-gap-lg {
+  padding-top: var(--space-128);
+  padding-bottom: var(--space-128);
+}
+
+.section-gap-xl {
+  padding-top: var(--space-160);
+  padding-bottom: var(--space-160);
+}
+
+/* Fluid horizontal container padding — scales from 16px → 48px */
+.container-pad {
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+/* =====================================================
+   EDITORIAL DESIGN SYSTEM — Awwwards-Level Visual Language
+   Principles: Asymmetry · Scale Contrast · Type-Led Design
+   "Standard agencies design pages. Elite agencies design systems."
+   ===================================================== */
+
+/* ── Hero & Section Scale Typography ─────────────────── */
+/* The 10× contrast between hero text and body copy is intentional.
+   Elite sites use scale as the primary compositional tool.
+
+   text-wrap: balance — distributes wrapped lines evenly so no single
+   orphan word sits alone on a line. Zero-effort: browser handles it.
+
+   clamp() anchored to vw (not rem) below the crossover so font size
+   is always proportional to the viewport — never a hard fixed floor
+   that causes overflow on mid-range screens. */
+.text-hero {
+  font-size: clamp(2rem, 10.5vw, 12.5rem);
+  line-height: 0.91;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.text-section-xl {
+  /* Crossover point: 1.75rem ÷ 0.075 = 233px  →  below 233px min kicks in.
+     On 375px phones: 7.5vw = 28.1px > 1.75rem(28px) → purely fluid.
+     "Compression T-Shirts" fits one line at ≥375px. "Built for Warriors" too.
+     On 320px: 1.75rem floor, long phrases wrap in 2 balanced lines.   */
+  font-size: clamp(1.75rem, 7.5vw, 8.5rem);
+  line-height: 0.93;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.text-section-lg {
+  /* Same approach — proportional fluid scale from mobile up.          */
+  font-size: clamp(1.5rem, 4.5vw, 5.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+/* ── Editorial Metadata Labels ────────────────────────── */
+/* Ultra-small tracked-out text creates tension with large headings.
+   Maximum typographic contrast — this is the Cuberto signature. */
+.editorial-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1;
+}
+
+.editorial-label-gold {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(201, 139, 58, 0.88);
+  line-height: 1;
+}
+
+/* ── Editorial Pill / Tag ─────────────────────────────── */
+/* Border-only pill: low visual weight, high information density.
+   Replaces the "badge" component in editorial contexts. */
+.editorial-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0.65rem;
+  border: 1px solid rgba(201, 139, 58, 0.35);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(201, 139, 58, 0.85);
+  font-family: var(--font-sans);
+  line-height: 1.8;
+}
+
+/* ── Section Tag (numbered indicator) ────────────────── */
+/* e.g. "01 — COMPRESSION" before each section.
+   Creates the "systems, not pages" feel. */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-500);
+}
+
+.section-tag::before {
+  content: '';
+  display: inline-block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--gold-500);
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+/* ── Vertical Writing ─────────────────────────────────── */
+.writing-vert {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+/* ── Decorative Rules ─────────────────────────────────── */
+/* Thin gold rule — draws the eye, creates compositional structure */
+.accent-rule {
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--gold-500);
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+.accent-rule-long {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(201, 139, 58, 0.28), rgba(201, 139, 58, 0.06) 60%, transparent);
+}
+
+/* ── Section Header Row ───────────────────────────────────
+   Heading always gets 1fr — it never shrinks regardless of
+   how long the copy is. Subheading rides in a fixed-width
+   auto column, never competing for space.
+   Replaces the old flex-row/justify-between pattern that
+   squeezed large display headings on wide screens.
+   ──────────────────────────────────────────────────────── */
+.section-header-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: end;
+}
+
+@media (min-width: 1024px) {
+  .section-header-row {
+    grid-template-columns: 1fr 200px;
+    gap: 2rem;
   }
+
+  .section-header-row>p {
+    max-width: 200px;
+    text-align: right;
+  }
+}
+
+/* ── Ghost Section Number ─────────────────────────────── */
+/* Large muted numeral behind section content.
+   "Invisible but felt" — adds depth and editorial gravitas. */
+.section-ghost-num {
+  font-family: var(--font-display);
+  font-size: clamp(8rem, 20vw, 24rem);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  color: rgba(255, 255, 255, 0.022);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Editorial Stats Item ─────────────────────────────── */
+.stat-editorial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.stat-editorial-num {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+.stat-editorial-num.gold {
+  color: var(--gold-400);
+}
+
+.stat-editorial-label {
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ── Marquee Text — Bolder editorial version ──────────── */
+.marquee-editorial {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── Product Card Price Typography ────────────────────── */
+.price-hero {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5.5vw, 5rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+/* ── CTA Section ──────────────────────────────────────── */
+.cta-overlay-gradient {
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.12) 0%,
+      rgba(0, 0, 0, 0.35) 40%,
+      rgba(0, 0, 0, 0.72) 75%,
+      rgba(0, 0, 0, 0.92) 100%);
+}
+
+/* ── Numbered Feature Item ────────────────────────────── */
+.feature-num {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--gold-500);
+  opacity: 0.6;
+  line-height: 1;
+}
+
+/* ── Section Entrance Overrides ──────────────────────── */
+/* Slightly larger bottom padding on editorial sections */
+.editorial-section-pad {
+  padding-top: var(--space-128);
+  padding-bottom: var(--space-128);
+}
+
+@media (min-width: 1280px) {
+  .editorial-section-pad {
+    padding-top: var(--space-160);
+    padding-bottom: var(--space-160);
+  }
+}
+
+/* ── Hero Bottom Bar separator ───────────────────────── */
+.hero-bottom-rule {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  margin-bottom: 1.5rem;
 }

@@ -9,26 +9,24 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Icon map for stats
 const iconMap = {
-  Users,
-  Star,
-  Truck,
-  Zap
+    Users,
+    Star,
+    Truck,
+    Zap
 };
 
 // Create stats array with actual icon components
 const stats = statsData.map(stat => ({
-  ...stat,
-  icon: iconMap[stat.iconName]
+    ...stat,
+    icon: iconMap[stat.iconName]
 }));
 
 const AnimatedNumber = ({ value, suffix, isText, highlight }) => {
     const numRef = useRef(null);
-    const [hasAnimated, setHasAnimated] = useState(false);
 
     useGSAP(() => {
         if (!numRef.current || isText) return;
 
-        // Parse numeric value (handles commas)
         const numericValue = parseFloat(value.replace(/,/g, ''));
         const hasDecimal = value.includes('.');
 
@@ -37,12 +35,11 @@ const AnimatedNumber = ({ value, suffix, isText, highlight }) => {
             start: 'top 90%',
             once: true,
             onEnter: () => {
-                setHasAnimated(true);
                 const obj = { val: 0 };
                 gsap.to(obj, {
                     val: numericValue,
-                    duration: 1.8,
-                    ease: 'power2.out',
+                    duration: 2.0,
+                    ease: 'elastic.out(1, 0.75)',
                     onUpdate: () => {
                         if (numRef.current) {
                             if (hasDecimal) {
@@ -61,47 +58,81 @@ const AnimatedNumber = ({ value, suffix, isText, highlight }) => {
         return <span ref={numRef}>{value}</span>;
     }
 
-    return <span ref={numRef}>0{suffix}</span>;
+    // Compute the final display string so the ghost can reserve its exact width
+    const numericValue = parseFloat(value.replace(/,/g, ''));
+    const hasDecimal = value.includes('.');
+    const finalDisplay = (hasDecimal ? numericValue.toFixed(1) : numericValue.toLocaleString()) + suffix;
+
+    // inline-grid stacks both spans in the same cell.
+    // The invisible ghost always holds the widest (final) string → no layout shift.
+    // The visible span animates on top.
+    return (
+        <span className="inline-grid">
+            <span ref={numRef} style={{ gridArea: '1/1' }}>0{suffix}</span>
+            <span style={{ gridArea: '1/1', visibility: 'hidden', pointerEvents: 'none' }} aria-hidden="true">
+                {finalDisplay}
+            </span>
+        </span>
+    );
 };
 
 const StatsBar = () => {
     const barRef = useRef(null);
 
+    useGSAP(() => {
+        if (!barRef.current) return;
+
+        const items = barRef.current.querySelectorAll('.stat-item');
+        gsap.fromTo(
+            items,
+            {
+                y: 25,
+                opacity: 0,
+                filter: 'blur(6px)',
+            },
+            {
+                y: 0,
+                opacity: 1,
+                filter: 'blur(0px)',
+                duration: 0.7,
+                stagger: 0.1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: barRef.current,
+                    start: 'top 90%',
+                    once: true,
+                },
+            }
+        );
+    }, []);
+
     return (
-        <div ref={barRef} className="w-full py-5 sm:py-6 md:py-8 bg-dark-950 border-y border-white/5"
-            style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03), inset 0 -1px 0 rgba(255,255,255,0.03)' }}>
+        <div ref={barRef} className="w-full py-8 sm:py-10 md:py-12 bg-dark-950"
+            style={{ borderTop: '1px solid rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
             <div className="max-w-5xl mx-auto px-4 sm:px-6">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 place-items-center">
-                    {stats.map((stat) => {
-                        const Icon = stat.icon;
-                        return (
+                {/* Editorial stats row: pure typographic — no icons, just numbers + labels */}
+                <div className="flex items-center justify-center">
+                    {stats.map((stat, idx) => (
+                        <div key={stat.label} className="flex items-stretch">
                             <div
-                                key={stat.label}
-                                className="flex items-center gap-3 justify-start sm:justify-center w-full max-w-[160px]"
+                                className="stat-item stat-editorial px-2 xs:px-4 sm:px-7 md:px-10 lg:px-14"
+                                style={{ opacity: 0 }}
                             >
-                                <div className={`p-2 rounded-xl ${stat.highlight ? 'bg-gold-500/10 border border-gold-500/20' : 'bg-white/5 border border-white/5'} transition-colors duration-300`}>
-                                    <Icon
-                                        size={18}
-                                        className={stat.highlight ? 'text-gold-500' : 'text-white/50'}
-                                        strokeWidth={2}
+                                <p className={`stat-editorial-num tabular-nums ${stat.highlight ? 'gold' : ''}`}>
+                                    <AnimatedNumber
+                                        value={stat.value}
+                                        suffix={stat.suffix}
+                                        isText={stat.isText}
+                                        highlight={stat.highlight}
                                     />
-                                </div>
-                                <div>
-                                    <p className={`text-lg sm:text-xl font-bold font-display tabular-nums ${stat.highlight ? 'text-gold-400' : 'text-white'}`}>
-                                        <AnimatedNumber
-                                            value={stat.value}
-                                            suffix={stat.suffix}
-                                            isText={stat.isText}
-                                            highlight={stat.highlight}
-                                        />
-                                    </p>
-                                    <p className="text-[10px] sm:text-xs text-dark-400 font-sans uppercase tracking-wider">
-                                        {stat.label}
-                                    </p>
-                                </div>
+                                </p>
+                                <span className="stat-editorial-label">{stat.label}</span>
                             </div>
-                        );
-                    })}
+                            {idx < stats.length - 1 && (
+                                <div className="self-center w-px h-7 bg-white/6 shrink-0" />
+                            )}
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

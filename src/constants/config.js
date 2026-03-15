@@ -33,8 +33,19 @@ export const EXTERNAL_LINKS = {
 };
 
 export const ANIMATION_CONFIG = {
-  scrollOffset: 72, // Navbar height for scroll positioning
+  scrollOffset: 0, // Set to 0 so we scroll exactly to the section start
   scrollDuration: 1.5,
   heroAnimationDuration: 0.8,
   heroAnimationDelay: 2.2
+};
+
+/**
+ * CSS_CLASSES — single source of truth for semantic component class names.
+ * Import this instead of hard-coding class strings in JSX.
+ * All classes are defined in src/index.css @layer components.
+ */
+export const CSS_CLASSES = {
+  heroSubtitle: 'hero-subtitle',
+  heroStatValue: 'hero-stat-value',
+  heroStatLabel: 'hero-stat-label',
 };

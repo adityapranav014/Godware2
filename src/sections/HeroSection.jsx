@@ -1,27 +1,54 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { Video } from '@imagekit/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { EASE, DURATION, isMobile, getResponsiveDuration } from '../utils/animations';
+import { EASE, DURATION, isMobile, getResponsiveDuration, ripple, buttonHoverIn, buttonHoverOut } from '../utils/animations';
 import { uiConfigData } from '../assets/data';
+import { CSS_CLASSES } from '../constants/config';
+import TextReveal from '../components/ui/TextReveal';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const HeroSection = ({ onShopClick }) => {
+const HeroSection = ({ onShopClick, preloaderComplete }) => {
   const heroRef = useRef(null);
-  const textRef = useRef(null);
+  const eyebrowRef = useRef(null);
   const buttonRef = useRef(null);
+  const heroBtnRef = useRef(null);
   const videoContainerRef = useRef(null);
-  const scrollIndicatorRef = useRef(null);
 
+  // GSAP anticipation hover — not CSS, uses 2-phase timeline
+  // Phase 1: micro-squeeze (anticipation) | Phase 2: lift + scale (action)
+  const handleBtnEnter = useCallback(() => buttonHoverIn(heroBtnRef.current), []);
+  const handleBtnLeave = useCallback(() => buttonHoverOut(heroBtnRef.current), []);
+
+  // Click: ripple + scroll to shop
+  const handleBtnClick = useCallback((e) => {
+    if (heroBtnRef.current) ripple(heroBtnRef.current, e, 'rgba(0,0,0,0.15)');
+    onShopClick?.();
+  }, [onShopClick]);
+  const scrollIndicatorRef = useRef(null);
+  const subtitleRef = useRef(null);
+
+  // Hide animated elements before first paint so nothing flashes visible
+  // under the preloader overlay. useLayoutEffect fires synchronously before browser paint.
+  useLayoutEffect(() => {
+    gsap.set(
+      [videoContainerRef.current, buttonRef.current, scrollIndicatorRef.current].filter(Boolean),
+      { opacity: 0 }
+    );
+  }, []);
+
+  // Only run entrance animations once the preloader has exited.
+  // This creates a clean hand-off: preloader curtain rises while hero bursts in.
   useEffect(() => {
+    if (!preloaderComplete) return;
+
     const ctx = gsap.context(() => {
       const mobile = isMobile();
 
-      // Master timeline with refined pacing
+      // Master timeline — no delay needed, preloader already handled the timing
       const masterTl = gsap.timeline({
         defaults: { ease: EASE.circ },
-        delay: 0.2
       });
 
       // Video reveal - premium cinematic entrance (mobile optimized)
@@ -29,67 +56,79 @@ const HeroSection = ({ onShopClick }) => {
         videoContainerRef.current,
         {
           opacity: 0,
-          scale: mobile ? 1.08 : 1.12,
-          filter: mobile ? 'blur(15px) brightness(0.6)' : 'blur(30px) brightness(0.5)',
+          scale: mobile ? 1.08 : 1.15,
+          filter: mobile ? 'blur(15px) brightness(0.6)' : 'blur(40px) brightness(0.4)',
           willChange: 'transform, opacity, filter',
         },
         {
           opacity: 1,
           scale: 1,
           filter: 'blur(0px) brightness(1)',
-          duration: mobile ? DURATION.cinematic : DURATION.epic,
+          duration: mobile ? DURATION.cinematic : 2.5,
           ease: EASE.expo,
           clearProps: 'willChange',
         }
       );
 
-      // Text entrance with depth (mobile optimized)
+      // Eyebrow line + text entrance
       masterTl.fromTo(
-        textRef.current,
+        eyebrowRef.current,
         {
           opacity: 0,
-          y: mobile ? 50 : 80,
-          scale: 0.92,
-          rotateX: mobile ? 10 : 20,
-          filter: mobile ? 'blur(6px)' : 'blur(10px)',
+          x: -30,
+          filter: 'blur(8px)',
           willChange: 'transform, opacity, filter',
         },
         {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          rotateX: 0,
+          opacity: 0.8,
+          x: 0,
           filter: 'blur(0px)',
-          duration: getResponsiveDuration('slow'),
-          ease: EASE.expo,
+          duration: getResponsiveDuration('medium'),
+          ease: 'power4.out',
           clearProps: 'willChange',
         },
-        mobile ? '-=1.2' : '-=1.8'
+        mobile ? 1.0 : 1.6
       );
 
-      // Button entrance - premium slide with depth
+      // Button entrance FIRST — this is the PARENT div containing the subtitle.
+      // Must reveal the parent before animating the child, otherwise child
+      // animation plays while parent is at opacity:0 (invisible).
       masterTl.fromTo(
         buttonRef.current,
         {
-          willChange: 'transform, opacity, filter',
+          willChange: 'transform, opacity',
           opacity: 0,
-          y: mobile ? 50 : 80,
-          scale: 0.88,
-          filter: mobile ? 'blur(8px)' : 'blur(12px)',
-          rotateX: mobile ? -8 : -15,
+          y: mobile ? 20 : 30,
+          scale: 0.95,
         },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          filter: 'blur(0px)',
-          rotateX: 0,
-          duration: getResponsiveDuration('slow'),
-          ease: EASE.backSoft,
+          duration: getResponsiveDuration('normal'),
+          ease: "power3.out",
           clearProps: 'willChange',
         },
-        '-=0.7'
+        "-=0.3"
       );
+
+      // Subtitle secondary polish — blur-in INSIDE the now-visible parent.
+      if (subtitleRef.current) {
+        masterTl.fromTo(
+          subtitleRef.current,
+          {
+            y: 12,
+            filter: 'blur(5px)',
+          },
+          {
+            y: 0,
+            filter: 'blur(0px)',
+            duration: getResponsiveDuration('normal'),
+            ease: 'power3.out',
+          },
+          '-=0.45'
+        );
+      }
 
       // Scroll indicator fade in
       if (scrollIndicatorRef.current) {
@@ -105,13 +144,13 @@ const HeroSection = ({ onShopClick }) => {
             duration: getResponsiveDuration('medium'),
             ease: EASE.circ,
           },
-          '-=0.4'
+          "-=0.4"
         );
       }
 
-      // ===== SCROLL ANIMATIONS - Mobile Optimized =====
+      // ===== SCROLL ANIMATIONS - Multi-layer Parallax Depth =====
 
-      // Parallax effect on video - responsive and smooth
+      // Layer 1: Background video — slowest (parallax depth)
       ScrollTrigger.create({
         trigger: heroRef.current,
         start: 'top top',
@@ -120,20 +159,48 @@ const HeroSection = ({ onShopClick }) => {
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const progress = self.progress;
-          const scale = 1 + (progress * (mobile ? 0.08 : 0.15));
+          const scale = 1 + (progress * (mobile ? 0.08 : 0.2));
           const opacity = Math.max(0, 1 - (progress * 1.3));
-          const blur = progress * (mobile ? 8 : 15);
-          const brightness = Math.max(0.5, 1 - progress * 0.35);
+          const blur = progress * (mobile ? 8 : 18);
+          const brightness = Math.max(0.4, 1 - progress * 0.4);
+          const y = progress * (mobile ? 40 : 80); // parallax shift
 
           gsap.set(videoContainerRef.current, {
             scale: scale,
             opacity: opacity,
             filter: `blur(${blur}px) brightness(${brightness})`,
+            y: y,
           });
         }
       });
 
-      // Text reveal and zoom on scroll - silky smooth
+      // Layer 2: Text — moves faster than video for depth
+      const textElements = heroRef.current?.querySelector('.hero-text-container');
+      if (textElements) {
+        ScrollTrigger.create({
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: mobile ? 2 : 1.5,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            const opacity = Math.max(0, 1 - (progress * 1.6));
+            const y = progress * (mobile ? 100 : 180);
+            const scale = Math.max(0.85, 1 - (progress * 0.15));
+            const blur = progress * (mobile ? 8 : 12);
+
+            gsap.set(textElements, {
+              opacity: opacity,
+              y: -y,
+              scale: scale,
+              filter: `blur(${blur}px)`,
+            });
+          }
+        });
+      }
+
+      // Layer 3: Button — moves fastest for parallax depth
       ScrollTrigger.create({
         trigger: heroRef.current,
         start: 'top top',
@@ -142,35 +209,11 @@ const HeroSection = ({ onShopClick }) => {
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const progress = self.progress;
-          const opacity = Math.max(0, 1 - (progress * 1.6));
-          const y = progress * (mobile ? 80 : 150);
-          const scale = Math.max(0.85, 1 - (progress * 0.15));
-          const blur = progress * (mobile ? 8 : 12);
-
-          gsap.set(textRef.current, {
-            opacity: opacity,
-            y: -y,
-            scale: scale,
-            filter: `blur(${blur}px)`,
-          });
-        }
-      });
-
-      // Button scroll animation - premium smooth
-      ScrollTrigger.create({
-        trigger: heroRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: mobile ? 2 : 1.5,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          const opacity = Math.max(0, 1 - (progress * 1.9));
-          const y = progress * (mobile ? 70 : 120);
+          const opacity = Math.max(0, 1 - (progress * 2.0));
+          const y = progress * (mobile ? 80 : 140);
           const scale = Math.max(0.75, 1 - (progress * 0.25));
-          const blur = progress * (mobile ? 6 : 8);
+          const blur = progress * (mobile ? 6 : 10);
 
-          // Animate entire button container including glow
           gsap.set(buttonRef.current, {
             opacity: opacity,
             y: -y,
@@ -196,16 +239,18 @@ const HeroSection = ({ onShopClick }) => {
         });
       }
 
-      // Overlay darkness increases on scroll
+      // Overlay darkness increases slightly on scroll (starts at full opacity so gradient is always effective)
       const overlayElement = heroRef.current.querySelector('.hero-overlay');
       if (overlayElement) {
+        // Pin the overlay at opacity 1 initially, allow subtle darkening on scroll
+        gsap.set(overlayElement, { opacity: 1 });
         ScrollTrigger.create({
           trigger: heroRef.current,
           start: 'top top',
           end: 'bottom top',
           scrub: true,
           onUpdate: (self) => {
-            const opacity = 0.6 + (self.progress * 0.3);
+            const opacity = 1.0 + (self.progress * 0.0); // stays at 1
             gsap.set(overlayElement, {
               opacity: opacity,
             });
@@ -227,7 +272,7 @@ const HeroSection = ({ onShopClick }) => {
     }, heroRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [preloaderComplete]);
 
   return (
     <div ref={heroRef} className="relative bg-black text-white min-h-dvh overflow-hidden">
@@ -244,101 +289,107 @@ const HeroSection = ({ onShopClick }) => {
           className="w-full h-full object-cover"
           aria-hidden="true"
         />
-        {/* Dark overlay for better text readability */}
-        <div className="hero-overlay absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/70 transition-opacity duration-300" />
+        {/* Cinematic dark overlay for text readability (Radial Gradient) */}
+        <div className="hero-overlay absolute inset-0"
+          style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.52) 65%, rgba(0,0,0,0.93) 100%)' }}
+        />
       </div>
 
-      {/* Content Overlay */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-dvh px-6 sm:px-8 lg:px-12">
-        {/* Hero Text on Video */}
-        <h1
-          ref={textRef}
-          className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-display text-center leading-tight tracking-tight mb-8 sm:mb-12 md:mb-16 max-w-[90vw] sm:max-w-none text-white"
-          style={{
-            perspective: '1200px',
-            transformStyle: 'preserve-3d',
-            textShadow: '0 2px 12px rgba(0,0,0,0.6), 0 1px 4px rgba(0,0,0,0.8)'
-          }}
-        >
-          {uiConfigData.hero.mainHeading}
-        </h1>
-
-        {/* Shop Now Button - Professional Video Overlay CTA */}
-        <div ref={buttonRef} className="relative">
-          {/* Button glow effect container */}
-          <div className="absolute inset-0 blur-xl opacity-50 bg-gold-500/25 rounded-2xl scale-110 transition-opacity duration-300 pointer-events-none" />
-
-          <button
-            onClick={onShopClick}
-            className="group relative w-full sm:w-auto min-w-70 sm:min-w-75 md:min-w-[320px] lg:min-w-[320px] max-w-[90vw] sm:max-w-90 
-                       px-8 sm:px-10 md:px-11 lg:px-12 
-                       py-4 sm:py-4 md:py-4.5 lg:py-4.5
-                       depth-btn-gold
-                       font-bold 
-                       text-base sm:text-lg md:text-lg lg:text-lg
-                       rounded-xl
-                       overflow-hidden active:scale-[0.97]
-                       focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:ring-offset-2 focus:ring-offset-black/50"
-            style={{ color: 'var(--color-dark-900)' }}
-            aria-label="Shop Now - Browse our premium compression t-shirts"
-            onMouseEnter={(e) => {
-              if (!isMobile()) {
-                gsap.to(e.currentTarget, {
-                  y: -2,
-                  scale: 1.01,
-                  duration: getResponsiveDuration('fast'),
-                  ease: EASE.backGentle,
-                });
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (!isMobile()) {
-                gsap.to(e.currentTarget, {
-                  y: 0,
-                  scale: 1,
-                  duration: getResponsiveDuration('fast'),
-                  ease: EASE.circ,
-                });
-              }
-            }}
-          >
-            {/* Animated gradient overlay - Shine effect */}
-            <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-
-            {/* Corner accents for premium feel */}
-            <span className="absolute top-0 left-0 w-2 h-2 bg-white/60 rounded-br-full opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-            <span className="absolute bottom-0 right-0 w-2 h-2 bg-white/60 rounded-tl-full opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-
-            {/* Button content */}
-            <span className="relative flex items-center justify-center gap-2.5 sm:gap-3 font-sans tracking-wide">
-              <span className="relative">
-                {uiConfigData.hero.ctaButton}
-                {/* Text underline animation on hover */}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white/60 group-hover:w-full transition-all duration-300" />
-              </span>
-
-              {/* Animated arrow icon */}
-              <svg
-                className="w-5 h-5 sm:w-5.5 sm:h-5.5 md:w-6 md:h-6 animate-arrow-right"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                strokeWidth="2.5"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-          </button>
+      {/* ── Corner Metadata ── */}
+      <div
+        ref={eyebrowRef}
+        className="absolute top-0 left-0 right-0 z-20 flex justify-between items-start"
+        style={{ paddingTop: '6.5rem', paddingInline: 'clamp(1.5rem, 5vw, 3rem)', opacity: 0 }}
+      >
+        <div className="flex items-center gap-3">
+          <span className="accent-rule" />
+          <span className="editorial-label-gold">Your second layer of skin</span>
         </div>
+        <span className="editorial-pill hidden sm:inline-flex">
+          <span role="img" aria-label="India flag" style={{ fontSize: '0.85em', lineHeight: 1 }}>🇮🇳</span>
+          {' '}Made in India
+        </span>
+      </div>
 
-        {/* Scroll Indicator */}
-        <div ref={scrollIndicatorRef} className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2">
-          <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-1.5 sm:p-2">
-            <div className="w-1 h-2 sm:w-1.5 sm:h-3 bg-gold-500 rounded-full animate-bounce" />
+      {/* ── Main Content — Bottom Anchored ── */}
+      <div className="relative z-10 flex flex-col justify-end min-h-dvh pb-10 sm:pb-12 lg:pb-16">
+        <div className="max-w-7xl mx-auto w-full px-6 sm:px-12 xl:px-8">
+
+          {/* MASSIVE Editorial Heading */}
+          <div className="hero-text-container mb-6 sm:mb-8">
+            <TextReveal
+              as="h1"
+              variant="slideUp"
+              splitBy="words"
+              trigger="top 95%"
+              stagger={0.08}
+              duration={1.0}
+              delay={1.8}
+              className="text-hero font-display leading-none tracking-tight uppercase perspective-text"
+              style={{
+                color: 'rgba(255,255,255,0.78)',
+                mixBlendMode: 'overlay',
+                textShadow: '0 2px 0 rgba(0,0,0,0.12)',
+              }}
+            >
+              {uiConfigData.hero.mainHeading}
+            </TextReveal>
           </div>
+
+          {/* Thin rule separator */}
+          <div className="hero-bottom-rule" />
+
+          {/* Bottom Bar */}
+          <div
+            ref={buttonRef}
+            className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 sm:gap-8"
+            style={{ opacity: 0 }}
+          >
+            <div className="max-w-xs sm:max-w-sm">
+              <p
+                ref={subtitleRef}
+                className={CSS_CLASSES.heroSubtitle}
+              >
+                Engineered for those who demand more. The perfect balance of restriction and release.
+              </p>
+              <button
+                ref={heroBtnRef}
+                onClick={handleBtnClick}
+                onMouseEnter={handleBtnEnter}
+                onMouseLeave={handleBtnLeave}
+                data-magnetic
+                className="group inline-flex items-center justify-center gap-3 text-sm py-3 px-8 sm:py-3.5 sm:px-10 bg-white text-black uppercase tracking-[0.15em] font-medium overflow-hidden relative active:scale-[0.98] transition-shadow duration-300 hover:shadow-[0_8px_30px_rgba(255,255,255,0.1)]"
+                aria-label="Shop Now - Browse our premium compression t-shirts"
+              >
+                <span>{uiConfigData.hero.ctaButton}</span>
+                <span className="text-base transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+              </button>
+            </div>
+            <div className="flex items-end gap-8 sm:gap-10 sm:pb-0.5">
+              {[
+                { val: '10K+', label: 'Athletes' },
+                { val: '4.5★', label: 'Rated' },
+                { val: '69%', label: 'Off Today' },
+              ].map((s) => (
+                <div key={s.label} className="text-right">
+                  <p className={CSS_CLASSES.heroStatValue}>{s.val}</p>
+                  <p className={CSS_CLASSES.heroStatLabel}>{s.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </div>
-    </div >
+
+      {/* ── Vertical SCROLL indicator ── */}
+      <div ref={scrollIndicatorRef} className="absolute right-5 sm:right-8 bottom-16 z-20">
+        <div className="writing-vert flex items-center gap-2.5">
+          <span className="text-[8px] uppercase tracking-[0.5em] text-white/20 font-sans">Scroll</span>
+          <div className="w-px bg-white/15 scroll-indicator-draw" style={{ height: '44px' }} />
+        </div>
+      </div>
+    </div>
   );
 };
 

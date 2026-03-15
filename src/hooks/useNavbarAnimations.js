@@ -2,20 +2,22 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { EASE, isMobile, getResponsiveDuration } from "../utils/animations";
 
-export const useNavbarAnimations = (isMobileMenuOpen, isVisible) => {
+export const useNavbarAnimations = (isMobileMenuOpen, isVisible, preloaderComplete = true) => {
     const navRef = useRef(null);
     const logoRef = useRef(null);
     const navLinksRef = useRef([]);
     const mobileMenuRef = useRef(null);
     const menuButtonRef = useRef(null);
 
-    // Initial entrance animation
+    // Initial entrance animation — gated behind preloader completion
     useEffect(() => {
+        if (!preloaderComplete) return; // Wait for preloader to finish
+
         const ctx = gsap.context(() => {
             const mobile = isMobile();
             const tl = gsap.timeline({
                 defaults: { ease: EASE.circ },
-                delay: 0.1
+                delay: 0.15
             });
 
             // Navbar slides down
@@ -75,23 +77,27 @@ export const useNavbarAnimations = (isMobileMenuOpen, isVisible) => {
                 );
             }
 
-            // Nav links stagger
+            // Nav links stagger — clip-path reveal with blur
             const links = navLinksRef.current.filter(Boolean);
             if (links.length > 0 && !mobile) {
                 tl.fromTo(
                     links,
                     {
-                        y: -15,
+                        y: -20,
                         opacity: 0,
-                        willChange: 'transform, opacity',
+                        filter: 'blur(8px)',
+                        clipPath: 'inset(0 0 100% 0)',
+                        willChange: 'transform, opacity, filter, clip-path',
                     },
                     {
                         y: 0,
                         opacity: 1,
-                        duration: getResponsiveDuration('fast'),
-                        stagger: 0.06,
-                        ease: EASE.circ,
-                        clearProps: 'willChange',
+                        filter: 'blur(0px)',
+                        clipPath: 'inset(0 0 0% 0)',
+                        duration: getResponsiveDuration('medium'),
+                        stagger: 0.08,
+                        ease: EASE.expo,
+                        clearProps: 'willChange,filter,clipPath',
                     },
                     '-=0.35'
                 );
@@ -99,16 +105,26 @@ export const useNavbarAnimations = (isMobileMenuOpen, isVisible) => {
         }, navRef);
 
         return () => ctx.revert();
-    }, []);
+    }, [preloaderComplete]);
 
-    // Hide/show animation
+    // Hide/show animation — translate only (no opacity), agency-grade eases
     useEffect(() => {
-        if (navRef.current) {
+        if (!navRef.current) return;
+        if (isVisible) {
+            // Snap back down — expo.out feels like a spring release
             gsap.to(navRef.current, {
-                y: isVisible ? 0 : -100,
-                autoAlpha: isVisible ? 1 : 0,
-                duration: 0.6,
-                ease: isVisible ? "power3.out" : "power3.in",
+                y: 0,
+                duration: 0.55,
+                ease: "expo.out",
+                overwrite: true,
+            });
+        } else {
+            // Slide up and away — power4.in accelerates like a curtain pulling up
+            gsap.to(navRef.current, {
+                y: "-110%",
+                duration: 0.38,
+                ease: "power4.in",
+                overwrite: true,
             });
         }
     }, [isVisible]);
@@ -127,29 +143,31 @@ export const useNavbarAnimations = (isMobileMenuOpen, isVisible) => {
                     { clipPath: "inset(0 0 100% 0)" },
                     {
                         clipPath: "inset(0 0 0% 0)",
-                        duration: 1,
-                        ease: "expo.inOut",
+                        duration: 1.2, // Slightly longer
+                        ease: "premium", // Agency custom ease
                     }
                 );
 
-                // 2. Links Stagger
+                // 2. Links Stagger - Follow-through
                 const links = mobileMenuRef.current.querySelectorAll('.mobile-nav-link');
                 tl.fromTo(
                     links,
                     {
-                        y: 50,
+                        y: 80,
                         opacity: 0,
-                        skewY: 5,
+                        skewY: 8,
+                        scale: 0.9,
                     },
                     {
                         y: 0,
                         opacity: 1,
                         skewY: 0,
-                        duration: 0.8,
-                        stagger: 0.08,
-                        ease: "power3.out",
+                        scale: 1,
+                        duration: 0.9,
+                        stagger: 0.06,
+                        ease: "premium",
                     },
-                    "-=0.5"
+                    "-=0.6"
                 );
 
                 // 3. Footer Stagger
@@ -168,12 +186,25 @@ export const useNavbarAnimations = (isMobileMenuOpen, isVisible) => {
                 );
 
             } else {
-                // Exit Animation
-                gsap.to(mobileMenuRef.current, {
+                // Exit Animation - Anticipation squeeze then fly up
+                const tl = gsap.timeline();
+
+                // Links fly up first
+                const links = mobileMenuRef.current.querySelectorAll('.mobile-nav-link');
+                tl.to(links, {
+                    y: -40,
+                    opacity: 0,
+                    skewY: -4,
+                    duration: 0.4,
+                    stagger: 0.03,
+                    ease: "power2.in"
+                });
+
+                tl.to(mobileMenuRef.current, {
                     clipPath: "inset(0 0 100% 0)",
                     duration: 0.8,
-                    ease: "expo.inOut",
-                });
+                    ease: "anticipation", // Anticipation ease
+                }, "-=0.2");
             }
         }, mobileMenuRef);
 

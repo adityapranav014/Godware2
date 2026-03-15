@@ -1,12 +1,20 @@
-import { useRef, lazy, Suspense } from "react";
-import ReactLenis from "lenis/react";
+import { useRef, lazy, Suspense, useState, useCallback, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { InertiaPlugin } from "gsap/InertiaPlugin";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import GlobalSEO from "./seo/GlobalSEO";
-import Badge from "./components/ui/Badge";
 import StatsBar from "./components/ui/StatsBar";
+
+// Premium UI Components
+import CustomCursor from "./components/ui/CustomCursor";
+import ScrollProgress from "./components/ui/ScrollProgress";
+import Preloader from "./components/ui/Preloader";
+import ScrollVelocityText from "./components/ui/ScrollVelocityText";
+import FloatingParticles from "./components/ui/FloatingParticles";
+import AmbientBlobs from "./components/ui/AmbientBlobs";
 
 // Layout components
 import { Navbar, Footer } from "./components/layout";
@@ -28,9 +36,13 @@ const SEOHomepageCopy = lazy(() => import("./sections/SEOHomepageCopy"));
 import { useScrollSpy, useScrollToSection } from "./hooks";
 
 // Register GSAP plugins
-gsap.registerPlugin(ScrollToPlugin);
+gsap.registerPlugin(ScrollToPlugin, ScrollSmoother, InertiaPlugin);
 
 const App = () => {
+  // Preloader state
+  const [preloaderComplete, setPreloaderComplete] = useState(false);
+  const handlePreloaderComplete = useCallback(() => setPreloaderComplete(true), []);
+
   // Section refs for scroll navigation
   const heroSectionRef = useRef(null);
   const categorySectionRef = useRef(null);
@@ -49,97 +61,114 @@ const App = () => {
   const activeSection = useScrollSpy(sectionRefs);
   const scrollToSection = useScrollToSection(sectionRefs);
 
+  // Initialize ScrollSmoother
+  useLayoutEffect(() => {
+    let smoother = ScrollSmoother.create({
+      wrapper: "#smooth-wrapper",
+      content: "#smooth-content",
+      smooth: 1.5, // Heavy, premium feel
+      effects: true,
+      normalizeScroll: true, // Prevents mobile bar jumping
+      ignoreMobileResize: true,
+    });
+
+    return () => {
+      if (smoother) smoother.kill();
+    };
+  }, []);
+
   // Handler: Shop Now button clicks
   const handleShopClick = () => {
     scrollToSection("Shop");
   };
 
   return (
-    <ReactLenis root className="relative w-full min-h-screen overflow-x-hidden">
+    <>
+      {/* Cinematic Preloader */}
+      <Preloader onComplete={handlePreloaderComplete} />
+
+      {/* Premium Custom Cursor (desktop only) */}
+      <CustomCursor />
+
+      {/* Scroll Progress Bar */}
+      <ScrollProgress />
+
       <GlobalSEO />
 
       <Navbar
         activeSection={activeSection}
         onNavClick={scrollToSection}
+        preloaderComplete={preloaderComplete}
       />
 
-      <div id="Home" ref={heroSectionRef} data-section="Home">
-        <HeroSection onShopClick={handleShopClick} />
-        <TaglineSection />
+      <div id="smooth-wrapper" className="relative w-full min-h-screen overflow-x-hidden">
+        <div id="smooth-content">
+          <div id="Home" ref={heroSectionRef} data-section="Home">
+            <HeroSection onShopClick={handleShopClick} preloaderComplete={preloaderComplete} />
+            <TaglineSection />
+          </div>
+
+          {/* Trust Stats Bar */}
+          <StatsBar />
+
+          <Suspense fallback={<div className="min-h-screen bg-dark-950" />}>
+            {/* Gold divider */}
+            <div className="section-divider" />
+
+            <div id="comparison" data-section="Comparison" className="relative">
+              <AmbientBlobs variant="gold" />
+              <FloatingParticles count={20} color="gold" />
+              <ComparisonSection />
+            </div>
+
+            {/* Scroll Velocity Brand Text Divider */}
+            <ScrollVelocityText text="GOD WEAR" repeat={6} baseSpeed={0.4} className="bg-dark-950 border-y border-white/3" />
+
+            <div id="testimonials" data-section="Testimonials">
+              <TestimonialsSection />
+            </div>
+
+            <div id="Shop" ref={categorySectionRef} data-section="Shop" className="relative">
+              <AmbientBlobs variant="warm" />
+              <CategorySection />
+            </div>
+
+            {/* Scroll Velocity Brand Text Divider */}
+            <ScrollVelocityText text="PERFORMANCE REDEFINED" repeat={4} baseSpeed={0.3} className="bg-dark-950 border-y border-white/3" />
+
+            <div id="About" ref={aboutSectionRef} data-section="About">
+              <AboutUsSection />
+            </div>
+
+            <div className="section-divider" />
+
+            <div id="cta" data-section="CTA" className="relative">
+              <AmbientBlobs variant="warm" />
+              <FloatingParticles count={25} color="gold" />
+              <CTASection onShopClick={handleShopClick} />
+            </div>
+
+            <div className="section-divider-subtle" />
+
+            <div id="Contact" ref={contactSectionRef} data-section="Contact" className="relative">
+              <AmbientBlobs variant="subtle" />
+              <Contact />
+            </div>
+
+            {/* SEO crawlable text — keyword-rich, 300+ words, below fold */}
+            <div className="section-divider-subtle" />
+            <SEOHomepageCopy />
+
+          </Suspense>
+
+
+
+          <Footer onNavClick={scrollToSection} />
+          <Analytics />
+          <SpeedInsights />
+        </div>
       </div>
-
-      {/* Trust Stats Bar */}
-      <StatsBar />
-
-      <Suspense fallback={
-        <div className="min-h-[50vh] flex items-center justify-center bg-black">
-          <Badge>Loading...</Badge>
-        </div>
-      }>
-        {/* Gold divider */}
-        <div className="section-divider" />
-
-        <div id="comparison" data-section="Comparison">
-          <ComparisonSection />
-        </div>
-
-        <div className="section-divider-subtle" />
-
-        <div id="testimonials" data-section="Testimonials">
-          <TestimonialsSection />
-        </div>
-
-        <div id="Shop" ref={categorySectionRef} data-section="Shop">
-          <CategorySection />
-        </div>
-
-        <div className="section-divider-subtle" />
-
-        <div id="About" ref={aboutSectionRef} data-section="About">
-          <AboutUsSection />
-        </div>
-
-        <div className="section-divider" />
-
-        <div id="cta" data-section="CTA">
-          <CTASection onShopClick={handleShopClick} />
-        </div>
-
-        <div className="section-divider-subtle" />
-
-        <div id="Contact" ref={contactSectionRef} data-section="Contact">
-          <Contact />
-        </div>
-
-        {/* SEO crawlable text — keyword-rich, 300+ words, below fold */}
-        <div className="section-divider-subtle" />
-        <SEOHomepageCopy />
-
-      </Suspense>
-
-      {/* Back to Top */}
-      <div className="flex justify-center bg-dark-800 border-t border-white/5 py-4">
-        <button
-          onClick={() => {
-            const lenis = document.querySelector('[data-lenis]')?.__lenis;
-            if (lenis) {
-              lenis.scrollTo(0, { duration: 1.5 });
-            } else {
-              window.scrollTo({ top: 0, behavior: 'instant' });
-            }
-          }}
-          className="group flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider text-dark-300 bg-white/5 border border-white/10 hover:border-gold-500/40 hover:text-gold-400 hover:bg-gold-500/5 transition-all duration-300 hover:shadow-[0_0_20px_rgba(201,139,58,0.1)]"
-          aria-label="Back to Top"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-y-0.5 transition-transform" aria-hidden="true"><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg>
-          Back to Top
-        </button>
-      </div>
-
-      <Footer onNavClick={scrollToSection} />
-      <Analytics />
-      <SpeedInsights />
-    </ReactLenis >
+    </>
   );
 };
 

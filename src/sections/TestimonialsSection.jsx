@@ -1,12 +1,11 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Star, Quote, BadgeCheck } from "lucide-react";
 import Section from "../components/layout/Section";
-import SectionHeader from "../components/layout/SectionHeader";
-import Badge from "../components/ui/Badge";
-import { EASE, DURATION, STAGGER } from '../utils/animations';
+import TextReveal from "../components/ui/TextReveal";
+import { EASE, DURATION, STAGGER, isMobile } from '../utils/animations';
 import { testimonialsData, uiConfigData } from '../assets/data';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -14,10 +13,6 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * Professional GSAP-powered infinite marquee hook.
  * Uses GPU-accelerated transforms for buttery-smooth animation.
- * 
- * @param {React.RefObject} containerRef - ref to the flex row container
- * @param {number} speed - pixels per frame (default 0.5)
- * @param {boolean} reverse - if true, scrolls right instead of left
  */
 const useMarquee = (containerRef, speed = 0.5, reverse = false) => {
   const xRef = useRef(0);
@@ -34,13 +29,11 @@ const useMarquee = (containerRef, speed = 0.5, reverse = false) => {
 
     const getHalfWidth = () => el.scrollWidth / 2;
 
-    // Initialize reverse row position
     if (reverse) {
       xRef.current = -getHalfWidth();
       gsap.set(el, { x: xRef.current });
     }
 
-    // --- Animation loop (GPU-accelerated via GSAP transforms) ---
     const animate = () => {
       if (!isPaused.current) {
         const halfWidth = getHalfWidth();
@@ -57,7 +50,6 @@ const useMarquee = (containerRef, speed = 0.5, reverse = false) => {
     };
     animRef.current = requestAnimationFrame(animate);
 
-    // --- Mouse Drag (desktop) ---
     const onMouseDown = (e) => {
       isDragging.current = true;
       isPaused.current = true;
@@ -71,7 +63,6 @@ const useMarquee = (containerRef, speed = 0.5, reverse = false) => {
       const delta = e.clientX - dragState.current.startX;
       const halfWidth = getHalfWidth();
       let newX = dragState.current.scrollX + delta;
-      // Seamless wrap
       while (newX > 0) newX -= halfWidth;
       while (newX < -halfWidth) newX += halfWidth;
       xRef.current = newX;
@@ -85,7 +76,6 @@ const useMarquee = (containerRef, speed = 0.5, reverse = false) => {
       el.style.cursor = 'grab';
     };
 
-    // --- Touch Drag (mobile) ---
     const onTouchStart = (e) => {
       isPaused.current = true;
       touchState.current = {
@@ -101,7 +91,6 @@ const useMarquee = (containerRef, speed = 0.5, reverse = false) => {
       const dx = e.touches[0].clientX - startX;
       const dy = e.touches[0].clientY - startY;
 
-      // Determine swipe direction once
       if (touchState.current.isHorizontal === null) {
         if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
           touchState.current.isHorizontal = Math.abs(dx) > Math.abs(dy);
@@ -109,7 +98,6 @@ const useMarquee = (containerRef, speed = 0.5, reverse = false) => {
         return;
       }
 
-      // Vertical swipe → let page scroll naturally
       if (!touchState.current.isHorizontal) return;
 
       e.preventDefault();
@@ -126,7 +114,6 @@ const useMarquee = (containerRef, speed = 0.5, reverse = false) => {
       touchState.current.isHorizontal = null;
     };
 
-    // --- Mouse wheel (convert vertical to horizontal) ---
     const onWheel = (e) => {
       const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
       if (Math.abs(delta) < 1) return;
@@ -172,11 +159,31 @@ const useMarquee = (containerRef, speed = 0.5, reverse = false) => {
 const TestimonialsSection = () => {
   const sectionRef = useRef(null);
   const badgeRef = useRef(null);
-  const headerRef = useRef(null);
   const marqueeRef = useRef(null);
+  const quoteSvgRef = useRef(null);
   const row1Ref = useRef(null);
   const row2Ref = useRef(null);
   const [showSwipeHint, setShowSwipeHint] = useState(true);
+
+  // ── 3D tilt handlers — desktop only, matches CategorySection patterns ──
+  const handleCardEnter = useCallback((e) => {
+    if (isMobile()) return;
+    gsap.to(e.currentTarget, { scale: 1.04, duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
+  }, []);
+
+  const handleCardMove = useCallback((e) => {
+    if (isMobile()) return;
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const rotateY = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
+    const rotateX = ((e.clientY - rect.top) / rect.height - 0.5) * -6;
+    gsap.to(card, { rotateX, rotateY, transformPerspective: 1000, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
+  }, []);
+
+  const handleCardLeave = useCallback((e) => {
+    if (isMobile()) return;
+    gsap.to(e.currentTarget, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.6)', overwrite: true });
+  }, []);
 
   // Hide swipe hint after 3 seconds or on first touch
   useEffect(() => {
@@ -196,6 +203,7 @@ const TestimonialsSection = () => {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top 75%",
+        once: true,
       }
     });
 
@@ -212,72 +220,65 @@ const TestimonialsSection = () => {
       }
     );
 
-    // Header entrance
-    tl.fromTo(
-      headerRef.current,
-      { y: 40, opacity: 0, filter: 'blur(8px)' },
-      {
-        y: 0,
-        opacity: 1,
-        filter: 'blur(0px)',
-        duration: DURATION.medium,
-        ease: EASE.power,
-      },
-      '-=0.3'
-    );
+    // Large quote SVG line-draw — removed (SVG removed in redesign)
 
     // Marquee entrance (container fade in)
     tl.fromTo(
       marqueeRef.current,
-      { opacity: 0, y: 40 },
+      { opacity: 0, y: 50 },
       {
         opacity: 1,
         y: 0,
         duration: DURATION.slow,
         ease: EASE.power,
       },
-      '-=0.2'
+      '-=0.8'
     );
   }, { scope: sectionRef });
 
-  // Row 1: scrolls LEFT  |  Row 2: scrolls RIGHT (opposite)
-  useMarquee(row1Ref, 0.8, false);
-  useMarquee(row2Ref, 0.6, true);
+  // Row 1: scrolls LEFT | Row 2: scrolls RIGHT (opposite) — different speeds for depth
+  useMarquee(row1Ref, 0.9, false);
+  useMarquee(row2Ref, 0.5, true);
 
   return (
     <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-950 text-white section-gradient-alt noise-overlay" containerClassName="w-full max-w-full">
       <div className="space-y-8 sm:space-y-10 md:space-y-12">
 
-        {/* Badge */}
-        <div ref={badgeRef}>
-          <Badge>Voices</Badge>
+        {/* ── Section Header — editorial left-aligned ── */}
+        <div ref={badgeRef} className="flex flex-col gap-4 px-4 sm:px-6">
+          <span className="section-tag">Voices</span>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 lg:gap-8">
+            <TextReveal
+              as="h2"
+              variant="slideUp"
+              splitBy="words"
+              trigger="top 80%"
+              stagger={0.07}
+              duration={0.9}
+              className="text-section-xl font-display uppercase font-bold leading-none text-white"
+            >
+              Proven By Athletes
+            </TextReveal>
+            <p className="text-white/60 font-sans text-sm leading-relaxed max-w-xs lg:max-w-sm lg:text-right pb-1">
+              Real voices. Real results. Hear from those who train relentlessly and trust God Wear.
+            </p>
+          </div>
+          <div className="accent-rule-long mt-2" />
         </div>
-
-        {/* Header */}
-        <div ref={headerRef}>
-          <SectionHeader
-            title="Proven By Athletes"
-            subtitle="Real voices. Real results. Hear from those who train relentlessly and trust God Wear."
-            align="center"
-            titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
-            subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
-          />
-        </div>
-
         {/* Testimonials - Auto Scroll + Manual Swipe */}
         <div ref={marqueeRef} className="relative overflow-hidden testimonial-mask">
           {/* Fade edges */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-[5%] sm:w-[10%] bg-gradient-to-r from-dark-900 via-dark-900/80 to-transparent z-10" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-[5%] sm:w-[10%] bg-gradient-to-l from-dark-900 via-dark-900/80 to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-[5%] sm:w-[10%] bg-linear-to-r from-dark-900 via-dark-900/80 to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-[5%] sm:w-[10%] bg-linear-to-l from-dark-900 via-dark-900/80 to-transparent z-10" />
 
-          {/* Row 1 → scrolls LEFT */}
-          <div className="mb-4 sm:mb-6 overflow-hidden">
+          {/* Row 1 → scrolls LEFT (faster) */}
+          <div className="mb-4 sm:mb-6 py-3">
             <div
               ref={row1Ref}
               className="flex gap-4 sm:gap-6 will-change-transform"
             >
               {[...testimonialsData, ...testimonialsData, ...testimonialsData, ...testimonialsData].map((item, index) => (
-                <div key={`${item.name}-${index}`} className="flex-shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[78vw] sm:w-[55vw] md:w-[45vw] lg:w-[32vw] select-none testimonial-card">
+                <div key={`${item.name}-${index}`} className="shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[78vw] sm:w-[55vw] md:w-[45vw] lg:w-[32vw] select-none testimonial-card" onMouseEnter={handleCardEnter} onMouseMove={handleCardMove} onMouseLeave={handleCardLeave} style={{ transformStyle: 'preserve-3d' }}>
                   {/* Quote Icon */}
                   <Quote size={20} className="text-gold-500/30 mb-3" strokeWidth={2} />
 
@@ -287,8 +288,8 @@ const TestimonialsSection = () => {
                       <Star
                         key={i}
                         size={14}
-                        className={i < (index % 3 === 0 ? 4 : 5) ? "star-gold" : "text-dark-600"}
-                        fill={i < (index % 3 === 0 ? 4 : 5) ? "currentColor" : "none"}
+                        className={i < ((index % testimonialsData.length) % 4 === 0 ? 4 : 5) ? "star-gold" : "text-dark-600"}
+                        fill={i < ((index % testimonialsData.length) % 4 === 0 ? 4 : 5) ? "currentColor" : "none"}
                         strokeWidth={1.5}
                       />
                     ))}
@@ -323,14 +324,14 @@ const TestimonialsSection = () => {
             </div>
           </div>
 
-          {/* Row 2 → scrolls RIGHT (opposite) */}
-          <div className="overflow-hidden">
+          {/* Row 2 → scrolls RIGHT (slower for depth) */}
+          <div className="py-3">
             <div
               ref={row2Ref}
               className="flex gap-4 sm:gap-6 will-change-transform"
             >
               {[...testimonialsData].reverse().concat([...testimonialsData].reverse(), [...testimonialsData].reverse(), [...testimonialsData].reverse()).map((item, index) => (
-                <div key={`${item.role}-${index}`} className="flex-shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[78vw] sm:w-[55vw] md:w-[45vw] lg:w-[32vw] select-none">
+                <div key={`${item.role}-${index}`} className="shrink-0 depth-card rounded-xl sm:rounded-2xl md:rounded-2xl p-5 sm:p-6 md:p-8 w-[78vw] sm:w-[55vw] md:w-[45vw] lg:w-[32vw] select-none testimonial-card" onMouseEnter={handleCardEnter} onMouseMove={handleCardMove} onMouseLeave={handleCardLeave} style={{ transformStyle: 'preserve-3d' }}>
                   {/* Quote Icon */}
                   <Quote size={20} className="text-gold-500/30 mb-3" strokeWidth={2} />
 
@@ -340,8 +341,8 @@ const TestimonialsSection = () => {
                       <Star
                         key={i}
                         size={14}
-                        className={i < (index % 2 === 0 ? 5 : 4) ? "star-gold" : "text-dark-600"}
-                        fill={i < (index % 2 === 0 ? 5 : 4) ? "currentColor" : "none"}
+                        className={i < ((index % testimonialsData.length) % 4 === 0 ? 4 : 5) ? "star-gold" : "text-dark-600"}
+                        fill={i < ((index % testimonialsData.length) % 4 === 0 ? 4 : 5) ? "currentColor" : "none"}
                         strokeWidth={1.5}
                       />
                     ))}

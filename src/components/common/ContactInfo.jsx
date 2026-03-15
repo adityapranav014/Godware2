@@ -1,100 +1,133 @@
-/**
- * ContactInfo component
- * Displays contact information with depth-layered cards
- */
-
-import { Mail, Phone, Instagram, MessageCircle, Clock, MapPin } from 'lucide-react';
+﻿import { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Mail, Phone, Instagram, MessageCircle, Clock, MapPin, Send } from 'lucide-react';
 import { CONTACT_INFO, SOCIAL_LINKS } from '../../constants';
 import { contactInfoLabelsData } from '../../assets/data';
+import { isMobile, svgIconDraw } from '../../utils/animations';
 
-// Icon map for contact reach us
-const iconMap = {
-  Phone,
-  MessageCircle,
-  Instagram,
-  Mail
+gsap.registerPlugin(ScrollTrigger);
+
+/**
+ * Self-contained reach item — mirrors ComparisonSection's FeatureCard pattern.
+ * Each item owns its own ref and useGSAP so the icon draw fires reliably
+ * at its own scroll position, independent of any parent timeline.
+ */
+const ReachItem = ({ icon: Icon, label, sub, href, index }) => {
+  const itemRef = useRef(null);
+  const iconWrapRef = useRef(null);
+
+  useGSAP(() => {
+    if (!iconWrapRef.current) return;
+    const svgEl = iconWrapRef.current.querySelector('svg');
+    if (!svgEl) return;
+
+    const paths = svgEl.querySelectorAll('path, line, circle, polyline, polygon, rect');
+    if (!paths.length) return;
+
+    // Pre-hide strokes
+    paths.forEach(path => {
+      const len = path.getTotalLength ? path.getTotalLength() : 80;
+      gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+    });
+
+    // Draw on scroll — each item triggers itself, stagger via index delay
+    gsap.to(paths, {
+      strokeDashoffset: 0,
+      duration: 1.0,
+      stagger: 0.06,
+      ease: 'power2.inOut',
+      delay: index * 0.12,
+      scrollTrigger: {
+        trigger: itemRef.current,
+        start: 'top 88%',
+        once: true,
+      },
+    });
+  }, { scope: itemRef });
+
+  return (
+    <a
+      ref={itemRef}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex items-center gap-5 py-4 border-b border-white/6 hover:border-gold-500/25 transition-colors duration-200"
+      onMouseEnter={(e) => {
+        if (isMobile()) return;
+        svgIconDraw(e.currentTarget.querySelector('svg'), 0.4);
+        const arrow = e.currentTarget.querySelector('[data-arrow]');
+        if (arrow) gsap.to(arrow, { x: 3, y: -3, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
+      }}
+      onMouseLeave={(e) => {
+        if (isMobile()) return;
+        const arrow = e.currentTarget.querySelector('[data-arrow]');
+        if (arrow) gsap.to(arrow, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.5)', overwrite: 'auto' });
+      }}
+    >
+      <span
+        ref={iconWrapRef}
+        className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 border border-white/8 group-hover:border-gold-500/30 group-hover:bg-gold-500/5 transition-all duration-200"
+        style={{ background: 'rgba(255,255,255,0.03)' }}
+      >
+        <Icon size={15} strokeWidth={1.5} className="text-white/40 group-hover:text-gold-500 transition-colors duration-200" />
+      </span>
+      <div className="flex-1 min-w-0">
+        <p className="editorial-label mb-0.5">{label}</p>
+        <p className="section-body truncate group-hover:text-white transition-colors duration-200">{sub}</p>
+      </div>
+      <span data-arrow className="text-white/15 group-hover:text-gold-500/60 transition-colors duration-200 text-xs">↗</span>
+    </a>
+  );
 };
 
 const ContactInfo = () => {
-  // Contact reach items with actual icons
-  const reachUsItems = [
-    { icon: Phone, label: contactInfoLabelsData.call, href: `tel:${CONTACT_INFO.phone.replace(/\s|-/g, "")}` },
-    { icon: MessageCircle, label: contactInfoLabelsData.whatsapp, href: `https://wa.me/${CONTACT_INFO.whatsappNumber}` },
-    { icon: Instagram, label: contactInfoLabelsData.instagram, href: SOCIAL_LINKS.instagram },
-    { icon: Mail, label: contactInfoLabelsData.email, href: `mailto:${CONTACT_INFO.email}` }
+  const reachItems = [
+    { icon: Phone, label: 'Call', sub: CONTACT_INFO.phone, href: `tel:${CONTACT_INFO.phone.replace(/\s|-/g, '')}` },
+    { icon: MessageCircle, label: 'WhatsApp', sub: CONTACT_INFO.whatsappPhone, href: `https://wa.me/${CONTACT_INFO.whatsappNumber}` },
+    { icon: Instagram, label: 'Instagram', sub: SOCIAL_LINKS.instagramHandle, href: SOCIAL_LINKS.instagram },
+    { icon: Mail, label: 'Email', sub: CONTACT_INFO.email, href: `mailto:${CONTACT_INFO.email}` },
   ];
-  return (
-    <div className="space-y-5 sm:space-y-6">
 
-      {/* Business Hours — Recessed (inset shadow = "pushed into" the surface) */}
-      <div
-        className="rounded-xl p-4 sm:p-5"
-        style={{
-          background: 'linear-gradient(180deg, #111115 0%, #131317 100%)',
-          boxShadow: 'inset 0 2px 6px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.03)',
-        }}
-      >
-        <div className="flex items-center gap-2 mb-4">
-          <Clock size={18} className="text-gold-500/70" />
-          <h3 className="text-sm font-bold uppercase tracking-wider font-display text-white/80">{contactInfoLabelsData.businessHours}</h3>
+  return (
+    <div className="space-y-10">
+
+      {/* Reach us */}
+      <div className="space-y-1">
+        <div className="flex items-center gap-2 mb-5">
+          <Send size={11} strokeWidth={2} className="text-gold-500/80 shrink-0" />
+          <span className="editorial-label-gold">Reach Us</span>
         </div>
-        <div className="space-y-2.5 text-sm text-dark-400 font-sans">
-          {contactInfoLabelsData.schedule.map((scheduleItem, index) => (
-            <div key={index}>
-              <p className="flex flex-col sm:flex-row sm:justify-between gap-2">
-                <span>{scheduleItem.day}</span>
-                <span className={scheduleItem.time === "Closed" ? "font-semibold text-dark-500" : "font-semibold text-white/90"}>{scheduleItem.time}</span>
-              </p>
-              {index < contactInfoLabelsData.schedule.length - 1 && <div className="border-t border-white/5" />}
+        {reachItems.map(({ icon, label, sub, href }, index) => (
+          <ReachItem key={label} icon={icon} label={label} sub={sub} href={href} index={index} />
+        ))}
+      </div>
+
+      {/* Hours */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <Clock size={11} strokeWidth={2} className="text-gold-500/80 shrink-0" />
+          <span className="editorial-label-gold">Business Hours</span>
+        </div>
+        <div className="space-y-3">
+          {contactInfoLabelsData.schedule.map((item, i) => (
+            <div key={i} className="flex items-center justify-between">
+              <span className="section-muted">{item.day}</span>
+              <span className={`text-sm font-sans font-medium ${item.time === 'Closed' ? 'text-white/15' : 'text-white/80'}`}>
+                {item.time}
+              </span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Reach Us — Elevated icon buttons (Level 2 shadow) */}
-      <div>
-        <h3 className="text-sm font-bold uppercase tracking-wider font-display text-white/80 mb-4">{contactInfoLabelsData.reachUs}</h3>
-        <div className="grid  grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
-          {reachUsItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex flex-col items-center justify-center aspect-square rounded-xl text-white transition-all duration-200 active:scale-95 hover:scale-[1.03]"
-                style={{
-                  background: 'linear-gradient(180deg, #1f1f26 0%, #18181d 100%)',
-                  borderTop: '1px solid rgba(255,255,255,0.08)',
-                  borderLeft: '1px solid rgba(255,255,255,0.04)',
-                  borderRight: '1px solid rgba(255,255,255,0.04)',
-                  borderBottom: '1px solid rgba(0,0,0,0.4)',
-                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 4px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.25)',
-                }}
-                aria-label={item.label}
-              >
-                <Icon size={20} className="mb-2 text-dark-400 group-hover:text-gold-500 transition-colors duration-200" strokeWidth={1.8} />
-                <span className="text-[11px] font-medium text-dark-400 group-hover:text-white transition-colors duration-200">
-                  {item.label}
-                </span>
-              </a>
-            );
-          })}
-        </div>
+      {/* Location */}
+      <div className="flex items-center gap-3">
+        <MapPin size={13} strokeWidth={1.5} className="text-gold-500/50 shrink-0" />
+        <span className="text-sm text-white/35 font-sans">{CONTACT_INFO.address}</span>
       </div>
 
-      {/* Location — Small recessed bar */}
-      <div
-        className="flex items-center gap-2.5 rounded-lg px-4 py-3 text-xs text-dark-400 font-sans"
-        style={{
-          background: 'linear-gradient(180deg, #111115 0%, #131317 100%)',
-          boxShadow: 'inset 0 1px 4px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.03)',
-        }}
-      >
-        <MapPin size={14} className="text-gold-500/50 shrink-0" />
-        <span>{CONTACT_INFO.address}</span>
-      </div>
     </div>
   );
 };

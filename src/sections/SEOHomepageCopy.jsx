@@ -14,7 +14,6 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronDown } from 'lucide-react';
 import Section from '../components/layout/Section';
-import SectionHeader from '../components/layout/SectionHeader';
 import Badge from '../components/ui/Badge';
 import { EASE, getResponsiveDuration, isMobile } from '../utils/animations';
 
@@ -32,7 +31,7 @@ const faqItems = [
                     GOD WEAR® is India&apos;s leading{' '}
                     <a href="#Shop" className={linkClass}>compression t-shirt</a>{' '}
                     brand, built for athletes who train without limits. Every compression t-shirt
-                    we create is engineered to feel like your second layer of skin — locking muscles
+                    we create is engineered to feel like your second layer of skin, locking muscles
                     in place, reducing fatigue, and wicking sweat away the moment it forms.
                 </p>
                 <p>
@@ -49,7 +48,7 @@ const faqItems = [
             <>
                 <p className="mb-4">
                     Our compression t-shirts are precision-engineered with 4-way stretch fabric that
-                    adapts to every movement — from heavy deadlifts to explosive sprints. The advanced
+                    adapts to every movement, from heavy deadlifts to explosive sprints. The advanced
                     moisture-wicking technology keeps athletes dry and focused through even the toughest
                     training sessions. Unlike ordinary gym t-shirts, GOD WEAR{' '}
                     <a href="#comparison" className={linkClass}>compression tees provide targeted muscle support</a>{' '}
@@ -60,7 +59,7 @@ const faqItems = [
                     <a href="#testimonials" className={linkClass}>10,000+ athletes across India</a>{' '}
                     trust GOD WEAR for their daily training. From the gym floor to outdoor training
                     grounds, our compression t-shirts stay locked in through every rep, every set,
-                    and every personal best — making them the ultimate second layer of skin for
+                    and every personal best, making them the ultimate second layer of skin for
                     serious athletes.
                 </p>
             </>
@@ -81,7 +80,7 @@ const faqItems = [
                 <p>
                     Learn more about{' '}
                     <a href="#About" className={linkClass}>our story and mission</a>{' '}
-                    to understand why we built GOD WEAR — a compression t-shirt brand born from
+                    to understand why we built GOD WEAR, a compression t-shirt brand born from
                     discipline, designed in India, and trusted by athletes who refuse to settle
                     for ordinary training gear.
                 </p>
@@ -115,42 +114,54 @@ const faqItems = [
 ];
 
 /* ── Accordion Item ─────────────────────────────── */
-const AccordionItem = ({ item, isOpen, onToggle }) => (
-    <div className="faq-item depth-card rounded-2xl sm:rounded-3xl overflow-hidden">
-        {/* Toggle Button */}
+const AccordionItem = ({ item, index, isOpen, onToggle }) => (
+    <div
+        className="faq-item group"
+        style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}
+    >
+        {/* Question Row */}
         <button
             onClick={onToggle}
-            className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 lg:p-8 text-left cursor-pointer group"
+            className="w-full flex items-center gap-5 sm:gap-7 py-6 sm:py-7 lg:py-8 text-left cursor-pointer"
             aria-expanded={isOpen}
         >
-            <h2 className="font-display font-bold text-sm sm:text-base lg:text-lg text-white uppercase tracking-wide group-hover:text-gold-500 transition-colors duration-300">
+            {/* Numbered index */}
+            <span
+                className="editorial-label-gold shrink-0 tabular-nums select-none"
+                style={{ minWidth: '1.75rem' }}
+            >
+                0{index + 1}
+            </span>
+
+            {/* Question */}
+            <h2 className="flex-1 font-display font-semibold text-base sm:text-lg lg:text-xl xl:text-2xl text-white/90 uppercase tracking-tight group-hover:text-gold-400 transition-colors duration-300 leading-snug">
                 {item.question}
             </h2>
+
+            {/* Chevron toggle */}
             <div
-                className={`shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all duration-500 ${
-                    isOpen
-                        ? 'bg-gold-500/10 border-gold-500/30 rotate-180'
-                        : 'bg-dark-750 border-dark-600'
-                }`}
-                style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.4)' }}
+                className={`shrink-0 w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-500 ${isOpen
+                    ? 'bg-gold-500/10 border-gold-500/25 rotate-180'
+                    : 'border-dark-700 group-hover:border-dark-500'
+                    }`}
+                style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)' }}
             >
                 <ChevronDown
-                    className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300 ${
-                        isOpen ? 'text-gold-500' : 'text-white/60'
-                    }`}
-                    strokeWidth={2}
+                    className={`w-4 h-4 transition-colors duration-300 ${isOpen ? 'text-gold-500' : 'text-white/40'
+                        }`}
+                    strokeWidth={1.5}
                 />
             </div>
         </button>
 
-        {/* Collapsible Body — CSS grid-rows trick for smooth height animation */}
+        {/* Collapsible Answer — CSS grid-rows trick for smooth height */}
         <div
             className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.215,0.61,0.355,1)]"
             style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
         >
             <div className="overflow-hidden min-h-0">
-                <div className="px-5 sm:px-6 lg:px-8 pb-5 sm:pb-6 lg:pb-8 border-t border-dark-700">
-                    <div className="text-sm sm:text-base leading-relaxed font-sans font-light tracking-wide pt-5 sm:pt-6" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                <div className="pl-12 sm:pl-14 pr-14 pb-7 sm:pb-8 lg:pb-10">
+                    <div className="section-body leading-relaxed">
                         {item.answer}
                     </div>
                 </div>
@@ -181,7 +192,7 @@ const SEOHomepageCopy = () => {
             scrollTrigger: {
                 trigger: sectionRef.current,
                 start: mobile ? 'top 85%' : 'top 75%',
-                toggleActions: 'play none none reverse',
+                once: true,
             },
         });
 
@@ -216,6 +227,17 @@ const SEOHomepageCopy = () => {
 
         // Staggered accordion items
         if (listRef.current) {
+            // Pre-hide chevron icon strokes before items fade in
+            const chevronPaths = [];
+            [...listRef.current.querySelectorAll('svg')].forEach(svg => {
+                const paths = [...svg.querySelectorAll('path, line, circle, polyline, polygon, rect')];
+                paths.forEach(path => {
+                    const len = path.getTotalLength ? path.getTotalLength() : 60;
+                    gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+                });
+                chevronPaths.push(...paths);
+            });
+
             tl.fromTo(
                 listRef.current.children,
                 { y: mobile ? 20 : 30, opacity: 0, willChange: 'transform, opacity' },
@@ -228,6 +250,23 @@ const SEOHomepageCopy = () => {
                 },
                 '-=0.3'
             );
+
+            // Dedicated ScrollTrigger — delay fires the draw after accordion items
+            // are partially visible. Same trigger as section, matching ComparisonSection pattern.
+            if (chevronPaths.length) {
+                gsap.to(chevronPaths, {
+                    strokeDashoffset: 0,
+                    duration: 0.8,
+                    stagger: 0.07,
+                    ease: 'power2.inOut',
+                    delay: 0.4,
+                    scrollTrigger: {
+                        trigger: sectionRef.current,
+                        start: mobile ? 'top 85%' : 'top 75%',
+                        once: true,
+                    },
+                });
+            }
         }
     }, { scope: sectionRef });
 
@@ -240,23 +279,23 @@ const SEOHomepageCopy = () => {
                     <div ref={badgeRef}>
                         <Badge>FAQ</Badge>
                     </div>
-                    <div ref={headerRef}>
-                        <SectionHeader
-                            title="Frequently Asked"
-                            subtitle="Everything you need to know about GOD WEAR compression t-shirts — from fabric technology to shipping across India."
-                            align="center"
-                            titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
-                            subtitleClassName="text-dark-400 md:text-white/60 font-sans text-sm sm:text-base md:text-base"
-                        />
+                    <div ref={headerRef} className="text-center">
+                        <h2 className="font-display uppercase text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[0.95] mb-5">
+                            Frequently Asked
+                        </h2>
+                        <p className="section-body max-w-2xl mx-auto">
+                            Everything you need to know about GOD WEAR compression t-shirts, from fabric technology to shipping across India.
+                        </p>
                     </div>
                 </div>
 
                 {/* ── Accordion List ── */}
-                <div ref={listRef} className="space-y-3 sm:space-y-4">
+                <div ref={listRef} style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                     {faqItems.map((item, index) => (
                         <AccordionItem
                             key={index}
                             item={item}
+                            index={index}
                             isOpen={openIndex === index}
                             onToggle={() => handleToggle(index)}
                         />

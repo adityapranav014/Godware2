@@ -4,8 +4,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Section from "../components/layout/Section";
-import SectionHeader from "../components/layout/SectionHeader";
-import Badge from "../components/ui/Badge";
+import TextReveal from "../components/ui/TextReveal";
 import { Video } from '@imagekit/react';
 import { EASE, DURATION, STAGGER, isMobile, getResponsiveDuration, getResponsiveStagger } from '../utils/animations';
 import { aboutFeaturesData } from '../assets/data';
@@ -14,20 +13,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Icon map for about features
 const iconMap = {
-  Landmark,
-  Zap
+    Landmark,
+    Zap
 };
 
 // Create features array with actual icon components
 const features = aboutFeaturesData.map(feature => ({
-  ...feature,
-  icon: iconMap[feature.iconName]
+    ...feature,
+    icon: iconMap[feature.iconName]
 }));
 
 const AboutUsSection = () => {
     const sectionRef = useRef(null);
     const badgeRef = useRef(null);
-    const headerRef = useRef(null);
     const imageRef = useRef(null);
     const contentRef = useRef(null);
 
@@ -39,7 +37,7 @@ const AboutUsSection = () => {
             scrollTrigger: {
                 trigger: sectionRef.current,
                 start: mobile ? "top 85%" : "top 75%",
-                toggleActions: 'play none none reverse',
+                once: true,
             }
         });
 
@@ -57,56 +55,56 @@ const AboutUsSection = () => {
             }
         );
 
-        // Header entrance - silky smooth
-        tl.fromTo(
-            headerRef.current,
-            {
-                y: mobile ? 30 : 40,
-                opacity: 0,
-                filter: mobile ? 'blur(5px)' : 'blur(8px)',
-                willChange: 'transform, opacity, filter',
-            },
-            {
-                y: 0,
-                opacity: 1,
-                filter: 'blur(0px)',
-                duration: getResponsiveDuration('medium'),
-                ease: EASE.circ,
-                clearProps: 'willChange',
-            },
-            '-=0.25'
-        );
+        // Image reveal with diagonal clip-path wipe
+        if (imageRef.current) {
+            tl.fromTo(
+                imageRef.current,
+                {
+                    clipPath: mobile ? 'inset(100% 0 0 0)' : 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)',
+                    opacity: 0.3,
+                    scale: 1.08,
+                    willChange: 'clip-path, opacity, transform',
+                },
+                {
+                    clipPath: mobile ? 'inset(0% 0 0 0)' : 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+                    opacity: 1,
+                    scale: 1,
+                    duration: getResponsiveDuration('slower'),
+                    ease: EASE.expo,
+                    clearProps: 'willChange',
+                },
+                '-=0.3'
+            );
 
-        // Image reveal with premium scale and blur
-        tl.fromTo(
-            imageRef.current,
-            {
-                y: mobile ? 30 : 40,
-                opacity: 0,
-                scale: 0.96,
-                filter: mobile ? 'blur(6px)' : 'blur(10px)',
-                willChange: 'transform, opacity, filter',
-            },
-            {
-                y: 0,
-                opacity: 1,
-                scale: 1,
-                filter: 'blur(0px)',
-                duration: getResponsiveDuration('slow'),
-                ease: EASE.expo,
-                clearProps: 'willChange',
-            },
-            '-=0.15'
-        );
+            // Parallax scroll-scrubbed scale on video
+            if (!mobile) {
+                ScrollTrigger.create({
+                    trigger: imageRef.current,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 2,
+                    onUpdate: (self) => {
+                        const video = imageRef.current?.querySelector('video');
+                        if (video) {
+                            const scale = 1 + (self.progress * 0.08);
+                            gsap.set(video, {
+                                y: -30 * self.progress,
+                                scale: scale,
+                            });
+                        }
+                    }
+                });
+            }
+        }
 
-        // Content reveal - synchronized
+        // Content card reveal
         tl.fromTo(
             contentRef.current,
             {
-                y: mobile ? 30 : 40,
+                y: mobile ? 30 : 50,
                 opacity: 0,
                 scale: 0.96,
-                filter: mobile ? 'blur(6px)' : 'blur(10px)',
+                filter: mobile ? 'blur(4px)' : 'blur(8px)',
                 willChange: 'transform, opacity, filter',
             },
             {
@@ -118,7 +116,7 @@ const AboutUsSection = () => {
                 ease: EASE.expo,
                 clearProps: 'willChange',
             },
-            '<'
+            '-=0.5'
         );
 
         // Feature items stagger - smooth cascade
@@ -127,37 +125,59 @@ const AboutUsSection = () => {
             tl.fromTo(
                 featureItems,
                 {
-                    y: mobile ? 20 : 30,
+                    y: mobile ? 20 : 35,
                     opacity: 0,
+                    x: -10,
                     willChange: 'transform, opacity',
                 },
                 {
                     y: 0,
                     opacity: 1,
+                    x: 0,
                     duration: getResponsiveDuration('normal'),
-                    stagger: getResponsiveStagger('normal'),
+                    stagger: getResponsiveStagger('medium'),
                     ease: EASE.circ,
                     clearProps: 'willChange',
                 },
-                '-=0.5'
+                '-=0.4'
             );
 
-            // Feature hover effects - desktop only
+            // Feature hover effects with SVG icon line-draw - desktop only
             if (!mobile) {
                 featureItems.forEach((item) => {
+                    const iconEl = item.querySelector('svg');
+
                     item.addEventListener('mouseenter', () => {
                         gsap.to(item, {
-                            scale: 1.015,
-                            y: -2,
+                            scale: 1.02,
+                            y: -3,
+                            x: 5,
                             duration: getResponsiveDuration('fast'),
                             ease: EASE.circ,
                         });
+
+                        // SVG icon re-draw effect on hover
+                        if (iconEl) {
+                            const paths = iconEl.querySelectorAll('path, line, circle, polyline');
+                            paths.forEach(path => {
+                                const length = path.getTotalLength ? path.getTotalLength() : 60;
+                                gsap.fromTo(path, {
+                                    strokeDasharray: length,
+                                    strokeDashoffset: length,
+                                }, {
+                                    strokeDashoffset: 0,
+                                    duration: 0.6,
+                                    ease: 'power2.inOut',
+                                });
+                            });
+                        }
                     });
 
                     item.addEventListener('mouseleave', () => {
                         gsap.to(item, {
                             scale: 1,
                             y: 0,
+                            x: 0,
                             duration: getResponsiveDuration('fast'),
                             ease: EASE.circ,
                         });
@@ -166,49 +186,41 @@ const AboutUsSection = () => {
             }
         }
 
-        // Parallax effect on image - subtle on mobile
-        if (!mobile) {
-            ScrollTrigger.create({
-                trigger: imageRef.current,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 2,
-                onUpdate: (self) => {
-                    const video = imageRef.current?.querySelector('video');
-                    if (video) {
-                        gsap.to(video, {
-                            y: -25 * self.progress,
-                            duration: 0,
-                        });
-                    }
-                }
-            });
-        }
     }, { scope: sectionRef });
 
     return (
         <Section background="dark" padding="large" sectionRef={sectionRef} className="bg-dark-950 text-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 xl:px-0">
 
-                <div ref={headerRef} className="mb-8 sm:mb-10 md:mb-12 lg:mb-14 space-y-6 sm:space-y-8">
-                    <div ref={badgeRef}>
-                        <Badge>About</Badge>
+                <div className="mb-8 sm:mb-10 md:mb-12 lg:mb-14 space-y-4 sm:space-y-6">
+                    <div ref={badgeRef} className="flex flex-col gap-4">
+                        <span className="section-tag">About</span>
+                        <div className="section-header-row">
+                            <TextReveal
+                                as="h2"
+                                variant="slideUp"
+                                splitBy="words"
+                                trigger="top 82%"
+                                stagger={0.06}
+                                duration={0.9}
+                                className="text-section-xl font-display uppercase font-bold leading-none text-white"
+                            >
+                                Built for Warriors
+                            </TextReveal>
+                            <p className="text-white/60 font-sans text-sm leading-relaxed pb-1">
+                                Born from discipline and driven by performance. God Wear delivers premium compression that moves as relentlessly as you do.
+                            </p>
+                        </div>
+                        <div className="accent-rule-long mt-2" />
                     </div>
-                    <SectionHeader
-                        title="Built for Warriors"
-                        subtitle="Born from discipline and driven by performance. God Wear delivers premium compression t-shirts that move as relentlessly as you do."
-                        align="center"
-                        titleClassName="text-white font-display text-2xl sm:text-3xl md:text-xl lg:text-2xl xl:text-3xl font-bold"
-                        subtitleClassName="text-dark-400 md:text-white/80 font-sans text-sm sm:text-base md:text-base"
-                    />
                 </div>
 
                 {/* Content - Mobile: Stack, Desktop: Side-by-side */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10 items-stretch">
 
-                    {/* Video/Image - Mobile First */}
-                    <div ref={imageRef} className="relative h-80 sm:h-96 lg:h-auto lg:min-h-[560px] rounded-2xl sm:rounded-3xl overflow-hidden depth-surface-recessed">
-                        <div className="size-full bg-dark-900 flex items-center justify-center">
+                    {/* Video/Image — Clip-path wipe reveal */}
+                    <div ref={imageRef} className="relative h-80 sm:h-96 lg:h-auto lg:min-h-140 rounded-2xl sm:rounded-3xl overflow-hidden depth-surface-recessed">
+                        <div className="size-full bg-dark-900 flex items-center justify-center overflow-hidden">
                             <Video
                                 urlEndpoint="https://ik.imagekit.io/fr3yiiin6"
                                 src="/video/video-tag-line.mp4"
@@ -225,30 +237,36 @@ const AboutUsSection = () => {
                     </div>
 
                     {/* Content Card */}
-                    <div ref={contentRef} className="depth-card rounded-2xl sm:rounded-3xl lg:col-span-2 flex flex-col justify-between p-6 sm:p-8 lg:p-12 space-y-6 sm:space-y-8">
+                    <div ref={contentRef} className="relative overflow-hidden depth-card rounded-2xl sm:rounded-3xl lg:col-span-2 flex flex-col justify-between p-6 sm:p-8 lg:p-12 space-y-6 sm:space-y-8 group">
 
                         {/* Headline */}
-                        <h2 className="text-2xl sm:text-3xl md:text-2xl lg:text-3xl xl:text-4xl font-display leading-tight font-bold uppercase text-white">
-                            We're Changing <br />
-                            The Way Things <br />
-                            Get Made
-                        </h2>
+                        <TextReveal
+                            as="h2"
+                            variant="wordSlide"
+                            splitBy="words"
+                            trigger="top 80%"
+                            stagger={0.06}
+                            duration={0.8}
+                            className="relative z-10 text-section-lg font-display leading-none font-bold uppercase text-white"
+                        >
+                            We're Changing The Way Things Get Made
+                        </TextReveal>
 
-                        {/* Feature Cards - Mobile: Stack, Desktop: Grid */}
-                        <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 border-t border-dark-700 pt-6 sm:pt-8">
-                            {features.map((feature) => {
+                        {/* Features — numbered editorial list */}
+                        <div className="relative z-10 grid gap-5 sm:gap-7 lg:grid-cols-2 border-t border-dark-700 pt-6 sm:pt-8">
+                            {features.map((feature, idx) => {
                                 const Icon = feature.icon;
                                 return (
-                                    <div key={feature.title} className="about-feature flex items-start gap-3 sm:gap-4">
-                                        <div className="shrink-0 size-10 sm:size-12 md:size-12 flex items-center justify-center rounded-full bg-dark-750 border border-dark-600"
-                                            style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.4)' }}>
-                                            <Icon size={20} className="text-gold-500 md:w-6 md:h-6" strokeWidth={2.5} />
+                                    <div key={feature.title} className="about-feature flex items-start gap-4 transition-all duration-300">
+                                        <div className="shrink-0 flex flex-col items-center gap-2 pt-0.5">
+                                            <span className="feature-num">{String(idx + 1).padStart(2, '0')}</span>
+                                            <div className="w-px h-8 bg-gold-500/20" />
                                         </div>
-                                        <div className="space-y-1 sm:space-y-2">
-                                            <h3 className="text-sm md:text-xl uppercase font-bold font-sans text-white tracking-wide">
+                                        <div className="space-y-1.5">
+                                            <h3 className="text-sm uppercase font-bold font-sans text-white tracking-wide">
                                                 {feature.title}
                                             </h3>
-                                            <p className="text-xs sm:text-sm font-sans text-dark-400 leading-relaxed">
+                                            <p className="section-muted leading-relaxed">
                                                 {feature.description}
                                             </p>
                                         </div>

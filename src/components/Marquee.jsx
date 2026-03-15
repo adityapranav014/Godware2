@@ -22,10 +22,10 @@ const Marquee = ({
 
   return (
     <div className={`relative overflow-hidden marquee-mask ${className}`}>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-ink via-ink/50 to-transparent opacity-90 blur-[30px]" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-ink via-ink/50 to-transparent opacity-90 blur-[30px]" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-linear-to-r from-ink via-ink/50 to-transparent opacity-90 blur-[30px]" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-linear-to-l from-ink via-ink/50 to-transparent opacity-90 blur-[30px]" />
 
-      <div className="overflow-hidden w-full h-20 md:h-24 lg:h-28 flex items-center marquee-text-responsive font-light uppercase whitespace-nowrap">
+      <div className="overflow-hidden w-full h-20 md:h-24 lg:h-28 flex items-center marquee-editorial font-bold uppercase whitespace-nowrap">
         <div
           ref={marqueeRef}
           className={`flex ${reverse ? "marquee-reverse" : "marquee"}`}

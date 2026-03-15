@@ -3,6 +3,5 @@
  */
 
 export * from './whatsapp';
-export * from './scroll';
 export * from './validation';
 export * from './animations';

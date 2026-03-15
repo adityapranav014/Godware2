@@ -6,25 +6,22 @@
 export const NAV_LINKS = [
   {
     id: 'home',
-    name: 'Home'
+    name: 'Home',
+    iconName: 'House'
   },
   {
     id: 'shop',
-    name: 'Shop'
+    name: 'Shop',
+    iconName: 'ShoppingBag'
   },
   {
     id: 'about',
-    name: 'About'
+    name: 'About',
+    iconName: 'Users'
   },
   {
     id: 'contact',
-    name: 'Contact'
+    name: 'Contact',
+    iconName: 'Mail'
   }
 ];
-
-export const SECTION_IDS = {
-  HOME: 'Home',
-  SHOP: 'Shop',
-  ABOUT: 'About',
-  CONTACT: 'Contact'
-};

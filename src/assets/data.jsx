@@ -309,14 +309,6 @@ const footerContentData = {
   craftedByLabel: "Crafted by"
 };
 
-// Contact Reach Us Items Data  
-const contactReachUsItemsData = [
-  { label: "Call", iconName: "Phone" },
-  { label: "WhatsApp", iconName: "MessageCircle" },
-  { label: "Instagram", iconName: "Instagram" },
-  { label: "Email", iconName: "Mail" }
-];
-
 // UI Configuration Data
 const uiConfigData = {
   testimonials: {
@@ -347,7 +339,6 @@ export {
   contactInfoLabelsData,
   contactFormLabelsData,
   footerContentData,
-  contactReachUsItemsData,
   uiConfigData,
 };
 

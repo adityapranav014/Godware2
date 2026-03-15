@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { Video } from '@imagekit/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { EASE, DURATION, isMobile, getResponsiveDuration, ripple, buttonHoverIn, buttonHoverOut } from '../utils/animations';
+import { EASE, DURATION, isMobile, getResponsiveDuration, ripple, buttonHoverIn, buttonHoverOut, hapticImpact } from '../utils/animations';
 import { uiConfigData } from '../assets/data';
 import { CSS_CLASSES } from '../constants/config';
 import TextReveal from '../components/ui/TextReveal';
@@ -24,6 +24,7 @@ const HeroSection = ({ onShopClick, preloaderComplete }) => {
   // Click: ripple + scroll to shop
   const handleBtnClick = useCallback((e) => {
     if (heroBtnRef.current) ripple(heroBtnRef.current, e, 'rgba(0,0,0,0.15)');
+    hapticImpact('light');
     onShopClick?.();
   }, [onShopClick]);
   const scrollIndicatorRef = useRef(null);
@@ -275,7 +276,7 @@ const HeroSection = ({ onShopClick, preloaderComplete }) => {
   }, [preloaderComplete]);
 
   return (
-    <div ref={heroRef} className="relative bg-black text-white min-h-dvh overflow-hidden">
+    <div ref={heroRef} className="relative bg-black text-white overflow-hidden" style={{ height: 'calc(100dvh - 72px)', minHeight: '600px' }}>
       {/* Full-screen Video Background */}
       <div ref={videoContainerRef} className="absolute inset-0 w-full h-full">
         <Video
@@ -312,7 +313,7 @@ const HeroSection = ({ onShopClick, preloaderComplete }) => {
       </div>
 
       {/* ── Main Content — Bottom Anchored ── */}
-      <div className="relative z-10 flex flex-col justify-end min-h-dvh pb-10 sm:pb-12 lg:pb-16">
+      <div className="relative z-10 flex flex-col justify-end h-full pb-10 sm:pb-12 lg:pb-16">
         <div className="max-w-7xl mx-auto w-full px-6 sm:px-12 xl:px-8">
 
           {/* MASSIVE Editorial Heading */}

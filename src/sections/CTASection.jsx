@@ -5,7 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Truck, CreditCard, RotateCcw, Users } from "lucide-react";
 import Section from "../components/layout/Section";
 import TextReveal from "../components/ui/TextReveal";
-import { EASE, DURATION, isMobile, getResponsiveDuration, ripple, buttonHoverIn, buttonHoverOut, svgIconDraw } from '../utils/animations';
+import { EASE, DURATION, isMobile, getResponsiveDuration, ripple, buttonHoverIn, buttonHoverOut, svgIconDraw, hapticImpact } from '../utils/animations';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,6 +20,7 @@ const CTASection = ({ onShopClick }) => {
   // Click: ripple expansion + call parent handler
   const handleCtaClick = useCallback((e) => {
     if (ctaBtnRef.current) ripple(ctaBtnRef.current, e);
+    hapticImpact('medium');
     onShopClick?.();
   }, [onShopClick]);
 

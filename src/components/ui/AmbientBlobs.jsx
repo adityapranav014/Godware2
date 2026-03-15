@@ -52,7 +52,7 @@ const AmbientBlobs = ({ variant = 'gold', className = '' }) => {
   const blobs = configs[variant] || configs.gold;
 
   return (
-    <div ref={containerRef} className={`absolute inset-0 overflow-hidden pointer-events-none z-0 ${className}`}>
+    <div ref={containerRef} aria-hidden="true" className={`absolute inset-0 overflow-hidden pointer-events-none z-0 ${className}`}>
       {blobs.map((blob, i) => (
         <div
           key={i}

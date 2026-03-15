@@ -780,6 +780,38 @@ a.active hr {
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+
+    /* Section VI: Disable all ambient decorative motion */
+    .ambient-blob {
+      animation: none !important;
+      transform: none !important;
+    }
+
+    /* Freeze floating particles entirely */
+    [class*="particle-float"] {
+      animation: none !important;
+      opacity: 0 !important;
+    }
+
+    /* Disable parallax skew on tagline marquee */
+    .marquee-editorial {
+      transform: none !important;
+    }
+
+    /* Disable scroll-velocity skew text */
+    .will-change-transform {
+      transform: none !important;
+    }
+
+    /* Hero video parallax — keep video static */
+    .hero-overlay {
+      opacity: 1 !important;
+    }
+
+    /* Preloader — skip cinematic intro, show content immediately */
+    .preloader-skip {
+      display: none !important;
+    }
   }
 
   /* Perspective utilities */
@@ -1574,4 +1606,15 @@ a.active hr {
   height: 1px;
   background: rgba(255, 255, 255, 0.07);
   margin-bottom: 1.5rem;
+}
+
+/* ── Section XIV: Carbon-Aware / Performance ─────────────────────────
+   content-visibility: auto skips rendering below-fold sections entirely
+   until they scroll near the viewport — reducing initial paint cost and
+   improving Core Web Vitals (FCP/LCP). contain-intrinsic-size prevents
+   layout shift by reserving approximate space for the hidden content.
+   ──────────────────────────────────────────────────────────────────── */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 800px;
 }

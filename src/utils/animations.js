@@ -12,6 +12,31 @@ export const isMobile = () => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
 };
 
+/**
+ * prefersReducedMotion() — Checks the OS-level motion preference.
+ * Section VI: Algorithmic Motion Preferences.
+ * Returns true when the user has requested reduced motion in their OS settings.
+ * Use this to skip or simplify heavy GSAP timelines for users with vestibular disorders.
+ */
+export const prefersReducedMotion = () =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/**
+ * hapticImpact() — Synchronized haptic feedback for mobile interactions.
+ * Section XII: Tactile Web — Haptic UX.
+ * When a physics-based element lands, a micro-vibration confirms the action,
+ * tricking the brain into perceiving the UI as having physical mass.
+ *
+ * @param {'light'|'medium'|'heavy'} intensity - Vibration pattern
+ */
+export const hapticImpact = (intensity = 'light') => {
+  if (!navigator.vibrate) return;
+  const patterns = { light: 8, medium: 15, heavy: 25 };
+  navigator.vibrate(patterns[intensity] ?? 8);
+};
+
+
+
 import { gsap } from 'gsap';
 import { CustomEase } from 'gsap/CustomEase';
 
@@ -244,7 +269,7 @@ export const errorFlash = (element) => {
  * @param {Element} element - The button element
  */
 export const buttonHoverIn = (element) => {
-  if (!element || isMobile()) return;
+  if (!element || isMobile() || prefersReducedMotion()) return;
   gsap.killTweensOf(element);
   return gsap.timeline()
     .to(element, { scale: 0.97, duration: 0.08, ease: 'power2.in' })
@@ -259,7 +284,7 @@ export const buttonHoverIn = (element) => {
  * @param {Element} element - The button element
  */
 export const buttonHoverOut = (element) => {
-  if (!element || isMobile()) return;
+  if (!element || isMobile() || prefersReducedMotion()) return;
   gsap.killTweensOf(element);
   return gsap.to(element, { scale: 1, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)', overwrite: true });
 };

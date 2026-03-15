@@ -115,7 +115,7 @@ const App = () => {
             {/* Gold divider */}
             <div className="section-divider" />
 
-            <div id="comparison" data-section="Comparison" className="relative">
+            <div id="comparison" data-section="Comparison" className="relative cv-auto">
               <AmbientBlobs variant="gold" />
               <FloatingParticles count={20} color="gold" />
               <ComparisonSection />
@@ -124,11 +124,11 @@ const App = () => {
             {/* Scroll Velocity Brand Text Divider */}
             <ScrollVelocityText text="GOD WEAR" repeat={6} baseSpeed={0.4} className="bg-dark-950 border-y border-white/3" />
 
-            <div id="testimonials" data-section="Testimonials">
+            <div id="testimonials" data-section="Testimonials" className="cv-auto">
               <TestimonialsSection />
             </div>
 
-            <div id="Shop" ref={categorySectionRef} data-section="Shop" className="relative">
+            <div id="Shop" ref={categorySectionRef} data-section="Shop" className="relative cv-auto">
               <AmbientBlobs variant="warm" />
               <CategorySection />
             </div>
@@ -136,13 +136,13 @@ const App = () => {
             {/* Scroll Velocity Brand Text Divider */}
             <ScrollVelocityText text="PERFORMANCE REDEFINED" repeat={4} baseSpeed={0.3} className="bg-dark-950 border-y border-white/3" />
 
-            <div id="About" ref={aboutSectionRef} data-section="About">
+            <div id="About" ref={aboutSectionRef} data-section="About" className="cv-auto">
               <AboutUsSection />
             </div>
 
             <div className="section-divider" />
 
-            <div id="cta" data-section="CTA" className="relative">
+            <div id="cta" data-section="CTA" className="relative cv-auto">
               <AmbientBlobs variant="warm" />
               <FloatingParticles count={25} color="gold" />
               <CTASection onShopClick={handleShopClick} />
@@ -150,7 +150,7 @@ const App = () => {
 
             <div className="section-divider-subtle" />
 
-            <div id="Contact" ref={contactSectionRef} data-section="Contact" className="relative">
+            <div id="Contact" ref={contactSectionRef} data-section="Contact" className="relative cv-auto">
               <AmbientBlobs variant="subtle" />
               <Contact />
             </div>
